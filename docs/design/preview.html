@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en" data-theme="dusk" data-palette="quest" data-display="grenze">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slow Road design preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans+SC:wght@500;700&family=Grenze+Gotisch:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="dusk"] {
+  --ground: #22302C; --raised: #2B3B36; --raised-hi: #33463F; --contour: #3D4F49;
+  --fog: #A9B4B6; --text: #E7E3D6; --muted: #9AA7A2; --lichen: #A6BC7F;
+  --ember: #E9773F; --ember-hover: #F08A57; --on-ember: #1A1F1C; --locked: #66697E;
+  --warning: #D8B26E; --error: #D9675B; --info: #8FB3C4;
+  --line: rgba(231, 227, 214, 0.12); --line-strong: rgba(231, 227, 214, 0.28);
+  color-scheme: dark;
+}
+[data-theme="dawn"] {
+  --ground: #DDE2DE; --raised: #EEF1EE; --raised-hi: #E4E9E5; --contour: #BFC9C3;
+  --fog: #FFFFFF; --text: #1F2B27; --muted: #56625D; --lichen: #55722F;
+  --ember: #C2521C; --ember-hover: #D2612B; --on-ember: #FFF8F0; --locked: #7A7D90;
+  --warning: #8A6420; --error: #A83A2F; --info: #2F6378;
+  --line: rgba(31, 43, 39, 0.14); --line-strong: rgba(31, 43, 39, 0.3);
+  color-scheme: light;
+}
+[data-theme="dusk"][data-palette="northrend"] {
+  --ground: #161F27; --raised: #1E2A34; --raised-hi: #26343F; --contour: #2C3B47;
+  --fog: #B9C6D0; --text: #E6ECF0; --muted: #93A4B1; --lichen: #8CC7DC;
+  --ember: #E9773F; --ember-hover: #F08A57; --on-ember: #141B21; --locked: #5F6577;
+  --warning: #D8B26E; --error: #E06A5E; --info: #A9C9E8;
+  --line: rgba(230, 236, 240, 0.12); --line-strong: rgba(230, 236, 240, 0.28);
+}
+[data-theme="dawn"][data-palette="northrend"] {
+  --ground: #E3E8EC; --raised: #F2F5F7; --raised-hi: #E8EDF1; --contour: #C4CFD7;
+  --fog: #FFFFFF; --text: #17222B; --muted: #52616D; --lichen: #2F6F8A;
+  --ember: #C2521C; --ember-hover: #D2612B; --on-ember: #FFF8F0; --locked: #747A8C;
+  --warning: #8A6420; --error: #A83A2F; --info: #2F5F86;
+  --line: rgba(23, 34, 43, 0.14); --line-strong: rgba(23, 34, 43, 0.3);
+}
+[data-theme="dusk"][data-palette="quest"] {
+  --ground: #1F1A15; --raised: #2A231C; --raised-hi: #332B22; --contour: #3B3127;
+  --fog: #C9BBA3; --text: #EFE6D2; --muted: #A99B85; --lichen: #9DB86A;
+  --ember: #E8B53A; --ember-hover: #F0C258; --on-ember: #1F1A15; --locked: #6E6558;
+  --warning: #E39A4C; --error: #D9675B; --info: #9FB7C4;
+  --line: rgba(239, 230, 210, 0.12); --line-strong: rgba(239, 230, 210, 0.28);
+}
+[data-theme="dawn"][data-palette="quest"] {
+  --ground: #E9DFC9; --raised: #F3ECDC; --raised-hi: #EDE3CF; --contour: #D3C5A8;
+  --fog: #FFF9EC; --text: #2A2119; --muted: #6B5B47; --lichen: #557A2C;
+  --ember: #9A6B0C; --ember-hover: #AD7A12; --on-ember: #FFF9EC; --locked: #8A7F70;
+  --warning: #9A5A16; --error: #A83A2F; --info: #3A6478;
+  --line: rgba(42, 33, 25, 0.14); --line-strong: rgba(42, 33, 25, 0.3);
+}
+[data-display="grenze"] { --display: "Grenze Gotisch", Georgia, serif; --display-weight: 600; --display-track: 0; }
+[data-display="marcellus"] { --display: "Marcellus", Georgia, serif; --display-weight: 400; --display-track: 0.01em; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--ground); color: var(--text);
+  font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 1.125rem; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .25s ease-in-out, color .25s ease-in-out;
+}
+#map { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+main, header.site, footer.site { position: relative; z-index: 1; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.display { font-family: var(--display); font-weight: var(--display-weight); letter-spacing: var(--display-track); line-height: 1.05; }
+.sc { font-family: "Alegreya Sans SC", "Alegreya Sans", sans-serif; font-weight: 500; letter-spacing: .04em; font-size: .875rem; }
+.muted { color: var(--muted); }
+.num { font-variant-numeric: lining-nums tabular-nums; }
+h1, h2, h3 { margin: 0; font-weight: var(--display-weight); }
+p { margin: 0; }
+
+/* ---------- header ---------- */
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 22px; padding-bottom: 22px; }
+.wordmark { font-family: var(--display); font-weight: var(--display-weight); font-size: 1.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+.wordmark .stone-mark { width: 12px; height: 12px; transform: rotate(45deg); border: 2px solid var(--lichen); background: var(--ground); }
+nav.main { display: flex; gap: 28px; font-size: 1.0625rem; }
+nav.main a { text-decoration: none; color: var(--muted); }
+nav.main a:hover { color: var(--text); }
+nav.main a[aria-current="page"] { color: var(--text); }
+
+/* ---------- buttons ---------- */
+.btn { --b: var(--ember); display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 1.0625rem; color: var(--on-ember); padding: 14px 24px; text-decoration: none;
+  background:
+    linear-gradient(135deg, transparent 8px, var(--b) 8px) top / 100% 51% no-repeat,
+    linear-gradient(315deg, transparent 8px, var(--b) 8px) bottom / 100% 51% no-repeat; }
+.btn:hover { --b: var(--ember-hover); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible, .btn-secondary:focus-visible, .link:focus-visible, .tick:focus-visible, .arm:focus-visible, input:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.btn[disabled] { --b: var(--raised-hi); color: var(--muted); cursor: not-allowed; }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 500; font-size: 1.0625rem; padding: 13px 22px; border: 1px solid var(--line-strong); border-radius: 2px; background: transparent; color: var(--text); cursor: pointer; text-decoration: none; }
+.btn-secondary:hover { background: var(--raised); }
+.link { color: var(--text); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line-strong); background: none; border: 0; font: inherit; cursor: pointer; padding: 0; }
+.link:hover { text-decoration-color: var(--text); }
+
+/* ---------- fog ---------- */
+.fog { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.fog .dawn-fog { display: none; }
+[data-theme="dawn"] .fog .dusk-fog { display: none; }
+[data-theme="dawn"] .fog .dawn-fog { display: inline; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; min-height: min(860px, 100vh); overflow: hidden; }
+.hero .fog { -webkit-mask-image: linear-gradient(to left, #000 0%, #000 12%, transparent 48%), linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to left, #000 0%, #000 12%, transparent 48%), linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%); mask-composite: intersect; opacity: .75; }
+.hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 520px) minmax(0, 1fr); gap: 40px; align-items: center; min-height: min(760px, 88vh); }
+.hero h1 { font-size: clamp(2.75rem, 6vw, 4.5rem); }
+.hero .lede { margin-top: 24px; font-size: 1.3125rem; line-height: 1.5; max-width: 30ch; color: var(--text); }
+.hero .actions { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+.hero .fine { margin-top: 22px; font-size: .9375rem; }
+.hero-road { position: relative; aspect-ratio: 600 / 520; width: 100%; }
+.hero-road svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.waypoint { position: absolute; transform: translate(18px, -50%); max-width: 210px; }
+.waypoint .what { font-weight: 500; font-size: 1.0625rem; line-height: 1.3; }
+.waypoint .meta { font-size: .9375rem; color: var(--muted); }
+.waypoint.now .what { color: var(--text); }
+
+/* ---------- the scene: fifty chores become three steps ---------- */
+.scene { position: relative; height: 230vh; }
+.scene-inner { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+.scene .fog { opacity: .7; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 100%), linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 100%), linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%); mask-composite: intersect; transition: transform .8s ease-in-out .35s, opacity .8s ease-in-out .35s; }
+.lifted .fog { transform: translateX(55%); opacity: .25; }
+.chores { position: absolute; inset: 0; }
+.chore { position: absolute; white-space: nowrap; color: var(--fog); opacity: var(--o); font-size: var(--s); translate: 0 0;
+  animation: drift var(--d) ease-in-out infinite alternate; animation-delay: var(--dl);
+  transition: opacity .5s ease-in, transform .6s ease-in, filter .6s ease-in; transition-delay: calc(var(--i) * 9ms); }
+[data-theme="dawn"] .chore { color: var(--muted); }
+@keyframes drift { from { translate: -5px 0; } to { translate: 6px -4px; } }
+.lifted .chore { opacity: 0; transform: translateY(26px); filter: blur(3px); }
+.scene-copy { position: relative; height: 100%; display: grid; align-items: center; }
+.scene-copy > div { grid-area: 1 / 1; max-width: 560px; }
+.problem { transition: opacity .35s ease-in, transform .35s ease-in; }
+.lifted .problem { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+.answer { opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .45s ease-out .75s, transform .45s ease-out .75s; }
+.lifted .answer { opacity: 1; transform: none; pointer-events: auto; }
+.scene h2 { font-size: clamp(2.25rem, 4.5vw, 3.5rem); }
+.scene .body { margin-top: 20px; font-size: 1.25rem; max-width: 36ch; }
+.quote { margin-top: 28px; padding: 18px 22px; background: var(--ground); border: 1px solid var(--line); max-width: 44ch; }
+.quote p { font-size: 1.25rem; font-style: italic; }
+.quote .who { margin-top: 8px; font-size: .9375rem; color: var(--muted); font-style: normal; }
+.fact { margin-top: 18px; font-size: 1rem; color: var(--muted); max-width: 44ch; }
+
+/* road list (the answer) */
+.roadlist { position: relative; margin-top: 30px; padding-left: 44px; }
+.roadlist svg.trail { position: absolute; left: 0; top: 0; width: 30px; height: 100%; overflow: visible; }
+.reveal { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.lifted .reveal, .drawn .reveal { stroke-dashoffset: 0; transition: stroke-dashoffset .6s ease-out .8s; }
+.roadlist .tickrow { position: relative; }
+.roadlist .tickrow::before { content: ""; position: absolute; left: -36px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border: 2px solid var(--lichen); background: var(--ground); opacity: 0; transform: rotate(45deg) scale(.5); transition: opacity .15s ease-out, transform .2s ease-out; }
+.roadlist .tickrow.current::before { background: var(--ember); border-color: var(--ember); }
+.lifted .roadlist .tickrow::before { opacity: 1; transform: rotate(45deg) scale(1); }
+.lifted .roadlist .tickrow:nth-child(1)::before { transition-delay: .95s; } .lifted .roadlist .tickrow:nth-child(2)::before { transition-delay: 1.1s; } .lifted .roadlist .tickrow:nth-child(3)::before { transition-delay: 1.25s; }
+.after { margin-top: 18px; font-size: 1.0625rem; color: var(--muted); max-width: 40ch; }
+
+/* tick rows (shared with My road) */
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.tickrow { display: flex; align-items: stretch; min-height: 64px; background: var(--raised); border: 1px solid var(--line); }
+.tick { flex: 1; display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.tick:hover { background: var(--raised-hi); }
+.box { flex: none; width: 24px; height: 24px; border: 2px solid var(--line-strong); display: grid; place-items: center; transition: background-color .15s ease-out, border-color .15s ease-out; }
+.box svg { width: 16px; height: 16px; opacity: 0; transition: opacity .15s ease-out; }
+.tickrow.current .box { border-color: var(--ember); }
+.tickrow.done .box { background: var(--lichen); border-color: var(--lichen); }
+.tickrow.done .box svg { opacity: 1; }
+.tick .label { font-weight: 500; font-size: 1.125rem; line-height: 1.3; }
+.tick .meta { font-size: .9375rem; color: var(--muted); }
+.tickrow.done .label { color: var(--muted); }
+.tickrow.done .meta::after { content: " \00b7  done"; color: var(--lichen); }
+.tickrow.skipped { opacity: .55; }
+.tickrow.skipped .meta::after { content: " \00b7  skipped"; }
+.skip { flex: none; background: none; border: 0; border-left: 1px solid var(--line); padding: 0 18px; color: var(--muted); font: inherit; font-size: .9375rem; cursor: pointer; }
+.skip:hover { color: var(--text); background: var(--raised-hi); }
+
+/* ---------- sections ---------- */
+section.band { padding: 120px 0; position: relative; }
+section.band h2 { font-size: clamp(2rem, 4vw, 3rem); }
+.two { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 64px; align-items: start; }
+.lead { margin-top: 18px; font-size: 1.1875rem; max-width: 34ch; }
+
+/* recap */
+.recap { background: var(--raised); border: 1px solid var(--line); padding: 28px 30px; max-width: 560px; }
+.recap .when { font-size: .9375rem; color: var(--muted); }
+.recap .did { margin-top: 10px; font-size: 1.375rem; line-height: 1.45; }
+.recap .did b { font-weight: 500; color: var(--lichen); }
+.recap .next { margin-top: 14px; font-size: 1.0625rem; }
+
+/* signpost */
+.signpost { position: relative; padding: 8px 0 8px 0; }
+.signpost::before { content: ""; position: absolute; left: 34px; top: -24px; bottom: -40px; width: 10px; background: var(--contour); }
+.arms { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; position: relative; }
+.arm { display: block; text-decoration: none; padding: 16px 64px 16px 22px; margin-left: 12px; max-width: 560px; background: var(--raised); color: var(--text);
+  clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 50%, calc(100% - 26px) 100%, 0 100%); transition: background-color .15s ease-out; }
+.arms li:nth-child(even) .arm { margin-left: 0; max-width: 520px; clip-path: polygon(26px 0, 100% 0, 100% 100%, 26px 100%, 0 50%); padding: 16px 22px 16px 52px; }
+.arm:hover { background: var(--raised-hi); }
+.arm .name { font-family: var(--display); font-weight: var(--display-weight); font-size: 1.625rem; line-height: 1.15; }
+.arm .meta { font-size: .9375rem; color: var(--muted); }
+
+/* code */
+.codebox { display: flex; align-items: stretch; border: 1px solid var(--line-strong); background: var(--raised); max-width: 620px; }
+.codebox code { flex: 1; min-width: 0; font-family: "JetBrains Mono", monospace; font-size: .875rem; padding: 14px 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+.codebox button { flex: none; border: 0; border-left: 1px solid var(--line-strong); background: none; color: var(--text); font: inherit; font-weight: 500; padding: 0 18px; cursor: pointer; }
+.codebox button:hover { background: var(--raised-hi); }
+.paste { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; max-width: 620px; }
+.field { display: grid; gap: 6px; flex: 1 1 280px; }
+.field label { font-size: .9375rem; color: var(--muted); }
+input.code, input.text { width: 100%; font: inherit; font-size: 1rem; color: var(--text); background: var(--ground); border: 1px solid var(--line-strong); border-radius: 2px; padding: 12px 14px; }
+input.code { font-family: "JetBrains Mono", monospace; font-size: .875rem; }
+input.code::placeholder, input.text::placeholder { color: var(--muted); }
+input:focus { border-color: var(--lichen); }
+.field.invalid input { border-color: var(--error); }
+.field .err { font-size: .9375rem; color: var(--error); }
+
+/* coming: the road runs into fog */
+.ahead { position: relative; margin-top: 44px; overflow: hidden; padding: 30px 0 10px; }
+.ahead .fog { -webkit-mask-image: linear-gradient(to right, transparent 35%, #000 90%); mask-image: linear-gradient(to right, transparent 35%, #000 90%); }
+.ahead ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); position: relative; }
+.ahead ol::before { content: ""; position: absolute; left: 6px; right: 0; top: 7px; border-top: 2px dashed var(--lichen); opacity: .8; }
+.ahead li { position: relative; padding-top: 34px; padding-right: 24px; }
+.ahead li::before { content: ""; position: absolute; left: 0; top: 0; width: 14px; height: 14px; transform: rotate(45deg); border: 2px solid var(--lichen); background: var(--ground); }
+.ahead li:first-child::before { background: var(--ember); border-color: var(--ember); }
+.ahead li:nth-child(n+2) { color: var(--muted); }
+.ahead .when { font-family: "Alegreya Sans SC", sans-serif; font-weight: 500; letter-spacing: .04em; font-size: .875rem; color: var(--muted); }
+.ahead .what { margin-top: 4px; font-size: 1.125rem; max-width: 26ch; }
+
+footer.site { padding: 56px 0 80px; border-top: 1px solid var(--line); font-size: .9375rem; color: var(--muted); }
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 12px 40px; justify-content: space-between; }
+
+/* ---------- design system part ---------- */
+.sys { background: var(--ground); border-top: 1px solid var(--line-strong); }
+.sys-title { padding: 72px 0 8px; }
+.sys-title h2 { font-size: 2.5rem; }
+.sys-title p { margin-top: 10px; color: var(--muted); max-width: 60ch; }
+.sys section { padding: 56px 0; border-top: 1px solid var(--line); }
+.sys h3 { font-family: var(--display); font-weight: var(--display-weight); font-size: 1.75rem; margin-bottom: 24px; }
+.specimens { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.spec { border: 1px solid var(--line); padding: 26px; background: var(--raised); }
+.spec.active { border-color: var(--lichen); }
+.spec .fname { font-size: .9375rem; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.spec .big { margin-top: 12px; font-size: 3rem; line-height: 1.05; }
+.spec .mid { margin-top: 10px; font-size: 1.625rem; line-height: 1.2; }
+.spec .abc { margin-top: 14px; font-size: 1.25rem; color: var(--muted); }
+.spec .use { margin-top: 18px; }
+.f-grenze { font-family: "Grenze Gotisch", serif; font-weight: 600; }
+.f-marcellus { font-family: "Marcellus", serif; font-weight: 400; }
+.textspec { margin-top: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.textspec > div { border-top: 1px solid var(--line); padding-top: 14px; }
+.textspec .role { font-size: .9375rem; color: var(--muted); margin-bottom: 8px; }
+.mono { font-family: "JetBrains Mono", monospace; font-size: .875rem; }
+
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.sw { border: 1px solid var(--line); background: var(--raised); }
+.sw .chip { height: 72px; border-bottom: 1px solid var(--line); }
+.sw .info { padding: 10px 12px 12px; }
+.sw .n { font-weight: 500; font-size: 1rem; }
+.sw .h { font-family: "JetBrains Mono", monospace; font-size: .8125rem; color: var(--muted); }
+.sw .r { font-size: .875rem; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+
+.comp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; }
+.comp-grid .label { font-size: .9375rem; color: var(--muted); margin-bottom: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.alerts { display: grid; gap: 10px; }
+.alert { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; font-size: 1rem; line-height: 1.45; }
+.alert .ic { flex: none; width: 18px; height: 18px; margin-top: 3px; }
+.alert.ok { background: color-mix(in srgb, var(--lichen) 16%, var(--raised)); }
+.alert.warn { background: color-mix(in srgb, var(--warning) 16%, var(--raised)); }
+.alert.bad { background: color-mix(in srgb, var(--error) 16%, var(--raised)); }
+.alert.note { background: color-mix(in srgb, var(--info) 14%, var(--raised)); }
+.alert.ok .ic { color: var(--lichen); } .alert.warn .ic { color: var(--warning); } .alert.bad .ic { color: var(--error); } .alert.note .ic { color: var(--info); }
+
+/* My road app frame */
+.app { border: 1px solid var(--line-strong); background: var(--ground); position: relative; overflow: hidden; }
+.app-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 22px; border-bottom: 1px solid var(--line); }
+.app-bar .wordmark { font-size: 1.375rem; }
+.app-bar nav { display: flex; gap: 22px; font-size: 1rem; color: var(--muted); }
+.app-body { max-width: 680px; margin: 0 auto; padding: 36px 22px 44px; }
+.welcome { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; padding: 16px 18px; background: color-mix(in srgb, var(--lichen) 12%, var(--raised)); }
+.welcome p { font-size: 1.0625rem; }
+.welcome b { font-weight: 500; }
+.road-head { margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.road-head h4 { margin: 0; font-family: var(--display); font-weight: var(--display-weight); font-size: 2.5rem; line-height: 1.05; }
+.road-head .stage { margin-top: 6px; font-size: 1.1875rem; }
+.who { font-size: .9375rem; color: var(--muted); text-align: right; }
+.stages { margin-top: 18px; display: flex; align-items: center; gap: 0; }
+.stages i { display: block; width: 12px; height: 12px; transform: rotate(45deg); border: 2px solid var(--locked); background: var(--ground); flex: none; }
+.stages i.done { background: var(--lichen); border-color: var(--lichen); }
+.stages i.now { border-color: var(--ember); background: var(--ember); }
+.stages b { display: block; height: 2px; flex: 1; max-width: 56px; background: var(--locked); opacity: .6; }
+.stages b.done { background: var(--lichen); opacity: 1; }
+.app .ticks { margin-top: 26px; }
+.app .tickrow { min-height: 64px; }
+.fogline { margin-top: 14px; font-size: 1rem; color: var(--muted); }
+.camp { display: none; margin-top: 26px; padding: 22px 22px; border: 1px solid var(--line-strong); background: var(--raised); gap: 18px; align-items: flex-start; }
+.camp.show { display: flex; }
+.camp svg { flex: none; width: 34px; height: 30px; color: var(--ember); margin-top: 4px; }
+.camp .t { font-family: var(--display); font-weight: var(--display-weight); font-size: 1.75rem; line-height: 1.1; }
+.camp .s { margin-top: 6px; font-size: 1.0625rem; }
+.camp .x { margin-top: 6px; font-size: .9375rem; color: var(--muted); }
+details.backup { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 14px; }
+details.backup summary { cursor: pointer; color: var(--muted); font-size: 1rem; }
+details.backup .codebox { margin-top: 12px; }
+.states { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.state { border: 1px solid var(--line); padding: 20px; background: var(--raised); }
+.state .k { font-size: .9375rem; color: var(--muted); margin-bottom: 10px; }
+.state .t { font-family: var(--display); font-weight: var(--display-weight); font-size: 1.5rem; line-height: 1.1; }
+.state p { margin-top: 8px; font-size: 1rem; }
+
+/* preview controls */
+.controls { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 12px; background: var(--raised); border: 1px solid var(--line-strong); font-size: .875rem; max-width: calc(100vw - 32px); }
+.controls .ttl { color: var(--muted); margin-right: 4px; }
+.seg { display: inline-flex; border: 1px solid var(--line-strong); }
+.seg button { font: inherit; font-size: .875rem; background: none; border: 0; color: var(--muted); padding: 6px 10px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--ground); }
+.controls .link { font-size: .875rem; }
+
+@media (max-width: 860px) {
+  body { font-size: 1.0625rem; }
+  nav.main { display: none; }
+  .hero-grid { grid-template-columns: 1fr; gap: 12px; padding-top: 24px; min-height: 0; }
+  .hero { min-height: 0; padding-bottom: 40px; }
+  .hero-road { max-width: 460px; }
+  .waypoint { max-width: 150px; }
+  .waypoint .what { font-size: .9375rem; }
+  .waypoint .meta { font-size: .8125rem; }
+  .two, .specimens, .comp-grid, .textspec, .states { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .ahead ol { grid-template-columns: 1fr; gap: 26px; }
+  .ahead ol::before { left: 6px; right: auto; top: 8px; bottom: 8px; border-top: 0; border-left: 2px dashed var(--lichen); }
+  .ahead li { padding-top: 0; padding-left: 34px; }
+  .chore:nth-child(2n) { display: none; }
+  section.band { padding: 80px 0; }
+  .app-bar nav { display: none; }
+  .road-head h4 { font-size: 2rem; }
+  .who { text-align: left; }
+  .scene .body, .quote p { font-size: 1.125rem; }
+}
+@media (max-width: 480px) {
+  .wrap { padding: 0 16px; }
+  .hero-road { aspect-ratio: auto; display: grid; gap: 14px; }
+  .hero-road svg { position: relative; height: 200px; }
+  .waypoint { position: static; transform: none; max-width: none; display: flex; gap: 12px; align-items: baseline; }
+  .waypoint::before { content: ""; flex: none; width: 10px; height: 10px; transform: rotate(45deg) translateY(-2px); border: 2px solid var(--lichen); }
+  .waypoint.now::before { background: var(--ember); border-color: var(--ember); }
+  .waypoint .what { font-size: 1.0625rem; }
+  .waypoint .meta { font-size: .9375rem; margin-left: auto; white-space: nowrap; }
+  .chore { opacity: calc(var(--o) * .55); }
+  .controls .ttl { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<canvas id="map" aria-hidden="true"></canvas>
+
+<!-- shared fog filters -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="fogDusk" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0016 0.0045" numOctaves="3" seed="11" result="n"/>
+      <feColorMatrix id="fogDuskMatrix" in="n" type="matrix" values="0 0 0 0 0.663  0 0 0 0 0.706  0 0 0 0 0.714  1.5 0 0 0 -0.62" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="14"/>
+    </filter>
+    <filter id="fogDawn" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0016 0.0045" numOctaves="3" seed="11" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.7 0 0 0 -0.6" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="14"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#top"><span class="stone-mark" aria-hidden="true"></span>Slow Road</a>
+    <nav class="main" aria-label="Main">
+      <a href="#roads">Roads</a>
+      <a href="#codes">Editor</a>
+      <a href="#myroad">My road</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="fog" aria-hidden="true" preserveAspectRatio="none"><rect class="dusk-fog" width="100%" height="100%" filter="url(#fogDusk)"/><rect class="dawn-fog" width="100%" height="100%" filter="url(#fogDawn)"/></svg>
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="display">Know what this week is for.</h1>
+        <p class="lede">Retail hands you fifty chores. Slow Road gives your character one road: the next three steps, and a new stage at each weekly reset.</p>
+        <div class="actions">
+          <a class="btn" href="#myroad">Show my next three steps</a>
+          <a class="link" href="#codes">Paste a road code</a>
+        </div>
+        <p class="fine muted">Free, no login, saved in your browser. A fan tool, not affiliated with Blizzard Entertainment.</p>
+      </div>
+      <div class="hero-road" aria-label="A road with three steps, fading into fog">
+        <svg viewBox="0 0 600 520" aria-hidden="true">
+          <defs>
+            <linearGradient id="roadFade" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+              <stop offset=".72" stop-color="#fff" stop-opacity="1"/>
+              <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <mask id="heroMask"><rect width="600" height="520" fill="url(#roadFade)"/></mask>
+          </defs>
+          <path d="M-10 512 C 90 486, 130 410, 210 384 S 320 330, 340 272 S 410 176, 470 152 S 560 82, 640 20" fill="none" stroke="var(--lichen)" stroke-width="2.5" stroke-dasharray="7 9" stroke-linecap="round" mask="url(#heroMask)"/>
+          <rect x="201" y="375" width="18" height="18" transform="rotate(45 210 384)" fill="var(--ember)" stroke="var(--ember)" stroke-width="2"/>
+          <rect x="331" y="263" width="18" height="18" transform="rotate(45 340 272)" fill="var(--ground)" stroke="var(--lichen)" stroke-width="2"/>
+          <rect x="461" y="143" width="18" height="18" transform="rotate(45 470 152)" fill="var(--ground)" stroke="var(--lichen)" stroke-width="2"/>
+        </svg>
+        <div class="waypoint now" style="left:35%; top:73.8%"><div class="what">Reach a Mythic+ rating of 1,500</div><div class="meta num">1,240 now</div></div>
+        <div class="waypoint" style="left:56.6%; top:52.3%"><div class="what">Win 10 rated 2v2 games</div><div class="meta num">6 of 10</div></div>
+        <div class="waypoint" style="left:78.3%; top:29.2%"><div class="what">Fill one Great Vault slot</div><div class="meta">this week</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE: fifty chores become three steps -->
+  <section class="scene" id="scene" aria-label="Retail is loud. Walk one road.">
+    <div class="scene-inner">
+      <svg class="fog" aria-hidden="true" preserveAspectRatio="none"><rect class="dusk-fog" width="100%" height="100%" filter="url(#fogDusk)"/><rect class="dawn-fog" width="100%" height="100%" filter="url(#fogDawn)"/></svg>
+      <div class="chores" id="chores" aria-hidden="true"></div>
+      <div class="wrap scene-copy">
+        <div class="problem">
+          <h2 class="display">Retail is loud.</h2>
+          <p class="body">Log in and the game hands you fifty things at once. None of them says which one matters this week, so most evenings end with a few world quests and the feeling of running in place.</p>
+          <div class="quote">
+            <p>“I feel dumb in retail. I don't see goals, only grinding.”</p>
+            <p class="who">A returning player, October 2026</p>
+          </div>
+          <p class="fact">In August 2026 a thread on r/wow about not knowing what to do drew 613 upvotes and 308 comments.</p>
+        </div>
+        <div class="answer">
+          <h2 class="display">Walk one road.</h2>
+          <p class="body">Slow Road shows your character the next three steps of one road. Nothing else is on the screen.</p>
+          <div class="roadlist">
+            <svg class="trail" viewBox="0 0 30 230" preserveAspectRatio="none" aria-hidden="true">
+              <defs><mask id="trailMask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="70" height="280"><path class="reveal" pathLength="1" d="M15 0 C 6 20, 24 40, 15 60 S 6 100, 15 120 S 24 160, 15 180 S 8 215, 15 230" fill="none" stroke="#fff" stroke-width="10"/></mask></defs>
+              <path d="M15 0 C 6 20, 24 40, 15 60 S 6 100, 15 120 S 24 160, 15 180 S 8 215, 15 230" fill="none" stroke="var(--lichen)" stroke-width="2.5" stroke-dasharray="5 7" mask="url(#trailMask)"/>
+            </svg>
+            <ul class="ticks" id="sceneTicks">
+              <li class="tickrow current"><button class="tick" role="checkbox" aria-checked="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="var(--ground)" stroke-width="2.4"/></svg></span><span><span class="label">Reach a Mythic+ rating of 1,500</span><br><span class="meta num">1,240 of 1,500</span></span></button></li>
+              <li class="tickrow"><button class="tick" role="checkbox" aria-checked="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="var(--ground)" stroke-width="2.4"/></svg></span><span><span class="label">Win 10 rated 2v2 games</span><br><span class="meta num">6 of 10</span></span></button></li>
+              <li class="tickrow"><button class="tick" role="checkbox" aria-checked="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="var(--ground)" stroke-width="2.4"/></svg></span><span><span class="label">Fill one Great Vault slot from dungeons</span><br><span class="meta">resets Wednesday</span></span></button></li>
+            </ul>
+          </div>
+          <p class="after">Finish all three and you make camp. The next stage opens at the weekly reset.</p>
+        </div>
+      </div>
+    </div>
+    <div id="sentinel" style="position:absolute; left:0; top:58%; height:1px; width:100%" aria-hidden="true"></div>
+  </section>
+
+  <!-- RECAP -->
+  <section class="band">
+    <div class="wrap two">
+      <div>
+        <h2 class="display">Every week starts with what you did.</h2>
+        <p class="lead muted">On your first visit after a reset, Slow Road shows a short recap. It never lists what you missed.</p>
+      </div>
+      <div class="recap">
+        <p class="when">Wednesday, after the reset</p>
+        <p class="did">Last week on The Slow Road you <b>filled a Vault slot</b>, <b>won 10 arena games</b> and <b>earned Keystone Explorer</b>.</p>
+        <p class="next">Stage 3, <span class="display" style="font-size:1.25rem">The Long Climb</span>, is open. Three steps are waiting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADS: signpost -->
+  <section class="band" id="roads">
+    <div class="wrap two">
+      <div>
+        <h2 class="display">Pick a road.</h2>
+        <p class="lead muted">Players who know the game write roads for players who are lost. These four are ours, and the editor makes your own.</p>
+      </div>
+      <div class="signpost">
+        <ul class="arms">
+          <li><a class="arm" href="#myroad"><div class="name">Returning Player</div><div class="meta">4 stages, weekly. Ignore the noise, do these.</div></a></li>
+          <li><a class="arm" href="#myroad"><div class="name">The Slow Road</div><div class="meta">6 stages, weekly. A whole season, PvE and PvP.</div></a></li>
+          <li><a class="arm" href="#myroad"><div class="name">First Steps in Rated PvP</div><div class="meta">5 stages, weekly. From zero to 1,800.</div></a></li>
+          <li><a class="arm" href="#myroad"><div class="name">Collector's Mile</div><div class="meta">8 stages, free pace. Titles, mounts and transmog.</div></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODES -->
+  <section class="band" id="codes">
+    <div class="wrap two">
+      <div>
+        <h2 class="display">A road is one line of text.</h2>
+        <p class="lead muted">Build a road in the editor and share it the way you share a WeakAuras string. Paste one here to start walking it.</p>
+      </div>
+      <div>
+        <div class="codebox"><code id="sampleCode">SR1!eyJ2IjoxLCJpZCI6InNyLXJldHVybmluZy1wbGF5ZXIiLCJyZXYiOjMsInRpdGxlIjoiUmV0dXJuaW5nIFBsYXllciIsInBhY2UiOiJ3ZWVrbHkifQ</code><button type="button" data-copy="sampleCode">Copy</button></div>
+        <div class="paste">
+          <div class="field" id="pasteField">
+            <label for="paste">Paste a road code</label>
+            <input class="code" id="paste" placeholder="SR1!..." autocomplete="off" spellcheck="false">
+            <span class="err" id="pasteErr" hidden>That isn't a road code. Road codes start with SR1!</span>
+          </div>
+          <div style="display:flex; align-items:flex-end"><button class="btn" type="button" id="pasteGo">Start this road</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="ahead">
+        <svg class="fog" aria-hidden="true" preserveAspectRatio="none"><rect class="dusk-fog" width="100%" height="100%" filter="url(#fogDusk)"/><rect class="dawn-fog" width="100%" height="100%" filter="url(#fogDawn)"/></svg>
+        <ol>
+          <li><div class="when">Now</div><div class="what">Tick your steps by hand, saved in your browser.</div></li>
+          <li><div class="when">Later</div><div class="what">Road Check reads your character and ticks steps for you.</div></li>
+          <li><div class="when">After that</div><div class="what">The addon puts your road inside the game.</div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>Slow Road, made by Ludven, a small studio. Code MIT, roads CC BY 4.0.</span>
+    <span>Fan tool. Not affiliated with Blizzard Entertainment. World of Warcraft is a trademark of Blizzard Entertainment, Inc.</span>
+  </div>
+</footer>
+
+<!-- ======================= DESIGN SYSTEM ======================= -->
+<div class="sys" style="position:relative; z-index:1">
+  <div class="wrap sys-title">
+    <h2 class="display">The system behind it</h2>
+    <p>"The fog lifts", quest log colours: a night survey map under fog, where only your stretch of road is clear. Use the switches at the bottom right to try dawn and the second display face.</p>
+  </div>
+
+  <div class="wrap">
+    <section id="myroad">
+      <h3>My road, the page players use every week</h3>
+      <div class="app">
+        <div class="app-bar">
+          <span class="wordmark"><span class="stone-mark" aria-hidden="true"></span>Slow Road</span>
+          <nav><span>Roads</span><span>Editor</span><span style="color:var(--text)">My road</span></nav>
+        </div>
+        <div class="app-body">
+          <div class="welcome">
+            <p>Welcome back. Last week you <b>filled a Vault slot</b> and <b>won 10 arena games</b>.</p>
+            <button class="link muted" type="button" onclick="this.parentElement.remove()">Dismiss</button>
+          </div>
+          <div class="road-head">
+            <div>
+              <h4>The Slow Road</h4>
+              <p class="stage">Stage 2 of 6: <span class="display" style="font-size:1.3rem">Into the Hills</span></p>
+            </div>
+            <p class="who">Thalwen, Silvermoon EU<br>weekly pace</p>
+          </div>
+          <div class="stages" aria-label="Stage 2 of 6">
+            <i class="done"></i><b class="done"></b><i class="now"></i><b></b><i></i><b></b><i></i><b></b><i></i><b></b><i></i>
+          </div>
+          <ul class="ticks" id="appTicks">
+            <li class="tickrow current"><button class="tick" role="checkbox" aria-checked="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="var(--ground)" stroke-width="2.4"/></svg></span><span><span class="label">Reach a Mythic+ rating of 1,500</span><br><span class="meta num">1,240 of 1,500</span></span></button><button class="skip" type="button">Skip</button></li>
+            <li class="tickrow"><button class="tick" role="checkbox" aria-checked="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="var(--ground)" stroke-width="2.4"/></svg></span><span><span class="label">Win 10 rated 2v2 games</span><br><span class="meta num">6 of 10</span></span></button><button class="skip" type="button">Skip</button></li>
+            <li class="tickrow"><button class="tick" role="checkbox" aria-checked="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="var(--ground)" stroke-width="2.4"/></svg></span><span><span class="label">Earn the achievement Keystone Explorer</span><br><span class="meta">time 8 different dungeons</span></span></button><button class="skip" type="button">Skip</button></li>
+          </ul>
+          <p class="fogline" id="fogline">2 more steps in this stage, still in the fog.</p>
+          <div class="camp" id="camp" role="status">
+            <svg viewBox="0 0 34 30" aria-hidden="true"><path d="M17 3 L32 27 H2 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 12 L23 27 H11 Z" fill="currentColor"/></svg>
+            <div>
+              <p class="t">Make camp.</p>
+              <p class="s">The road opens Wednesday morning, at the EU reset.</p>
+              <p class="x">Stage 3, The Long Climb: three steps are waiting.</p>
+            </div>
+          </div>
+          <details class="backup">
+            <summary>Backup code: move your progress to another browser</summary>
+            <div class="codebox"><code id="backupCode">SRB1!eyJyb2FkcyI6eyJzci1zbG93LXJvYWQiOnsicmV2IjoyLCJzdGFnZSI6Mn19fQ</code><button type="button" data-copy="backupCode">Copy</button></div>
+          </details>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:14px; font-size:1rem">Try it: tick or skip all three steps to see the camp.</p>
+    </section>
+
+    <section>
+      <h3>States</h3>
+      <div class="states">
+        <div class="state"><p class="k">Empty, no road yet</p><p class="t">No road yet.</p><p>Pick one from the signpost, or paste a road code. <a class="link" href="#roads">See the roads</a></p></div>
+        <div class="state"><p class="k">Camp, stage done</p><p class="t">Make camp.</p><p>The road opens Wednesday morning, at the EU reset. Small text gives the exact time.</p></div>
+        <div class="state"><p class="k">Newer code than this page knows</p><p class="t">This road is from a newer version.</p><p>Reload the page to import it. Your progress is safe.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Type</h3>
+      <div class="specimens">
+        <div class="spec" id="spec-grenze">
+          <div class="fname"><span>Display A: Grenze Gotisch 600</span><span>the agent's pick</span></div>
+          <p class="big f-grenze">Into the Hills</p>
+          <p class="mid f-grenze">The Slow Road · First Steps in Rated PvP</p>
+          <p class="abc f-grenze">Aa Bb Gg Kk Qq Rr 1,800 2v2</p>
+          <div class="use"><button class="btn-secondary" type="button" data-display="grenze">Use Grenze Gotisch</button></div>
+        </div>
+        <div class="spec" id="spec-marcellus">
+          <div class="fname"><span>Display B: Marcellus 400</span><span>my pick</span></div>
+          <p class="big f-marcellus">Into the Hills</p>
+          <p class="mid f-marcellus">The Slow Road · First Steps in Rated PvP</p>
+          <p class="abc f-marcellus">Aa Bb Gg Kk Qq Rr 1,800 2v2</p>
+          <div class="use"><button class="btn-secondary" type="button" data-display="marcellus">Use Marcellus</button></div>
+        </div>
+      </div>
+      <div class="textspec">
+        <div><p class="role">Text and UI: Alegreya Sans 400, 500, 700</p><p>Win 10 rated 2v2 games this week. Rated play counts from the start of the season, so earlier wins are already ticked.</p></div>
+        <div><p class="role">Small labels: Alegreya Sans SC 500</p><p class="sc">Now · Later · After that · Weekly pace</p></div>
+        <div><p class="role">Codes: JetBrains Mono 400</p><p class="mono">SR1!eyJ2IjoxLCJpZCI6...</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Colour</h3>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section>
+      <h3>Components</h3>
+      <div class="comp-grid">
+        <div>
+          <p class="label">Buttons: one ember action per screen</p>
+          <div class="row">
+            <button class="btn" type="button">Start this road</button>
+            <button class="btn-secondary" type="button">Open the editor</button>
+            <button class="link" type="button">Paste a road code</button>
+            <button class="btn" type="button" disabled>Start this road</button>
+          </div>
+        </div>
+        <div>
+          <p class="label">Inputs</p>
+          <div style="display:grid; gap:14px">
+            <div class="field"><label for="i1">Road name</label><input class="text" id="i1" value="My first season"></div>
+            <div class="field invalid"><label for="i2">Paste a road code</label><input class="code" id="i2" value="hello there"><span class="err">That isn't a road code. Road codes start with SR1!</span></div>
+          </div>
+        </div>
+        <div style="grid-column: 1 / -1">
+          <p class="label">Messages, in the product's words</p>
+          <div class="alerts">
+            <div class="alert ok"><svg class="ic" viewBox="0 0 18 18"><path d="M3.5 9.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.2"/></svg><span>Road saved. Its code is copied, ready to share.</span></div>
+            <div class="alert warn"><svg class="ic" viewBox="0 0 18 18"><path d="M9 2.5L16.5 15.5H1.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 7v4M9 12.6v.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Two steps in this road use a type this page doesn't know yet. They show as steps you tick by hand.</span></div>
+            <div class="alert bad"><svg class="ic" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 6l6 6M12 6l-6 6" stroke="currentColor" stroke-width="1.8"/></svg><span>This code is longer than 24 KB, so we didn't open it.</span></div>
+            <div class="alert note"><svg class="ic" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 8v5M9 5.2v.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Your progress lives in this browser only. A backup code moves it to another one.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div style="height:90px"></div>
+</div>
+
+<div class="controls" role="group" aria-label="Preview controls">
+  <span class="ttl">Preview</span>
+  <span class="seg"><button type="button" data-theme-set="dusk" aria-pressed="true">Dusk</button><button type="button" data-theme-set="dawn" aria-pressed="false">Dawn</button></span>
+  <span class="seg"><button type="button" data-palette-set="pine" aria-pressed="true">Pine dusk</button><button type="button" data-palette-set="northrend" aria-pressed="false">Northrend</button><button type="button" data-palette-set="quest" aria-pressed="false">Quest log</button></span>
+  <span class="seg"><button type="button" data-display="grenze" aria-pressed="true">Grenze</button><button type="button" data-display="marcellus" aria-pressed="false">Marcellus</button></span>
+  <button class="link" type="button" id="replay">Replay the moment</button>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  // ---------- seeded noise for the contour map ----------
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var rnd = mulberry32(1987);
+  var P = 256, grid = new Float32Array(P * P);
+  for (var i = 0; i < grid.length; i++) grid[i] = rnd();
+  function at(x, y) { return grid[((y & 255) * P) + (x & 255)]; }
+  function noise(x, y) {
+    var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+    var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+    var a = at(xi, yi), b = at(xi + 1, yi), c = at(xi, yi + 1), d = at(xi + 1, yi + 1);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+  function fbm(x, y) { return (noise(x, y) + 0.5 * noise(x * 2.1, y * 2.1) + 0.25 * noise(x * 4.3, y * 4.3)) / 1.75; }
+
+  var canvas = document.getElementById('map'), ctx = canvas.getContext('2d');
+  // each case lists edge pairs: 0 top, 1 right, 2 bottom, 3 left (bits: tl 8, tr 4, br 2, bl 1)
+  var CASES = [[], [[3, 2]], [[2, 1]], [[3, 1]], [[0, 1]], [[3, 0], [2, 1]], [[0, 2]], [[3, 0]], [[3, 0]], [[0, 2]], [[3, 2], [0, 1]], [[0, 1]], [[3, 1]], [[2, 1]], [[3, 2]], []];
+  function drawMap() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), w = window.innerWidth, h = window.innerHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    var step = 9, cols = Math.ceil(w / step) + 1, rows = Math.ceil(h / step) + 1, F = new Float32Array(cols * rows);
+    for (var j = 0; j < rows; j++) for (var k = 0; k < cols; k++) F[j * cols + k] = fbm(k * step / 340 + 3.7, j * step / 340 + 1.3);
+    var color = getComputedStyle(root).getPropertyValue('--contour').trim();
+    ctx.strokeStyle = color; ctx.lineJoin = 'round'; ctx.globalAlpha = 0.6;
+    var levels = [0.36, 0.42, 0.48, 0.54, 0.60, 0.66];
+    levels.forEach(function (t, li) {
+      ctx.beginPath(); ctx.lineWidth = li % 3 === 1 ? 1.4 : 0.9;
+      for (var j = 0; j < rows - 1; j++) for (var k = 0; k < cols - 1; k++) {
+        var tl = F[j * cols + k], tr = F[j * cols + k + 1], br = F[(j + 1) * cols + k + 1], bl = F[(j + 1) * cols + k];
+        var idx = (tl > t ? 8 : 0) | (tr > t ? 4 : 0) | (br > t ? 2 : 0) | (bl > t ? 1 : 0);
+        if (idx === 0 || idx === 15) continue;
+        var x0 = k * step, y0 = j * step;
+        var pts = [
+          [x0 + step * (t - tl) / (tr - tl), y0],
+          [x0 + step, y0 + step * (t - tr) / (br - tr)],
+          [x0 + step * (t - bl) / (br - bl), y0 + step],
+          [x0, y0 + step * (t - tl) / (bl - tl)]
+        ];
+        CASES[idx].forEach(function (seg) { var a = pts[seg[0]], b = pts[seg[1]]; ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); });
+      }
+      ctx.stroke();
+    });
+  }
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(drawMap, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawMap); drawMap();
+
+  // ---------- fifty chores ----------
+  var CHORES = ['World quests', 'Weekly quest', 'World boss', 'Delves', 'Upgrade crests', 'Renown', 'Catalyst charges', 'Timewalking', 'Profession knowledge', 'Crafting orders', 'Great Vault', 'Mythic+ keys', 'Conquest cap', 'Honor', 'Rated battlegrounds', 'Solo Shuffle', 'Raid lockouts', 'Trading Post', 'Darkmoon Faire', 'Pet battles', 'Housing decor', 'Holiday event', 'Reputations', 'Transmog', 'Mounts', 'Achievements', 'Talent builds', 'Addon updates', 'Weekly cache', 'Bonus event', 'Rares', 'Treasures', 'Campaign chapter', 'Side stories', 'Gearing guide', 'Best-in-slot lists', 'Tier set', 'Embellishments', 'Gems and enchants', 'Consumables', 'Group finder', 'Key levels', 'Season journey', 'Alts', 'Collections', 'Patch notes', 'Spec tier lists', 'Weekly event', 'Gold making', 'Brawler\'s Guild'];
+  var box = document.getElementById('chores'), r2 = mulberry32(42), html = '';
+  CHORES.forEach(function (c, n) {
+    var x = 3 + r2() * 88, y = 7 + r2() * 84;
+    if (x > 8 && x < 46 && y > 24 && y < 86) x = 47 + r2() * 46;
+    var o = (x < 46 ? 0.16 + r2() * 0.1 : 0.28 + r2() * 0.32).toFixed(2);
+    var s = (0.85 + r2() * 0.45).toFixed(2) + 'rem';
+    html += '<span class="chore" style="left:' + x.toFixed(1) + '%;top:' + y.toFixed(1) + '%;--o:' + o + ';--s:' + s + ';--d:' + (12 + r2() * 10).toFixed(1) + 's;--dl:-' + (r2() * 10).toFixed(1) + 's;--i:' + n + '">' + c + '</span>';
+  });
+  box.innerHTML = html;
+
+  // ---------- the one moment ----------
+  var scene = document.getElementById('scene');
+  function lift() { scene.classList.add('lifted'); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { lift(); io.disconnect(); } }); });
+    io.observe(document.getElementById('sentinel'));
+  } else { lift(); }
+  document.getElementById('replay').addEventListener('click', function () {
+    scene.classList.remove('lifted');
+    window.scrollTo({ top: scene.offsetTop, behavior: 'auto' });
+    setTimeout(function () { window.scrollTo({ top: scene.offsetTop + window.innerHeight * 1.05, behavior: 'smooth' }); }, 900);
+    setTimeout(lift, 1700);
+  });
+
+  // ---------- ticking ----------
+  function wire(listId, onChange) {
+    var list = document.getElementById(listId);
+    list.querySelectorAll('.tickrow').forEach(function (row) {
+      var t = row.querySelector('.tick'), s = row.querySelector('.skip');
+      t.addEventListener('click', function () {
+        row.classList.remove('skipped');
+        var on = !row.classList.contains('done');
+        row.classList.toggle('done', on); t.setAttribute('aria-checked', on ? 'true' : 'false');
+        if (s) s.textContent = 'Skip';
+        onChange && onChange(list);
+      });
+      if (s) s.addEventListener('click', function () {
+        var on = !row.classList.contains('skipped');
+        row.classList.remove('done'); t.setAttribute('aria-checked', 'false');
+        row.classList.toggle('skipped', on); s.textContent = on ? 'Undo' : 'Skip';
+        onChange && onChange(list);
+      });
+    });
+  }
+  wire('sceneTicks');
+  wire('appTicks', function (list) {
+    var rows = list.querySelectorAll('.tickrow'), left = 0;
+    rows.forEach(function (r) { if (!r.classList.contains('done') && !r.classList.contains('skipped')) left++; });
+    document.getElementById('camp').classList.toggle('show', left === 0);
+    document.getElementById('fogline').hidden = left === 0;
+  });
+
+  // ---------- copy + paste ----------
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var txt = document.getElementById(b.getAttribute('data-copy')).textContent;
+      try { navigator.clipboard.writeText(txt).then(function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1400); }); } catch (e) { b.textContent = 'Copy failed'; }
+    });
+  });
+  document.getElementById('pasteGo').addEventListener('click', function () {
+    var v = document.getElementById('paste').value.trim(), ok = v.indexOf('SR1!') === 0 && v.length > 8;
+    document.getElementById('pasteField').classList.toggle('invalid', !ok);
+    document.getElementById('pasteErr').hidden = ok;
+    if (ok) document.getElementById('myroad').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // ---------- swatches ----------
+  var SW = [['ground', 'Ground', 'page ground'], ['raised', 'Raised', 'rows, panels'], ['contour', 'Contour', 'map lines, signpost'], ['fog', 'Fog', 'fog, chores'], ['text', 'Text', 'text'], ['muted', 'Muted', 'muted text'], ['lichen', 'Road', 'the road, done steps'], ['ember', 'Action', 'your step, the one action'], ['locked', 'Locked', 'locked stages'], ['warning', 'Warning', 'warnings'], ['error', 'Error', 'errors'], ['info', 'Note', 'notes']];
+  function paintSwatches() {
+    var cs = getComputedStyle(root), out = '';
+    SW.forEach(function (s) { var v = cs.getPropertyValue('--' + s[0]).trim(); out += '<div class="sw"><div class="chip" style="background:' + v + '"></div><div class="info"><div class="n">' + s[1] + '</div><div class="h">' + v + '</div><div class="r">' + s[2] + '</div></div></div>'; });
+    document.getElementById('swatches').innerHTML = out;
+  }
+  paintSwatches();
+
+  // ---------- preview controls ----------
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    document.querySelectorAll('[data-theme-set]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-theme-set') === t ? 'true' : 'false'); });
+    drawMap(); paintSwatches();
+  }
+  function setDisplay(d) {
+    root.setAttribute('data-display', d);
+    document.querySelectorAll('.controls [data-display]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-display') === d ? 'true' : 'false'); });
+    document.getElementById('spec-grenze').classList.toggle('active', d === 'grenze');
+    document.getElementById('spec-marcellus').classList.toggle('active', d === 'marcellus');
+  }
+  var FOG = { pine: [0.663, 0.706, 0.714], northrend: [0.725, 0.776, 0.816], quest: [0.788, 0.733, 0.639] };
+  function setPalette(p) {
+    root.setAttribute('data-palette', p);
+    var f = FOG[p]; document.getElementById('fogDuskMatrix').setAttribute('values', '0 0 0 0 ' + f[0] + '  0 0 0 0 ' + f[1] + '  0 0 0 0 ' + f[2] + '  1.5 0 0 0 -0.62');
+    document.querySelectorAll('[data-palette-set]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-palette-set') === p ? 'true' : 'false'); });
+    drawMap(); paintSwatches();
+  }
+  document.querySelectorAll('[data-palette-set]').forEach(function (b) { b.addEventListener('click', function () { setPalette(b.getAttribute('data-palette-set')); }); });
+  document.querySelectorAll('[data-theme-set]').forEach(function (b) { b.addEventListener('click', function () { setTheme(b.getAttribute('data-theme-set')); }); });
+  document.querySelectorAll('[data-display]').forEach(function (b) { b.addEventListener('click', function () { setDisplay(b.getAttribute('data-display')); }); });
+  setDisplay('grenze');
+  setPalette('quest');
+})();
+</script>
+</body>
+</html>
