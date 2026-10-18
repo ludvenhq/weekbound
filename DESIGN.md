@@ -198,6 +198,10 @@ toggle.
 ## Layout
 
 - **Max width** 1280px with a 24px gutter (16px under 480px).
+- **Header:** sticky at the top. Once the page scrolls it settles into a compact bar (12px instead
+  of 22px above and below, the name at 1.625rem) on the page colour with a 1px `line` under it, and
+  the mark's diamond fills green; 200ms, instant with reduced motion. Columns that stick sit below
+  it (96px from the top).
 - **Home:** left-aligned throughout. The hero is text on the left and the road with its three
   stones on the right; under 860px the road moves below the text, and under 480px its three steps
   become a short list under the drawing. Sections alternate a narrow text column (up to 440px) with
@@ -296,4 +300,5 @@ hidden), so it is the only blur on the site.
 | 2026-10-18 | The landing, the map and the fog built from the approved preview | The owner asked for the look of the preview ("i dont see your fancy fog"): the contour map behind every page, fog in the hero, the scene and the road ahead, the hero road, the moment, the recap and codes sections, and fog over the steps still ahead on My road. Two chores swapped for Midnight's (Prey hunts, Special assignments) |
 | 2026-10-18 | The moment plays both ways | The owner expected the fog to come back when scrolling up ("there is no animation when i scroll up"); it was once only |
 | 2026-10-18 | Named Weekbound | The owner picked it over the working name Slow Road, which a viral driving game (Slow Roads) owns in search; one stage per weekly reset, an echo of WoW's "Warbound". The approved preview (`docs/design/preview.html`) keeps the old name as the record of what was approved |
+| 2026-10-18 | Sticky header | The owner asked for a header that stays at the top "with some animation when it became fixed": it settles into a compact bar and the diamond fills green (a small state change, no shadow or blur) |
 | 2026-10-18 | Camp instead of a countdown | From the design agent; the slow pace shown as rest, with the exact time in small text |

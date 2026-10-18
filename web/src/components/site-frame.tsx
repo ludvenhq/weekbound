@@ -2,6 +2,7 @@ import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import type { ReactNode } from 'react';
 import { NavLink } from './nav-link';
+import { StickyHeader } from './sticky-header';
 import { TextLink } from './text-link';
 import { ThemeToggle } from './theme-toggle';
 
@@ -13,9 +14,12 @@ export function PageWidth({ children }: { children: ReactNode }) {
   );
 }
 
+// Settled: what the header's parts become once the page has scrolled (StickyHeader).
+const settled = (css: Record<string, string>) => ({ '[data-stuck] &': css });
+
 export function SiteHeader() {
   return (
-    <Box as="header">
+    <StickyHeader>
       <PageWidth>
         {/* On a phone the links wrap under the name as whole words. */}
         <Flex
@@ -25,6 +29,8 @@ export function SiteHeader() {
           gap="6px 24px"
           py="22px"
           whiteSpace="nowrap"
+          transition="padding 200ms ease-out"
+          css={settled({ paddingBlock: '12px' })}
         >
           <Flex
             asChild
@@ -34,6 +40,8 @@ export function SiteHeader() {
             fontWeight="600"
             fontSize="2rem"
             textDecoration="none"
+            transition="font-size 200ms ease-out"
+            css={settled({ fontSize: '1.625rem' })}
             _focusVisible={{ outline: '2px solid {colors.text}', outlineOffset: '3px' }}
           >
             <NextLink href="/">
@@ -45,6 +53,8 @@ export function SiteHeader() {
                 borderWidth="2px"
                 borderColor="accent"
                 bg="background"
+                transition="background-color 200ms ease-out"
+                css={settled({ backgroundColor: 'var(--chakra-colors-accent)' })}
               />
               Weekbound
               {/* In alpha since the launch on 2026-10-18 (the owner's call); a quiet tag, not gold. */}
@@ -81,7 +91,7 @@ export function SiteHeader() {
           </Flex>
         </Flex>
       </PageWidth>
-    </Box>
+    </StickyHeader>
   );
 }
 

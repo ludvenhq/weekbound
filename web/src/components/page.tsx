@@ -42,11 +42,12 @@ export function Columns({
   );
 }
 
-// A column that stays in view while the other one scrolls, on wide screens only.
+// A column that stays in view while the other one scrolls, on wide screens only, below the
+// sticky header once it has settled (about 65px tall there).
 export const stickyColumn = {
   position: { lg: 'sticky' },
-  top: { lg: '32px' },
-  maxH: { lg: 'calc(100dvh - 64px)' },
+  top: { lg: '96px' },
+  maxH: { lg: 'calc(100dvh - 128px)' },
   overflowY: { lg: 'auto' },
 } as const;
 
