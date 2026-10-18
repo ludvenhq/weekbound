@@ -1,0 +1,11 @@
+.git
+.github
+.gstack
+**/node_modules
+**/.next
+**/out
+**/.env
+**/.env.*
+**/*.tsbuildinfo
+docs
+samples

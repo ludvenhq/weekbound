@@ -7,6 +7,8 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 
 const config: NextConfig = {
   reactStrictMode: true,
+  // One small server for the container (the repo-root Dockerfile).
+  output: 'standalone',
   // `next dev` would otherwise write its own agent rules file into web/.
   agentRules: false,
   turbopack: { root },

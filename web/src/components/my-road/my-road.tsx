@@ -17,6 +17,7 @@ import {
   findRoad,
   importRoad,
   markStep,
+  markSteps,
   marksOf,
   removeRoad,
   replaceRoad,
@@ -27,6 +28,7 @@ import {
 import { position, recap, withMark, type Mark, type Recap } from '@/lib/walk/walk';
 import { Backup, YourRoads } from './library';
 import { PasteRoad } from './paste-road';
+import { RoadCheckSection } from './road-check';
 import { RoadView } from './road-view';
 import { currentSaved, updateSaved, useNow, useSaved } from './use-saved';
 
@@ -314,6 +316,25 @@ export function MyRoad() {
       </Stack>
 
       <Stack as="aside" aria-label="Your roads and backup" gap="40px">
+        {road && (
+          <RoadCheckSection
+            road={road}
+            marks={marksOf(saved, road.id)}
+            region={region}
+            onTicks={(ticks) => {
+              const at = Date.now();
+              updateSaved((current) => markSteps(current, road.id, ticks));
+              setNow(at);
+              setRecapNote(null);
+              setNotice({
+                tone: 'success',
+                text: `Road Check ticked ${ticks.length === 1 ? 'one step' : `${ticks.length} steps`} the game says are done.`,
+              });
+              setAnnouncement(`Road Check ticked ${ticks.length} steps.`);
+              toTop();
+            }}
+          />
+        )}
         {roads.length > 0 && (
           <SideSection title="Your roads">
             <YourRoads

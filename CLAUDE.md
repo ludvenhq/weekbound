@@ -15,7 +15,10 @@ Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0).
   `/roads/<name>`, three studio roads in `roads/` reviewed by the owner, wider two-column pages,
   and the landing from the approved preview: the contour map, the fog and the one moment);
   (5) the owner plays a week; (6) deploy at the owner's word (the build reads `roads/` next to
-  `web/`, so the Docker build context is the repo root).
+  `web/`, so the Docker build context is the repo root; `Dockerfile` and `/api/health` exist).
+  Version 1.1 came early (2026-10-18): Road Check on My road and search by name in the editor,
+  switched on by `BLIZZARD_CLIENT_ID` and `BLIZZARD_CLIENT_SECRET` (`docs/road-check.md`); not
+  yet run against the live API.
 - **Studio roads:** files in `roads/` (CC BY 4.0, `roads/README.md`); the owner reviews every road
   and every change to one before it is committed. Game ids are checked on the web; an uncertain one
   becomes a `manual` step.

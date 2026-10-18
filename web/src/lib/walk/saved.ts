@@ -113,6 +113,15 @@ export function markStep(
   return { ...saved, progress: { ...saved.progress, [roadId]: marks } };
 }
 
+// Several steps marked done at once, each at its own moment (Road Check's ticks).
+export function markSteps(
+  saved: Saved,
+  roadId: string,
+  ticks: readonly { stepId: string; at: number }[],
+): Saved {
+  return ticks.reduce((next, tick) => markStep(next, roadId, tick.stepId, 'done', tick.at), saved);
+}
+
 export function setRegion(saved: Saved, region: Region): Saved {
   return { ...saved, region };
 }

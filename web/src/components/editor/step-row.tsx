@@ -16,6 +16,7 @@ import {
 } from '@/lib/editor/words';
 import { isKnownStepType, MAX_LENGTH, PVP_BRACKETS, VAULT_ROWS } from '@/lib/road/schema';
 import { SelectField, Tag, TextField } from './fields';
+import { GameSearch, SEARCHABLE } from './game-search';
 
 export type FieldProps = {
   // The message for a field, once the author has left it.
@@ -151,8 +152,9 @@ function Params({
             onChange={(v) => set('n', v)}
           />
         );
-      default:
-        return (
+      default: {
+        const searchable = SEARCHABLE[param];
+        const idField = (
           <TextField
             key={param}
             {...common}
@@ -163,6 +165,14 @@ function Params({
             onChange={(v) => set(param, idFromLink(v, param))}
           />
         );
+        if (!searchable) return idField;
+        return (
+          <Flex key={param} flex="1 1 100%" wrap="wrap" gap="12px 16px" align="flex-start">
+            {idField}
+            <GameSearch kind={searchable} onPick={(found) => set(param, String(found))} />
+          </Flex>
+        );
+      }
     }
   });
 }

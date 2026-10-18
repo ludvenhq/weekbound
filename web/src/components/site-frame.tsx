@@ -2,6 +2,7 @@ import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import type { ReactNode } from 'react';
 import { NavLink } from './nav-link';
+import { TextLink } from './text-link';
 import { ThemeToggle } from './theme-toggle';
 
 export function PageWidth({ children }: { children: ReactNode }) {
@@ -71,7 +72,10 @@ export function SiteFooter() {
     <Box as="footer" borderTopWidth="1px" borderColor="line" pt="56px" pb="80px">
       <PageWidth>
         <Flex wrap="wrap" gap="12px 40px" justify="space-between" fontSize="1rem" color="textMuted">
-          <Text>Slow Road, made by Ludven, a small studio. Code MIT, roads CC BY 4.0.</Text>
+          <Text>
+            Slow Road, made by Ludven, a small studio. Code MIT, roads CC BY 4.0.{' '}
+            <TextLink href="/about">About and privacy</TextLink>
+          </Text>
           <Text>
             Fan tool. Not affiliated with Blizzard Entertainment. World of Warcraft is a trademark
             of Blizzard Entertainment, Inc.
