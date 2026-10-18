@@ -13,6 +13,12 @@ const config: NextConfig = {
   agentRules: false,
   turbopack: { root },
   outputFileTracingRoot: root,
+  // The analytics host and site id from .env.production (public values), written into the build
+  // so the server and the browser read the same; empty, no page loads a tracker.
+  env: {
+    UMAMI_HOST: process.env.UMAMI_HOST ?? '',
+    UMAMI_SITE_ID: process.env.UMAMI_SITE_ID ?? '',
+  },
 };
 
 export default config;

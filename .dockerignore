@@ -9,3 +9,4 @@
 **/*.tsbuildinfo
 docs
 samples
+!web/.env.production

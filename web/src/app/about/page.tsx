@@ -62,6 +62,12 @@ export default function AboutPage() {
               the server&apos;s memory for 15 minutes so a second check is quick, and is not saved
               anywhere. The character name you typed stays in your browser for next time.
             </Text>
+            <Text>
+              We count visits and a few actions (a road started, a stage finished, a code copied, a
+              remix opened, a check run) with the studio&apos;s own analytics, Umami at
+              stats.ludven.com. It sets no cookies and keeps nothing that names you, and the counts
+              are not shared with anyone.
+            </Text>
             <Text>No ads, no tracking cookies, and nothing is sold.</Text>
           </Part>
           <Part title="Licences">
