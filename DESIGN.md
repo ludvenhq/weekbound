@@ -292,4 +292,5 @@ hidden), so it is the only blur on the site.
 | 2026-10-18 | Display face Grenze Gotisch | The owner chose it over Marcellus after seeing both in the preview |
 | 2026-10-18 | Defaults set by Claude, not reviewed one by one | The spacing scale (4 to 120px), 64px tick rows, the motion timings, the 2px radius, the 680px app column and the message tint strength; change freely |
 | 2026-10-18 | Wider pages, larger type | The owner found the 680px column too small ("we have so much space, but we dont use and our content is tiny"): 1280px pages, two columns from 1024px, larger titles, labels and tick rows |
+| 2026-10-18 | The landing, the map and the fog built from the approved preview | The owner asked for the look of the preview ("i dont see your fancy fog"): the contour map behind every page, fog in the hero, the scene and the road ahead, the hero road, the moment, the recap and codes sections, and fog over the steps still ahead on My road. Two chores swapped for Midnight's (Prey hunts, Special assignments) |
 | 2026-10-18 | Camp instead of a countdown | From the design agent; the slow pace shown as rest, with the exact time in small text |

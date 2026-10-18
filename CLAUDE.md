@@ -12,7 +12,8 @@ Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0).
   2026-10-18); (2) My road with localStorage, the weekly lock, the recap and the backup code
   (done 2026-10-18; its paste box came early); (3) the editor (done 2026-10-18; ids, versions and
   inputs in `docs/road-format.md`); (4) gallery and the first roads (done 2026-10-18: `/roads`,
-  `/roads/<name>`, three studio roads in `roads/` reviewed by the owner, wider two-column pages);
+  `/roads/<name>`, three studio roads in `roads/` reviewed by the owner, wider two-column pages,
+  and the landing from the approved preview: the contour map, the fog and the one moment);
   (5) the owner plays a week; (6) deploy at the owner's word (the build reads `roads/` next to
   `web/`, so the Docker build context is the repo root).
 - **Studio roads:** files in `roads/` (CC BY 4.0, `roads/README.md`); the owner reviews every road

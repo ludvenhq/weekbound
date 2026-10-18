@@ -83,6 +83,11 @@ const config = defineConfig({
         '60%': { transform: 'scale(1.15)' },
         '100%': { transform: 'scale(1)' },
       },
+      // The chores on the home page, drifting in the fog.
+      drift: {
+        from: { translate: '-5px 0' },
+        to: { translate: '6px -4px' },
+      },
       // A message or the camp coming into view.
       arrive: {
         from: { opacity: 0, transform: 'translateY(6px)' },

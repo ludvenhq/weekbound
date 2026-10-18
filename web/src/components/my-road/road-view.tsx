@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Fog, fogMask } from '@/components/fog';
 import { pageTitle } from '@/components/page';
 import { TextLink } from '@/components/text-link';
 import type { Road } from '@/lib/road/schema';
@@ -38,6 +39,31 @@ function RegionSelect({ region, onChange }: { region: Region; onChange: (r: Regi
   );
 }
 
+// The road beyond the next three steps (DESIGN.md, Overview): the rows that are still ahead show
+// only as shapes under the fog.
+function FogAhead({ rows }: { rows: number }) {
+  return (
+    <Box aria-hidden position="relative" mt="10px" h={`${rows * 50 + 18}px`} overflow="hidden">
+      <Stack
+        gap="10px"
+        opacity={0.45}
+        filter="blur(3px)"
+        css={fogMask('linear-gradient(to bottom, #000 0, transparent 100%)')}
+      >
+        {Array.from({ length: rows }, (_, index) => (
+          <Box key={index} h="40px" bg="surface" borderWidth="1px" borderColor="line" />
+        ))}
+      </Stack>
+      <Fog
+        css={{
+          opacity: 0.9,
+          ...fogMask('linear-gradient(to bottom, transparent 0, #000 30%, transparent 100%)'),
+        }}
+      />
+    </Box>
+  );
+}
+
 // One road: its name, where the player stands, and the next three steps of the current stage,
 // or camp while the next stage waits for the reset, or the end of the road.
 export function RoadView({
@@ -67,6 +93,8 @@ export function RoadView({
   const view = stageView(stage, marks, lastReset(now, region));
   const done =
     where.kind === 'walking' ? where.stage : where.kind === 'camp' ? where.stage + 1 : count;
+  // Stages after the one the player walks, all still in the fog.
+  const ahead = where.kind === 'walking' ? count - 1 - where.stage : 0;
 
   return (
     <Box>
@@ -126,13 +154,24 @@ export function RoadView({
         </chakra.ul>
       )}
 
-      {where.kind === 'walking' && (view.fogged > 0 || view.earlier > 0) && (
+      {where.kind === 'walking' && (view.fogged > 0 || ahead > 0) && (
+        <FogAhead rows={Math.min(Math.max(view.fogged, 1), 2)} />
+      )}
+
+      {where.kind === 'walking' && (view.fogged > 0 || view.earlier > 0 || ahead > 0) && (
         <Stack gap="2px" mt="16px" fontSize="1.0625rem" color="textMuted">
-          {view.fogged > 0 && (
+          {view.fogged > 0 ? (
             <Text>
               {view.fogged === 1 ? 'One more step' : `${n(view.fogged)} more steps`} in this stage,
               still in the fog.
             </Text>
+          ) : (
+            ahead > 0 && (
+              <Text>
+                {ahead === 1 ? 'One more stage' : `${n(ahead)} more stages`} ahead, still in the
+                fog.
+              </Text>
+            )
           )}
           {view.earlier > 0 && (
             <Text>

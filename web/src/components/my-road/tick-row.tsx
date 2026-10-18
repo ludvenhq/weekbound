@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, chakra, Flex, Text } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 import type { Row } from '@/lib/walk/walk';
 import { stepTarget } from '@/lib/walk/words';
 
@@ -11,15 +12,18 @@ const CHECK = (
 );
 
 // One step: the whole row ticks it, Skip sits at its end (DESIGN.md, Tick row). `celebrate` plays
-// the small tick moment on the step just done.
+// the small tick moment on the step just done; `marker` is drawn beside the row (the home page's
+// road stones).
 export function TickRow({
   row,
   celebrate,
+  marker,
   onTick,
   onSkip,
 }: {
   row: Row;
   celebrate: boolean;
+  marker?: ReactNode;
   onTick: () => void;
   onSkip: () => void;
 }) {
@@ -32,6 +36,7 @@ export function TickRow({
   return (
     <Flex
       as="li"
+      position="relative"
       align="stretch"
       minH="76px"
       bg="surface"
@@ -40,6 +45,7 @@ export function TickRow({
       opacity={skipped ? 0.55 : 1}
       transition="opacity 150ms ease-out"
     >
+      {marker}
       <chakra.button
         type="button"
         role="checkbox"
