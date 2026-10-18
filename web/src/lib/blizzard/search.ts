@@ -19,7 +19,8 @@ const INDEXES: Record<SearchKind, { path: string; list: string }> = {
 
 const entrySchema = z.object({
   id: z.number(),
-  name: z.union([z.string(), z.record(z.string(), z.string())]).optional(),
+  // Some factions in the index have no name at all.
+  name: z.union([z.string(), z.record(z.string(), z.string())]).nullish(),
 });
 
 const cache = new Cache<Found[]>(SEARCH_KINDS.length, 24 * 3_600_000);

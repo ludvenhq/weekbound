@@ -19,8 +19,11 @@ Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0).
   Version 1.1 came early (2026-10-18): Road Check on My road and search by name in the editor,
   switched on by `BLIZZARD_CLIENT_ID` and `BLIZZARD_CLIENT_SECRET` (`docs/road-check.md`); not
   yet run against the live API.
-- **Studio roads:** files in `roads/` (CC BY 4.0, `roads/README.md`); the owner reviews every road
-  and every change to one before it is committed. Game ids are checked on the web; an uncertain one
+- **Studio roads:** files in `roads/` (CC BY 4.0, `roads/README.md`). Every new road and every
+  change to one gets an independent review before it is committed: a separate reviewer agent
+  checks every id against the live game data, the labels, the pacing and the copy, and its
+  blocking findings are fixed first (the owner handed road review to this, 2026-10-18; the first
+  three roads were reviewed by the owner). Game ids are checked on the web; an uncertain one
   becomes a `manual` step.
 - **Gate:** `cd web && npm run verify` (lint, type-check, Vitest with the shared samples, build),
   the same as CI. Node 24; TypeScript stays on 6.0 until typescript-eslint supports 7.

@@ -6,7 +6,8 @@ describe('the character a visitor asks about', () => {
   it('turns realm names into Blizzard slugs', () => {
     expect(realmSlug('Twisting Nether')).toBe('twisting-nether');
     expect(realmSlug("Kel'Thas")).toBe('kelthas');
-    expect(realmSlug('Aggra (Português)')).toBe('aggra-portugues');
+    expect(realmSlug('Aggra (Português)')).toBe('aggra-português');
+    expect(realmSlug("Pozzo dell'Eternità")).toBe('pozzo-delleternità');
     expect(realmSlug('  Silvermoon ')).toBe('silvermoon');
   });
 

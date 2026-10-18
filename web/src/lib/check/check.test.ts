@@ -64,7 +64,9 @@ describe('checking a step', () => {
     expect(checkStep(step('ilvl'), NONE)).toBe('not-met');
     expect(checkStep(step('campaign'), facts)).toBe('met');
     expect(checkStep(step('renown'), facts)).toBe('met');
-    expect(checkStep(step('renown'), NONE)).toBe('not-met');
+    expect(checkStep(step('renown'), { ...NONE, renown: { '2710': 4 } })).toBe('not-met');
+    // Blizzard leaves some renown factions out: unknown, not renown 0.
+    expect(checkStep(step('renown'), NONE)).toBe('in-game');
     expect(checkStep(step('mount'), facts)).toBe('met');
   });
 

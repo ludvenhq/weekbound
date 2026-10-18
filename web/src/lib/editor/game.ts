@@ -121,11 +121,12 @@ export const KNOWN_SPEC_IDS: ReadonlySet<string> = new Set(
 );
 
 // Wowhead pages that carry the same id as the game: /achievement=12345 and so on. A mount's page
-// is its spell or item, whose id is not the Mount Journal's, so mounts are typed by hand.
+// is its spell or item, whose id is not the Mount Journal's, and a title's page uses the title
+// table's row, not the id the game and Blizzard's API use (checked 2026-10-18: "the Seeker" is 42
+// in the game and title=81 on Wowhead), so mounts and titles are searched or typed by hand.
 const WOWHEAD_PAGES: Partial<Record<ParamKey, string>> = {
   achievementId: 'achievement',
   questId: 'quest',
-  titleId: 'title',
   factionId: 'faction',
   currencyId: 'currency',
 };
@@ -157,7 +158,6 @@ export function wowheadUrl(step: Step): string | null {
 export const LOOKUP: Partial<Record<ParamKey, string>> = {
   achievementId: 'https://www.wowhead.com/achievements',
   questId: 'https://www.wowhead.com/quests',
-  titleId: 'https://www.wowhead.com/titles',
   factionId: 'https://www.wowhead.com/factions',
   currencyId: 'https://www.wowhead.com/currencies',
   mountId: 'https://www.wowhead.com/mounts',

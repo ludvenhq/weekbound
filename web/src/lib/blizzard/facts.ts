@@ -27,7 +27,24 @@ type Summary = { name: string; realm: string; level: number | null; lastLogout: 
 const mythicSchema = z.object({
   current_mythic_rating: z.object({ rating: z.number().optional() }).optional(),
 });
-const bracketSchema = z.object({ rating: z.number().optional() });
+const bracketSchema = z.object({
+  rating: z.number().optional(),
+  season: z.object({ id: z.number() }).optional(),
+});
+
+// The PvP season now under way, from the Game Data API, held for an hour.
+const seasonCache = new Cache<number>(4, 3_600_000);
+const seasonIndexSchema = z.object({ current_season: z.object({ id: z.number() }) });
+
+async function currentPvpSeason(region: CheckRequest['region']): Promise<number | null> {
+  const hit = seasonCache.get(region, Date.now());
+  if (hit !== undefined) return hit;
+  const reply = await blizzardGet(region, '/data/wow/pvp-season/index', 'dynamic');
+  const parsed = reply.status === 'ok' ? seasonIndexSchema.safeParse(reply.data) : null;
+  if (!parsed?.success) return null;
+  seasonCache.set(region, parsed.data.current_season.id, Date.now());
+  return parsed.data.current_season.id;
+}
 const achievementsSchema = z.object({
   achievements: z
     .array(z.object({ id: z.number(), completed_timestamp: z.number().optional() }))
@@ -43,7 +60,6 @@ const reputationsSchema = z.object({
           .object({
             tier: z.number().optional(),
             renown_level: z.number().optional(),
-            name: z.string().optional(),
           })
           .optional(),
       }),
@@ -60,15 +76,12 @@ function text(value: z.infer<typeof name>): string | undefined {
   return value?.en_GB ?? value?.en_US;
 }
 
-type Standing = { tier?: number; renown_level?: number; name?: string } | undefined;
+type Standing = { tier?: number; renown_level?: number } | undefined;
 
-// The renown level of a major faction, or the standing tier of an older one.
+// The renown level of a major faction (`renown_level`, which renown factions have in place of
+// `tier`), or the standing tier of an older one. The standing's name is never parsed.
 export function renownOf(standing: Standing): number {
-  if (!standing) return 0;
-  if (typeof standing.renown_level === 'number') return standing.renown_level;
-  const named = /renown\s+(\d+)/i.exec(standing.name ?? '');
-  if (named) return Number(named[1]);
-  return standing.tier ?? 0;
+  return standing?.renown_level ?? standing?.tier ?? 0;
 }
 
 type Got<T> = { status: 'ok'; value: T } | { status: 'none' } | { status: 'busy' | 'gone' };
@@ -118,14 +131,19 @@ async function fetchKind(request: CheckRequest, kind: FactKind): Promise<Part | 
       };
     }
     case 'pvp': {
+      // A bracket last played in an earlier season still answers with that season's rating, so
+      // a rating counts only when its season is the current one; when the current season cannot
+      // be had, no rating counts, rather than a stale one ticking a step.
       const brackets = ['2v2', '3v3', 'rbg'] as const;
-      const got = await Promise.all(
-        brackets.map((bracket) => get(request, `/pvp-bracket/${bracket}`, bracketSchema)),
-      );
+      const [season, ...got] = await Promise.all([
+        currentPvpSeason(request.region),
+        ...brackets.map((bracket) => get(request, `/pvp-bracket/${bracket}`, bracketSchema)),
+      ]);
       if (got.some((each) => each.status === 'busy')) return 'busy';
       const rating = (i: number) => {
         const each = got[i]!;
-        return each.status === 'ok' ? (each.value.rating ?? 0) : 0;
+        if (each.status !== 'ok' || season === null) return 0;
+        return each.value.season?.id === season ? (each.value.rating ?? 0) : 0;
       };
       return { pvp: { '2v2': rating(0), '3v3': rating(1), rbg: rating(2) } };
     }

@@ -62,7 +62,10 @@ describe('reading a character', () => {
         status: 200,
         body: { current_mythic_rating: { rating: 1234.5 } },
       },
-      [`${BASE}/pvp-bracket/2v2`]: { status: 200, body: { rating: 1480 } },
+      '/data/wow/pvp-season/index': { status: 200, body: { current_season: { id: 42 } } },
+      [`${BASE}/pvp-bracket/2v2`]: { status: 200, body: { rating: 1480, season: { id: 42 } } },
+      // Last played a season ago: its old rating does not count.
+      [`${BASE}/pvp-bracket/3v3`]: { status: 200, body: { rating: 2100, season: { id: 41 } } },
       [`${BASE}/achievements`]: {
         status: 200,
         body: {
@@ -73,9 +76,18 @@ describe('reading a character', () => {
         status: 200,
         body: {
           reputations: [
-            { faction: { id: 2710 }, standing: { tier: 0, renown_level: 7, name: 'Renown 7' } },
-            { faction: { id: 2696 }, standing: { tier: 1, name: 'Renown 12' } },
-            { faction: { id: 72 }, standing: { tier: 7, name: 'Exalted' } },
+            {
+              faction: { id: 2710 },
+              standing: { raw: 17_500, value: 0, max: 2500, renown_level: 7 },
+            },
+            {
+              faction: { id: 2696 },
+              standing: { raw: 30_000, value: 0, max: 2500, renown_level: 12 },
+            },
+            {
+              faction: { id: 72 },
+              standing: { raw: 42_000, value: 999, max: 1000, tier: 7, name: 'Exalted' },
+            },
           ],
         },
       },

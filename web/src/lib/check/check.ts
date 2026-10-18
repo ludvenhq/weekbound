@@ -91,8 +91,12 @@ export function checkStep(step: Step, facts: Facts): CheckResult {
       return met(facts.achievements.includes(step.achievementId));
     case 'quest':
       return met(facts.quests.includes(step.questId));
-    case 'reputation':
-      return met((facts.renown[String(step.factionId)] ?? 0) >= step.n);
+    case 'reputation': {
+      // Blizzard leaves some renown factions out of its answer (a known fault since The War
+      // Within), so a missing faction is unknown, not renown 0.
+      const level = facts.renown[String(step.factionId)];
+      return level === undefined ? 'in-game' : met(level >= step.n);
+    }
     case 'mount':
       return met(facts.mounts.includes(step.mountId));
     case 'title':

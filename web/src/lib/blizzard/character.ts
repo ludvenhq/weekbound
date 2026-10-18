@@ -3,34 +3,28 @@ import { REGIONS } from '../walk/reset.ts';
 import { FACT_KINDS } from '../check/check.ts';
 
 // The character a visitor asks Road Check about. Every field is checked before anything reaches
-// Blizzard: a fixed list of regions, a realm slug of plain letters, digits and hyphens, and a
-// character name of 2 to 12 letters in any alphabet, as the game allows.
+// Blizzard: a fixed list of regions, a realm slug of letters, digits and hyphens, and a character
+// name of 2 to 12 letters in any alphabet, as the game allows.
 
-// "Aggra (Português)" is aggra-portugues, "Kel'Thas" is kelthas, "Twisting Nether" is
-// twisting-nether: the slugs Blizzard's API uses.
+// The slug Blizzard's API uses for a realm name: lowercase, apostrophes and brackets dropped,
+// spaces as hyphens, accents kept ("Aggra (Português)" is aggra-português, "Kel'Thas" is
+// kelthas, "Twisting Nether" is twisting-nether; checked 2026-10-18 against the realm list).
+// Realms whose slug differs from their name are matched through the realm list (realms.ts).
 export function realmSlug(realm: string): string {
   return realm
     .trim()
     .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/['’]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
+    .normalize('NFC')
+    .replace(/['’()]/g, '')
+    .replace(/[^\p{L}\p{N}]+/gu, '-')
     .replace(/^-+|-+$/g, '');
 }
 
+const SLUG = /^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u;
+
 export const characterSchema = z.object({
   region: z.enum(REGIONS),
-  realm: z
-    .string()
-    .max(60)
-    .transform(realmSlug)
-    .pipe(
-      z
-        .string()
-        .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-        .max(40),
-    ),
+  realm: z.string().max(60).transform(realmSlug).pipe(z.string().regex(SLUG).max(40)),
   name: z
     .string()
     .trim()
@@ -43,11 +37,12 @@ export const checkRequestSchema = characterSchema.extend({
 });
 export type CheckRequest = z.infer<typeof checkRequestSchema>;
 
-// The path segment for a character: lowercase, and percent-encoded for names outside ASCII.
+// The path for a character: the name in lowercase, and both parts percent-encoded as UTF-8 for
+// letters outside ASCII.
 export function characterPath(character: Character): string {
-  return `/profile/wow/character/${character.realm}/${encodeURIComponent(character.name.toLocaleLowerCase())}`;
+  return `/profile/wow/character/${encodeURIComponent(character.realm)}/${encodeURIComponent(character.name.toLowerCase())}`;
 }
 
 export function characterKey(character: Character): string {
-  return `${character.region}:${character.realm}:${character.name.toLocaleLowerCase()}`;
+  return `${character.region}:${character.realm}:${character.name.toLowerCase()}`;
 }

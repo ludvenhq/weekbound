@@ -3,6 +3,7 @@ import { checkRequestSchema } from '@/lib/blizzard/character';
 import { credentials } from '@/lib/blizzard/client';
 import { characterFacts } from '@/lib/blizzard/facts';
 import { VisitorLimit } from '@/lib/blizzard/limits';
+import { resolveRealm } from '@/lib/blizzard/realms';
 
 // Road Check's server (design doc, version 1.1). GET says whether this server has a Blizzard
 // client; POST takes a region, realm, character name and the kinds of facts a road needs, and
@@ -43,6 +44,7 @@ export async function POST(request: Request) {
   }
   const parsed = checkRequestSchema.safeParse(body);
   if (!parsed.success) return reply({ ok: false, error: 'bad-input' }, 400);
-  const result = await characterFacts(parsed.data);
+  const realm = await resolveRealm(parsed.data.region, parsed.data.realm);
+  const result = await characterFacts({ ...parsed.data, realm });
   return reply(result, result.ok ? 200 : result.error === 'not-found' ? 404 : 503);
 }

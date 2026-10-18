@@ -194,7 +194,7 @@ function RoadCheck({ road, marks, region, onTicks }: Props) {
           <Text fontSize="0.9375rem" color="textMuted">
             {result.reply.character.name} on {result.reply.character.realm}
             {result.reply.character.level !== null && `, level ${result.reply.character.level}`}.
-            Data as of the last logout.
+            Data from Blizzard Entertainment, as of the last logout.
           </Text>
           {result.plan.ticks.length > 0 ? (
             <Message tone="success">

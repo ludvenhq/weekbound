@@ -91,7 +91,7 @@ its type's parameters:
 | `quest` | `questId` |
 | `reputation` | `factionId`, `n` 1 to 100 (the renown level of a major faction, or the standing of an older one) |
 | `mount` | `mountId` |
-| `title` | `titleId` |
+| `title` | `titleId`: the game's title id (the mask id `IsTitleKnown` takes, not Wowhead's number) |
 | `currency` | `currencyId`, `n` 1 to 1,000,000 |
 | `manual` | none |
 
@@ -155,12 +155,12 @@ concerns R3-3, R3-4, R3-15 and R3-36 this way. Each can be changed while no code
 - **Inputs per step type.** Item level, ratings, renown and amounts are whole numbers ("1,500" is
   read as 1500); the PvP bracket, the vault row and its 1 to 3 slots are picked from a list;
   Solo Shuffle and Blitz pick a spec from a list or take a spec id ("another spec", for a spec
-  newer than the list; Devourer, 1480, joined the list in build step 4). Achievement, quest, title,
-  faction and currency ids take
-  the number or a Wowhead link (`wowhead.com/achievement=12345`). Mount ids are the Mount
-  Journal's, typed by hand: Wowhead's mount pages carry spell or item ids.
-- **Not yet:** searching achievements, mounts, titles and factions by name. It needs the game data
-  files, which need the Blizzard API client (open question 3 in the design doc).
+  newer than the list; Devourer, 1480, joined the list in build step 4). Achievement, quest,
+  faction and currency ids take the number or a Wowhead link (`wowhead.com/achievement=12345`).
+  Mount ids are the Mount Journal's and title ids the game's: Wowhead's mount pages carry spell or
+  item ids and its title pages another number, so both are typed or searched.
+- **Search by name** (added with Road Check, `docs/road-check.md`): achievements, mounts, titles
+  and factions, from Blizzard's game data, once the server has a Blizzard API client.
 - **A road link**, `/my-road#road=<code>`, starts a road on My road the way pasting its code does.
   The code stays in the part after `#`, which no server sees. The editor's "Walk this road" uses
   it.
@@ -182,7 +182,9 @@ concerns R3-3, R3-4, R3-15 and R3-36 this way. Each can be changed while no code
   a studio road never travels as a code.
 - **Season-bound ids:** a studio road may use the live season's achievements (ranks, Keystone
   achievements, Ahead of the Curve); each season the studio ships a new `rev` with the new ids.
-- **Open: title ids.** The game has two ids per title: the row id that Wowhead and (probably) the
-  Blizzard API use, and the mask id that `IsTitleKnown` takes. `titleId` must name one of them
-  before the addon or Road Check reads it; until then the studio roads use the achievement that
-  grants a title instead of a `title` step.
+- **Decided: title ids** (2026-10-18). A title has two numbers: its row in the game's title table,
+  which Wowhead's title pages use, and its mask id, which the game's `IsTitleKnown` and Blizzard's
+  Profile API both use ("the Seeker" is 42 in the game and the API, `title=81` on Wowhead).
+  `titleId` is the mask id, so the addon and Road Check read the same number. The editor no
+  longer takes Wowhead title links; its search by name gives the right id. The studio roads still
+  prefer the achievement that grants a title, which reads the same everywhere.

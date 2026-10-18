@@ -33,7 +33,7 @@ export const TYPE_HELP: Record<StepType, string> = {
   quest: "The quest's id: paste its Wowhead link, or the number in it.",
   reputation: "The faction's id (its Wowhead link works) and the renown level to reach.",
   mount: "The mount's id in the game's Mount Journal, not its spell or item id.",
-  title: "The title's id: paste its Wowhead link, or the number in it.",
+  title: "The title's id in the game, which is not the number on Wowhead's title page.",
   currency: "The currency's id (its Wowhead link works) and how much to hold.",
 };
 
