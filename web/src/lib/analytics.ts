@@ -1,9 +1,10 @@
-// Anonymous counts with the studio's own Umami (stats.ludven.com): no cookies, nothing personal,
-// nothing shared. The host and the site id are public values in web/.env.production; without both
-// no page loads the tracker and `track` does nothing.
+// Anonymous counts with the studio's own Umami: no cookies, nothing personal, nothing shared. The
+// tracker loads from a path on this site, which the web server in front passes on, so no page
+// names another server. The path and the site id are public values in web/.env.production;
+// without both no page loads the tracker and `track` does nothing.
 
 export const analytics = {
-  host: process.env.UMAMI_HOST || null,
+  path: process.env.UMAMI_PATH || null,
   siteId: process.env.UMAMI_SITE_ID || null,
   // The tracker counts only on the real site, never on localhost or a preview.
   domain: 'weekbound.ludven.com',
