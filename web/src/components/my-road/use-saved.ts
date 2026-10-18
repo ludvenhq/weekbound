@@ -80,6 +80,11 @@ function subscribe(listener: () => void) {
   };
 }
 
+// The saved state as it is now, for an action that runs before the page has drawn the last change.
+export function currentSaved(): Saved {
+  return snapshot().saved;
+}
+
 // Null while the server renders and during hydration: progress exists only in the browser.
 export function useSaved(): Snapshot | null {
   return useSyncExternalStore(subscribe, snapshot, () => null);

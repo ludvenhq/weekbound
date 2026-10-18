@@ -1,33 +1,16 @@
 'use client';
 
 import { Box, chakra, Flex, Stack, Text } from '@chakra-ui/react';
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { secondaryButton, textButton } from '@/components/buttons';
 import { CodeBox } from '@/components/code-box';
+import { Fold } from '@/components/fold';
 import { Message } from '@/components/message';
 import { BACKUP_MESSAGES, decodeBackup, encodeBackup } from '@/lib/walk/backup';
 import type { Region } from '@/lib/walk/reset';
 import { marksOf, type Saved } from '@/lib/walk/saved';
 import { position } from '@/lib/walk/walk';
 import { CodeField } from './paste-road';
-
-// A folded section under the road, so the road stays the only thing on the screen.
-export function Fold({ summary, children }: { summary: string; children: ReactNode }) {
-  return (
-    <chakra.details borderTopWidth="1px" borderColor="line" py="14px">
-      <chakra.summary
-        cursor="pointer"
-        color="textMuted"
-        fontSize="1rem"
-        _hover={{ color: 'text' }}
-        _focusVisible={{ outline: '2px solid {colors.text}', outlineOffset: '3px' }}
-      >
-        {summary}
-      </chakra.summary>
-      <Box mt="16px">{children}</Box>
-    </chakra.details>
-  );
-}
 
 export function YourRoads({
   saved,

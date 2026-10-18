@@ -50,23 +50,35 @@ function formatPath(path: readonly PropertyKey[]): string {
   return `at ${parts.join('')}: `;
 }
 
+export type FlatIssue = { path: PropertyKey[]; issue: z.core.$ZodIssue };
+
 // z.prettifyError says only "Invalid input" for a step that fails both as its own type and as an
 // unknown type. This opens such a union and keeps the branch that does not reject the step's
-// type, so a road author reads "at stages[0].steps[1].n: Too small: expected number to be >=1".
-export function describeIssues(
+// type, so the issue lands on the field that is wrong (stages[0].steps[1].n), not on the step.
+export function flattenIssues(
   issues: readonly z.core.$ZodIssue[],
   base: readonly PropertyKey[] = [],
-): string[] {
+): FlatIssue[] {
   return issues.flatMap((issue) => {
     const path = [...base, ...issue.path];
     if (issue.code === 'invalid_union' && issue.errors.length > 0) {
       const fits = issue.errors.find(
         (branch) => !branch.some((i) => i.path.length === 1 && i.path[0] === 'type'),
       );
-      return describeIssues(fits ?? issue.errors[0] ?? [], path);
+      return flattenIssues(fits ?? issue.errors[0] ?? [], path);
     }
-    return [`${formatPath(path)}${issue.message}`];
+    return [{ path, issue }];
   });
+}
+
+// "at stages[0].steps[1].n: Too small: expected number to be >=1", for a road author.
+export function describeIssues(
+  issues: readonly z.core.$ZodIssue[],
+  base: readonly PropertyKey[] = [],
+): string[] {
+  return flattenIssues(issues, base).map(
+    ({ path, issue }) => `${formatPath(path)}${issue.message}`,
+  );
 }
 
 const describe = (error: z.ZodError) => describeIssues(error.issues).join('\n');

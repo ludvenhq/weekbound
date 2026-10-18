@@ -1,9 +1,12 @@
 'use client';
 
 import { Box, chakra, Flex, Heading, Stack, Text, VisuallyHidden } from '@chakra-ui/react';
-import { Fragment, useEffect, useState, type ReactNode } from 'react';
+import { Fragment, useCallback, useEffect, useState, type ReactNode } from 'react';
 import { secondaryButton, textButton } from '@/components/buttons';
+import { Fold } from '@/components/fold';
 import { Message, type Tone } from '@/components/message';
+import { DECODE_MESSAGES, decodeRoad } from '@/lib/road/code';
+import { codeFromHash } from '@/lib/road/link';
 import type { Road } from '@/lib/road/schema';
 import { guessRegion, type Region } from '@/lib/walk/reset';
 import {
@@ -18,10 +21,10 @@ import {
   type Saved,
 } from '@/lib/walk/saved';
 import { position, recap, withMark, type Mark, type Recap } from '@/lib/walk/walk';
-import { Backup, Fold, YourRoads } from './library';
+import { Backup, YourRoads } from './library';
 import { PasteRoad } from './paste-road';
 import { RoadView } from './road-view';
-import { updateSaved, useNow, useSaved } from './use-saved';
+import { currentSaved, updateSaved, useNow, useSaved } from './use-saved';
 
 type Notice = { tone: Tone; text: ReactNode };
 
@@ -113,15 +116,12 @@ export function MyRoad() {
     updateSaved((current) => ({ ...current, lastVisit: at }));
   }, [snapshot, recapNote]);
 
-  if (!snapshot) return <Loading />;
-  const { saved, stored } = snapshot;
-  const region = regionOf(saved);
-  const road = findRoad(saved, saved.active);
-
-  function startRoad(incoming: Road) {
+  // From the paste box or a link. It reads the saved state as it is now, because a link is
+  // opened in the same moment as the visit is recorded.
+  const startRoad = useCallback((incoming: Road) => {
     setNewer(null);
     setRecapNote(null);
-    const outcome = importRoad(saved, incoming);
+    const outcome = importRoad(currentSaved(), incoming);
     switch (outcome.kind) {
       case 'added':
         updateSaved(() => outcome.saved);
@@ -146,7 +146,24 @@ export function MyRoad() {
         break;
     }
     toTop();
-  }
+  }, []);
+
+  // A road handed over in a link (/my-road#road=SR1!…, from the editor or another player) is
+  // started like a pasted one, then the code leaves the address bar.
+  useEffect(() => {
+    if (!snapshot) return;
+    const code = codeFromHash(window.location.hash);
+    if (code === null) return;
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    const result = decodeRoad(code);
+    if (result.ok) startRoad(result.road);
+    else setNotice({ tone: 'error', text: DECODE_MESSAGES[result.error] });
+  }, [snapshot, startRoad]);
+
+  if (!snapshot) return <Loading />;
+  const { saved, stored } = snapshot;
+  const region = regionOf(saved);
+  const road = findRoad(saved, saved.active);
 
   function mark(target: Road, stepId: string, state: Mark['state'] | null) {
     const at = Date.now();

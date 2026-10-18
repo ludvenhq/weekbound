@@ -16,7 +16,15 @@ export function SiteHeader() {
   return (
     <Box as="header">
       <PageWidth>
-        <Flex align="center" justify="space-between" gap="24px" py="22px">
+        {/* On a phone the links wrap under the name as whole words. */}
+        <Flex
+          align="center"
+          justify="space-between"
+          wrap="wrap"
+          gap="6px 24px"
+          py="22px"
+          whiteSpace="nowrap"
+        >
           <Flex
             asChild
             align="center"
@@ -40,8 +48,15 @@ export function SiteHeader() {
               Slow Road
             </NextLink>
           </Flex>
-          <Flex as="nav" aria-label="Main" align="center" gap="28px" fontSize="1.0625rem">
+          <Flex
+            as="nav"
+            aria-label="Main"
+            align="center"
+            gap={{ base: '22px', sm: '28px' }}
+            fontSize="1.0625rem"
+          >
             <NavLink href="/my-road">My road</NavLink>
+            <NavLink href="/editor">Make a road</NavLink>
             <ThemeToggle />
           </Flex>
         </Flex>

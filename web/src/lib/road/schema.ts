@@ -137,6 +137,16 @@ export const stageSchema = z.object({
 });
 export type Stage = z.infer<typeof stageSchema>;
 
+// The road a remix came from; it may be a studio road.
+export const basedOnSchema = z.object({
+  id: roadIdSchema,
+  rev: revSchema,
+  author: text(MAX_LENGTH.author),
+});
+export type BasedOn = z.infer<typeof basedOnSchema>;
+
+export const LICENSE = 'CC-BY-4.0';
+
 export const roadSchema = z
   .object({
     v: z.literal(SCHEMA_VERSION),
@@ -146,10 +156,8 @@ export const roadSchema = z
     pace: z.enum(['weekly', 'free']),
     author: text(MAX_LENGTH.author),
     // Every road is CC BY 4.0 (decided 2026-10-18); a code that says otherwise does not open.
-    license: z.literal('CC-BY-4.0'),
-    basedOn: z
-      .object({ id: roadIdSchema, rev: revSchema, author: text(MAX_LENGTH.author) })
-      .optional(),
+    license: z.literal(LICENSE),
+    basedOn: basedOnSchema.optional(),
     stages: z.array(stageSchema).min(1).max(MAX_STAGES),
   })
   .superRefine((road, ctx) => {

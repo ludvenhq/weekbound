@@ -10,7 +10,7 @@ studio.
 ## In this repo
 
 - `web/`: the website (Next.js, Chakra UI, Zod). Node 24.
-  - `npm ci`, then `npm run dev`.
+  - `npm ci`, then `npm run dev`. My road is at `/my-road`, the road editor at `/editor`.
   - `npm run verify` runs lint, type-check, tests and the build, as CI does.
   - `npm run code -- road.json` checks a road file and prints its code;
     `npm run code -- --decode <code>` prints the road inside a code.

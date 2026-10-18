@@ -128,3 +128,38 @@ The design doc left these open; each can be changed while no code is public.
 - Step ids are unique across the whole road, not only inside a stage.
 - The prefix digit is the encoding version and `v` the schema version.
 - Renown and reputation share one step type, `reputation`.
+
+## How the editor makes ids and versions (2026-10-18, build step 3)
+
+The website's editor (`/editor`, logic in `web/src/lib/editor/`) settles the design review's
+concerns R3-3, R3-4, R3-15 and R3-36 this way. Each can be changed while no code is public.
+
+- **Road ids.** A new road's id is `p-`, a slug of its title (lowercase ASCII words joined by
+  hyphens, at most 40 characters, cut at a word; `road` when the title has no Latin letters) and
+  a random six-character suffix: "SR healer" makes `p-sr-healer-k3m9q2`. The editor never makes an
+  `sr-` id.
+- **Versions.** A new road starts at `rev` 1. Once its code leaves the editor (copied, or walked on
+  My road), the id is fixed and any change after that is the next `rev`; changing it back is the
+  same `rev` again. Opening a code to make a new version works the same way: same id, `rev` plus
+  one once anything changes.
+- **Remixes.** Opening a code as a remix gives a new id at `rev` 1 and records the source's `id`,
+  `rev` and `author` in `basedOn` (a studio road's `sr-` id is allowed there).
+- **Step ids** are six random characters, given when the step is added and kept while it is
+  edited or moved, so players keep their ticks on every step a new version keeps. A step deleted
+  and added again is a new step. The editor never reuses an id inside a road; one deleted in an
+  earlier version could come back only by a one in two billion chance.
+- **Opening a code** in the editor runs the same cap and checks as My road's paste box.
+- **The cap.** The editor shows the code's size against the 24 KB cap at every change and gives
+  no code over it. A road of 20 stages of 20 steps with full-length labels is about 96 KB; about
+  150 to 180 short steps fit.
+- **Inputs per step type.** Item level, ratings, renown and amounts are whole numbers ("1,500" is
+  read as 1500); the PvP bracket, the vault row and its 1 to 3 slots are picked from a list;
+  Solo Shuffle and Blitz pick a spec from a list or take a spec id ("another spec", for Midnight's
+  Devourer, whose id is not checked yet). Achievement, quest, title, faction and currency ids take
+  the number or a Wowhead link (`wowhead.com/achievement=12345`). Mount ids are the Mount
+  Journal's, typed by hand: Wowhead's mount pages carry spell or item ids.
+- **Not yet:** searching achievements, mounts, titles and factions by name. It needs the game data
+  files, which need the Blizzard API client (open question 3 in the design doc).
+- **A road link**, `/my-road#road=<code>`, starts a road on My road the way pasting its code does.
+  The code stays in the part after `#`, which no server sees. The editor's "Walk this road" uses
+  it.

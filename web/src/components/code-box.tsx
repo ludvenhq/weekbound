@@ -3,8 +3,17 @@
 import { chakra, Flex } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 
-// A code in mono, cut with an ellipsis, and a Copy button that says "Copied" for 1.4 s.
-export function CodeBox({ code, label }: { code: string; label: string }) {
+// A code in mono, cut with an ellipsis, and a Copy button that says "Copied" for 1.4 s. `onCopy`
+// hears both the button and a copy of the selected text.
+export function CodeBox({
+  code,
+  label,
+  onCopy,
+}: {
+  code: string;
+  label: string;
+  onCopy?: () => void;
+}) {
   const [copied, setCopied] = useState<'yes' | 'failed' | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -16,6 +25,7 @@ export function CodeBox({ code, label }: { code: string; label: string }) {
       result = 'failed';
     }
     setCopied(result);
+    if (result === 'yes') onCopy?.();
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setCopied(null), 1400);
   }
@@ -34,6 +44,7 @@ export function CodeBox({ code, label }: { code: string; label: string }) {
         textOverflow="ellipsis"
         color="text"
         aria-label={label}
+        onCopy={onCopy}
       >
         {code}
       </chakra.code>
