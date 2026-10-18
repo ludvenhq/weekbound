@@ -99,23 +99,22 @@ export function nestingDepth(json: string, stopAbove = Infinity): number {
   return deepest;
 }
 
-export function decodeRoad(input: string): DecodeResult {
-  // A paste of any size is measured before anything else touches it; a valid code is ASCII, so
-  // the character count is a quick first bound.
-  if (input.length > MAX_CODE_BYTES || utf8Bytes(input) > MAX_CODE_BYTES) {
-    return { ok: false, error: 'too-long' };
-  }
-  const code = input.replace(WHITESPACE, '');
-  if (code === '') return { ok: false, error: 'empty' };
-  if (ANY_BACKUP_PREFIX.test(code)) return { ok: false, error: 'backup-code' };
-  const prefix = ROAD_PREFIX.exec(code);
-  if (!prefix) return { ok: false, error: 'not-a-road-code' };
-  if (prefix[1] !== '1') return { ok: false, error: 'newer-encoding' };
+// Checks 1 and 2: the size cap on the paste as given (a valid code is ASCII, so the character
+// count is a quick first bound), then whitespace removed. Null when the paste is too long.
+export function cleanPaste(input: string): string | null {
+  if (input.length > MAX_CODE_BYTES || utf8Bytes(input) > MAX_CODE_BYTES) return null;
+  return input.replace(WHITESPACE, '');
+}
 
-  const body = code.slice(prefix[0].length);
+export type BodyResult =
+  | { ok: true; data: Record<string, unknown> }
+  | { ok: false; error: 'bad-base64' | 'bad-text' | 'too-deep' | 'bad-json' | 'invalid' };
+
+// Checks 6 to 10, shared by road codes and backup codes: the text after the prefix to a JSON
+// object.
+export function readBody(body: string): BodyResult {
   const bytes = body === '' ? null : fromBase64Url(body);
   if (!bytes) return { ok: false, error: 'bad-base64' };
-
   let json: string;
   try {
     // A byte order mark stays in the text and fails as JSON, as it does in the addon.
@@ -124,7 +123,6 @@ export function decodeRoad(input: string): DecodeResult {
     return { ok: false, error: 'bad-text' };
   }
   if (nestingDepth(json, MAX_DEPTH) > MAX_DEPTH) return { ok: false, error: 'too-deep' };
-
   let data: unknown;
   try {
     data = JSON.parse(json);
@@ -132,14 +130,33 @@ export function decodeRoad(input: string): DecodeResult {
     return { ok: false, error: 'bad-json' };
   }
   if (typeof data !== 'object' || data === null || Array.isArray(data)) {
-    return { ok: false, error: 'invalid', detail: 'a road is a JSON object' };
+    return { ok: false, error: 'invalid' };
   }
-  const v = (data as { v?: unknown }).v;
-  if (typeof v === 'number' && Number.isInteger(v) && v > SCHEMA_VERSION) {
-    return { ok: false, error: 'newer-version' };
-  }
+  return { ok: true, data: data as Record<string, unknown> };
+}
 
-  const parsed = roadSchema.safeParse(data);
+export function writeBody(prefix: string, data: unknown): string {
+  return prefix + toBase64Url(new TextEncoder().encode(JSON.stringify(data)));
+}
+
+export function isNewerVersion(v: unknown, known: number): boolean {
+  return typeof v === 'number' && Number.isInteger(v) && v > known;
+}
+
+export function decodeRoad(input: string): DecodeResult {
+  const code = cleanPaste(input);
+  if (code === null) return { ok: false, error: 'too-long' };
+  if (code === '') return { ok: false, error: 'empty' };
+  if (ANY_BACKUP_PREFIX.test(code)) return { ok: false, error: 'backup-code' };
+  const prefix = ROAD_PREFIX.exec(code);
+  if (!prefix) return { ok: false, error: 'not-a-road-code' };
+  if (prefix[1] !== '1') return { ok: false, error: 'newer-encoding' };
+
+  const body = readBody(code.slice(prefix[0].length));
+  if (!body.ok) return body;
+  if (isNewerVersion(body.data.v, SCHEMA_VERSION)) return { ok: false, error: 'newer-version' };
+
+  const parsed = roadSchema.safeParse(body.data);
   if (!parsed.success) return { ok: false, error: 'invalid', detail: describe(parsed.error) };
   if (parsed.data.id.startsWith(STUDIO_PREFIX)) return { ok: false, error: 'reserved-id' };
   return { ok: true, road: parsed.data };
@@ -152,7 +169,7 @@ export function encodeRoad(road: unknown): EncodeResult {
   if (!parsed.success) {
     return { ok: false, error: 'invalid', detail: describe(parsed.error) };
   }
-  const code = CODE_PREFIX + toBase64Url(new TextEncoder().encode(JSON.stringify(parsed.data)));
+  const code = writeBody(CODE_PREFIX, parsed.data);
   if (code.length > MAX_CODE_BYTES) {
     return {
       ok: false,

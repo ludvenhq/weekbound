@@ -57,6 +57,7 @@ const ref = (role: Role) => ({ value: `{colors.${role}}` });
 const config = defineConfig({
   globalCss: {
     html: { colorScheme: 'dark' },
+    'html.light': { colorScheme: 'light' },
     body: {
       bg: 'background',
       color: 'text',
@@ -75,6 +76,19 @@ const config = defineConfig({
     },
   },
   theme: {
+    keyframes: {
+      // The small celebration on a tick: the box fills and settles.
+      tick: {
+        '0%': { transform: 'scale(0.7)' },
+        '60%': { transform: 'scale(1.15)' },
+        '100%': { transform: 'scale(1)' },
+      },
+      // A message or the camp coming into view.
+      arrive: {
+        from: { opacity: 0, transform: 'translateY(6px)' },
+        to: { opacity: 1, transform: 'none' },
+      },
+    },
     tokens: {
       fonts: {
         display: { value: 'var(--font-display), Georgia, serif' },
