@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { searchGame, SEARCH_KINDS } from '@/lib/blizzard/search';
-import { VisitorLimit } from '@/lib/blizzard/limits';
+import { visitorKey, VisitorLimit } from '@/lib/blizzard/limits';
 
 // The editor's search by name (design doc, Editor): achievements, mounts, titles and factions
 // from the Game Data API, held in the server's memory for a day rather than committed to the
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
   const parsed = querySchema.safeParse({ kind: params.get('kind'), q: params.get('q') });
   if (!parsed.success) return Response.json({ results: [] }, { status: 400 });
-  const who = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'direct';
+  const who = visitorKey(request);
   if (!visitors.take(who, Date.now())) return Response.json({ results: [] }, { status: 429 });
   const results = await searchGame(parsed.data.kind, parsed.data.q);
   return Response.json(

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { characterPath, characterSchema, realmSlug } from './character.ts';
-import { AppLimit, Cache, VisitorLimit, Window } from './limits.ts';
+import { AppLimit, Cache, VisitorLimit, visitorKey, Window } from './limits.ts';
 
 describe('the character a visitor asks about', () => {
   it('turns realm names into Blizzard slugs', () => {
@@ -29,6 +29,22 @@ describe('the character a visitor asks about', () => {
   it('builds the profile path in lowercase, encoded', () => {
     const character = characterSchema.parse({ region: 'eu', realm: 'Kel’Thas', name: 'Ëlyndra' });
     expect(characterPath(character)).toBe('/profile/wow/character/kelthas/%C3%ABlyndra');
+  });
+});
+
+describe('who a request comes from', () => {
+  const from = (headers: Record<string, string>) =>
+    visitorKey(new Request('http://localhost/api/check', { headers }));
+
+  it("trusts the web server's X-Real-IP over anything the visitor sent", () => {
+    expect(from({ 'x-real-ip': '203.0.113.7', 'x-forwarded-for': '1.2.3.4, 203.0.113.7' })).toBe(
+      '203.0.113.7',
+    );
+  });
+
+  it('takes the last X-Forwarded-For entry, the one the nearest proxy added', () => {
+    expect(from({ 'x-forwarded-for': 'spoofed, 198.51.100.2' })).toBe('198.51.100.2');
+    expect(from({})).toBe('direct');
   });
 });
 

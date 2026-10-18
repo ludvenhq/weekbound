@@ -42,6 +42,16 @@ export class AppLimit {
   }
 }
 
+// Who a request comes from, for the per-visitor limits. The web server in front sets X-Real-IP
+// from the connection itself; X-Forwarded-For can carry anything the visitor sent, so only its
+// last entry, the one the nearest proxy added, is used, and only when X-Real-IP is missing.
+export function visitorKey(request: Request): string {
+  const real = request.headers.get('x-real-ip')?.trim();
+  if (real) return real;
+  const forwarded = request.headers.get('x-forwarded-for')?.split(',').at(-1)?.trim();
+  return forwarded || 'direct';
+}
+
 // For each visitor: `limit` checks a minute, keyed by address, with old keys dropped.
 export class VisitorLimit {
   private readonly windows = new Map<string, Window>();

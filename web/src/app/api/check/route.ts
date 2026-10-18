@@ -2,7 +2,7 @@ import type { CheckReply } from '@/lib/check/api';
 import { checkRequestSchema } from '@/lib/blizzard/character';
 import { credentials } from '@/lib/blizzard/client';
 import { characterFacts } from '@/lib/blizzard/facts';
-import { VisitorLimit } from '@/lib/blizzard/limits';
+import { visitorKey, VisitorLimit } from '@/lib/blizzard/limits';
 import { resolveRealm } from '@/lib/blizzard/realms';
 
 // Road Check's server (design doc, version 1.1). GET says whether this server has a Blizzard
@@ -25,15 +25,9 @@ export function GET() {
   );
 }
 
-// The visitor's address, as the web server in front passes it on.
-function visitor(request: Request): string {
-  const forwarded = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-  return forwarded || request.headers.get('x-real-ip') || 'direct';
-}
-
 export async function POST(request: Request) {
   if (!credentials()) return reply({ ok: false, error: 'not-configured' }, 503);
-  if (!visitors.take(visitor(request), Date.now())) {
+  if (!visitors.take(visitorKey(request), Date.now())) {
     return reply({ ok: false, error: 'too-many' }, 429);
   }
   let body: unknown;
