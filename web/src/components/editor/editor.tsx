@@ -2,10 +2,11 @@
 
 import { Box, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import { Fragment, useCallback, useMemo, useState, type ReactNode } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { secondaryButton, textButton } from '@/components/buttons';
 import { Fold } from '@/components/fold';
 import { Message } from '@/components/message';
+import { Columns, pageTitle, stickyColumn } from '@/components/page';
 import { makeCode } from '@/lib/editor/check';
 import {
   addStage,
@@ -24,8 +25,9 @@ import {
   versionDraft,
   type Draft,
 } from '@/lib/editor/draft';
-import { roadLink } from '@/lib/road/link';
+import { remixFromHash, roadLink } from '@/lib/road/link';
 import { MAX_LENGTH, MAX_STAGES, MAX_STEPS_PER_STAGE, type Road } from '@/lib/road/schema';
+import { studioRoad } from '@/lib/studio/roads';
 import { CodePanel } from './code-panel';
 import { fieldId, TextField } from './fields';
 import { OpenCode, type OpenMode } from './open-code';
@@ -42,7 +44,7 @@ const PACES = [
     value: 'weekly',
     name: 'Weekly',
     about:
-      'The next stage opens at the first weekly reset after a stage is done. The Slow Road way.',
+      "The next stage opens at the first weekly reset after a stage is done. Slow Road's default.",
   },
   { value: 'free', name: 'Free', about: 'The next stage opens as soon as a stage is done.' },
 ] as const;
@@ -75,13 +77,16 @@ function UndoNote({ text, onUndo }: { text: string; onUndo: () => void }) {
 
 function Loading() {
   return (
-    <Box aria-busy="true" aria-label="Loading the editor">
-      <Box h="40px" w="55%" bg="surface" />
-      <Box mt="12px" h="22px" w="80%" bg="surface" />
-      <Box mt="40px" h="56px" bg="surface" />
-      <Box mt="16px" h="48px" w="50%" bg="surface" />
-      <Box mt="40px" h="180px" bg="surface" />
-    </Box>
+    <Columns template="minmax(0, 1fr) 400px" gap={{ base: '56px', lg: '80px' }}>
+      <Box aria-busy="true" aria-label="Loading the editor">
+        <Box h="52px" w="55%" bg="surface" />
+        <Box mt="14px" h="26px" w="80%" bg="surface" />
+        <Box mt="40px" h="56px" bg="surface" />
+        <Box mt="16px" h="48px" w="50%" bg="surface" />
+        <Box mt="40px" h="180px" bg="surface" />
+      </Box>
+      <Box h="220px" bg="surface" />
+    </Columns>
   );
 }
 
@@ -118,6 +123,23 @@ export function Editor() {
     }),
     [edit, touch],
   );
+
+  // A studio road's page starts a remix with /editor#remix=sr-…, and the link then leaves the
+  // address bar. Like opening a code, it can be undone, so the road the author was making stays.
+  const ready = draft !== null;
+  useEffect(() => {
+    if (!ready) return;
+    const id = remixFromHash(window.location.hash);
+    if (id === null) return;
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    const road = studioRoad(id);
+    if (!road) return;
+    edit(() => remixDraft(road, currentDraft().author), {
+      at: 'top',
+      text: `Started a remix of ${road.title}, by ${road.author}.`,
+    });
+    setTouched(new Set());
+  }, [ready, edit]);
 
   if (!draft) return <Loading />;
   const made = makeCode(draft);
@@ -210,140 +232,142 @@ export function Editor() {
   ));
 
   return (
-    <Stack gap="0">
-      <Heading as="h1" fontFamily="display" fontWeight="600" fontSize="2.5rem" lineHeight="1.05">
-        Make a road.
-      </Heading>
-      <Text mt="10px" color="textMuted" maxW="54ch">
-        A road is stages of steps. Players see three steps at a time and, at weekly pace, one stage
-        a week. The code is made in your browser; nothing is sent anywhere.
-      </Text>
+    <Columns template="minmax(0, 1fr) 400px" gap={{ base: '56px', lg: '80px' }}>
+      <Stack gap="0">
+        <Heading as="h1" {...pageTitle}>
+          Make a road.
+        </Heading>
+        <Text mt="14px" fontSize="1.25rem" color="textMuted" maxW="54ch">
+          A road is stages of steps. Players see three steps at a time and, at weekly pace, one
+          stage a week. The code is made in your browser; nothing is sent anywhere.
+        </Text>
 
-      <Box mt="24px" borderBottomWidth="1px" borderColor="line">
-        <Fold summary="Open a road code to change it or remix it">
-          <OpenCode onOpen={open} />
-        </Fold>
-      </Box>
-      {!isBlank(draft) && (
-        <Flex mt="12px">
+        <Box mt="24px" borderBottomWidth="1px" borderColor="line">
+          <Fold summary="Open a road code to change it or remix it">
+            <OpenCode onOpen={open} />
+          </Fold>
+        </Box>
+        {!isBlank(draft) && (
+          <Flex mt="12px">
+            <chakra.button
+              type="button"
+              css={textButton}
+              color="textMuted"
+              fontSize="1rem"
+              onClick={() => {
+                edit(() => newDraft(draft.author), { at: 'top', text: 'Started a new road.' });
+                setTouched(new Set());
+              }}
+            >
+              Start a new road
+            </chakra.button>
+          </Flex>
+        )}
+        {undo?.at === 'top' && (
+          <chakra.ul m="0" p="0" mt="16px">
+            {undoAt('top')}
+          </chakra.ul>
+        )}
+
+        <Stack as="section" aria-label="The road" gap="18px" mt="32px">
+          <TextField
+            field="title"
+            label="Road name"
+            display="title"
+            max={MAX_LENGTH.title}
+            placeholder="The returning healer"
+            error={error('title')}
+            onBlur={() => touch('title')}
+            value={draft.title}
+            onChange={(title) => edit((d) => ({ ...d, title }))}
+          />
+          <Box maxW="360px">
+            <TextField
+              field="author"
+              label="Your name, as players will see it"
+              max={MAX_LENGTH.author}
+              error={error('author')}
+              onBlur={() => touch('author')}
+              value={draft.author}
+              onChange={(author) => edit((d) => ({ ...d, author }))}
+            />
+          </Box>
+          {draft.basedOn && (
+            <Text fontSize="0.9375rem" color="textMuted">
+              A remix of a road by {draft.basedOn.author} (version {draft.basedOn.rev}). Its code
+              names that road, as CC BY asks.
+            </Text>
+          )}
+          <chakra.fieldset border="0" p="0" m="0">
+            <chakra.legend fontSize="0.9375rem" color="textMuted" mb="4px">
+              Pace
+            </chakra.legend>
+            {PACES.map((pace) => (
+              <chakra.label
+                key={pace.value}
+                display="flex"
+                gap="12px"
+                alignItems="flex-start"
+                py="6px"
+                cursor="pointer"
+              >
+                <chakra.input
+                  type="radio"
+                  name="pace"
+                  value={pace.value}
+                  checked={draft.pace === pace.value}
+                  onChange={() => edit((d) => ({ ...d, pace: pace.value }))}
+                  flex="none"
+                  w="18px"
+                  h="18px"
+                  mt="4px"
+                  css={{ accentColor: '{colors.accent}' }}
+                  _focusVisible={{ outline: '2px solid {colors.text}', outlineOffset: '3px' }}
+                />
+                <Box>
+                  <Text fontWeight="500">{pace.name}</Text>
+                  <Text fontSize="0.9375rem" color="textMuted">
+                    {pace.about}
+                  </Text>
+                </Box>
+              </chakra.label>
+            ))}
+          </chakra.fieldset>
+        </Stack>
+
+        <chakra.ol listStyleType="none" m="0" p="0" mt="40px" display="grid" gap="40px">
+          {stages}
+          {undoAt(`stage:${draft.stages.length}`)}
+        </chakra.ol>
+        {draft.stages.length === 0 && (
+          <Text mt="12px" color="textMuted">
+            No stages yet. A road needs at least one.
+          </Text>
+        )}
+        <Flex mt="28px" align="center" wrap="wrap" gap="8px 18px">
           <chakra.button
+            id={fieldId('stages')}
             type="button"
-            css={textButton}
-            color="textMuted"
-            fontSize="1rem"
+            css={secondaryButton}
+            disabled={draft.stages.length >= MAX_STAGES}
+            _disabled={{ opacity: 0.5, cursor: 'not-allowed' }}
             onClick={() => {
-              edit(() => newDraft(draft.author), { at: 'top', text: 'Started a new road.' });
-              setTouched(new Set());
+              const added = addStage(draft);
+              edit(() => added.draft);
+              focusSoon(`stage.${added.draft.stages.at(-1)!.key}.name`);
             }}
           >
-            Start a new road
+            Add a stage
           </chakra.button>
+          {draft.stages.length >= MAX_STAGES - 5 && (
+            <Text fontSize="0.9375rem" color="textMuted">
+              {draft.stages.length} of {MAX_STAGES} stages
+            </Text>
+          )}
         </Flex>
-      )}
-      {undo?.at === 'top' && (
-        <chakra.ul m="0" p="0" mt="16px">
-          {undoAt('top')}
-        </chakra.ul>
-      )}
-
-      <Stack as="section" aria-label="The road" gap="18px" mt="32px">
-        <TextField
-          field="title"
-          label="Road name"
-          display="title"
-          max={MAX_LENGTH.title}
-          placeholder="The returning healer"
-          error={error('title')}
-          onBlur={() => touch('title')}
-          value={draft.title}
-          onChange={(title) => edit((d) => ({ ...d, title }))}
-        />
-        <Box maxW="360px">
-          <TextField
-            field="author"
-            label="Your name, as players will see it"
-            max={MAX_LENGTH.author}
-            error={error('author')}
-            onBlur={() => touch('author')}
-            value={draft.author}
-            onChange={(author) => edit((d) => ({ ...d, author }))}
-          />
-        </Box>
-        {draft.basedOn && (
-          <Text fontSize="0.9375rem" color="textMuted">
-            A remix of a road by {draft.basedOn.author} (version {draft.basedOn.rev}). Its code
-            names that road, as CC BY asks.
-          </Text>
-        )}
-        <chakra.fieldset border="0" p="0" m="0">
-          <chakra.legend fontSize="0.9375rem" color="textMuted" mb="4px">
-            Pace
-          </chakra.legend>
-          {PACES.map((pace) => (
-            <chakra.label
-              key={pace.value}
-              display="flex"
-              gap="12px"
-              alignItems="flex-start"
-              py="6px"
-              cursor="pointer"
-            >
-              <chakra.input
-                type="radio"
-                name="pace"
-                value={pace.value}
-                checked={draft.pace === pace.value}
-                onChange={() => edit((d) => ({ ...d, pace: pace.value }))}
-                flex="none"
-                w="18px"
-                h="18px"
-                mt="4px"
-                css={{ accentColor: '{colors.accent}' }}
-                _focusVisible={{ outline: '2px solid {colors.text}', outlineOffset: '3px' }}
-              />
-              <Box>
-                <Text fontWeight="500">{pace.name}</Text>
-                <Text fontSize="0.9375rem" color="textMuted">
-                  {pace.about}
-                </Text>
-              </Box>
-            </chakra.label>
-          ))}
-        </chakra.fieldset>
       </Stack>
 
-      <chakra.ol listStyleType="none" m="0" p="0" mt="40px" display="grid" gap="40px">
-        {stages}
-        {undoAt(`stage:${draft.stages.length}`)}
-      </chakra.ol>
-      {draft.stages.length === 0 && (
-        <Text mt="12px" color="textMuted">
-          No stages yet. A road needs at least one.
-        </Text>
-      )}
-      <Flex mt="28px" align="center" wrap="wrap" gap="8px 18px">
-        <chakra.button
-          id={fieldId('stages')}
-          type="button"
-          css={secondaryButton}
-          disabled={draft.stages.length >= MAX_STAGES}
-          _disabled={{ opacity: 0.5, cursor: 'not-allowed' }}
-          onClick={() => {
-            const added = addStage(draft);
-            edit(() => added.draft);
-            focusSoon(`stage.${added.draft.stages.at(-1)!.key}.name`);
-          }}
-        >
-          Add a stage
-        </chakra.button>
-        {draft.stages.length >= MAX_STAGES - 5 && (
-          <Text fontSize="0.9375rem" color="textMuted">
-            {draft.stages.length} of {MAX_STAGES} stages
-          </Text>
-        )}
-      </Flex>
-
-      <Box mt="56px">
+      <Box {...stickyColumn}>
         <CodePanel
           draft={draft}
           made={made}
@@ -356,6 +380,6 @@ export function Editor() {
           }}
         />
       </Box>
-    </Stack>
+    </Columns>
   );
 }

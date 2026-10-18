@@ -1,0 +1,131 @@
+{
+  "summary": "Back after a break? Ignore the noise, do these.",
+  "about": "For a character back in Midnight after a break, from a few months to a few years. Retail shows you dozens of quests at once; this road keeps three on the table each week: the story to level 90, enough gear for group content, and your first Great Vault. Everything else can wait. Five short stages, then pick your next road.",
+  "season": "Midnight Season 2 (patch 12.1.5)",
+  "checked": "2026-10-18",
+  "road": {
+    "v": 1,
+    "id": "sr-returning-player",
+    "rev": 1,
+    "title": "Returning Player",
+    "pace": "weekly",
+    "author": "Ludven",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Clear the noise",
+        "steps": [
+          {
+            "id": "one-character",
+            "type": "manual",
+            "label": "Pick one character and one spec for this season; your alts can wait"
+          },
+          {
+            "id": "untrack-side-quests",
+            "type": "manual",
+            "label": "Untrack every side quest, so only the campaign shows on your screen"
+          },
+          {
+            "id": "story-eversong",
+            "type": "achievement",
+            "label": "Finish the Eversong Woods story (Eversong In Reprise)",
+            "achievementId": 41802
+          }
+        ]
+      },
+      {
+        "name": "The road to 90",
+        "steps": [
+          {
+            "id": "story-zulaman",
+            "type": "achievement",
+            "label": "Finish the Zul'Aman story (For Zul'Aman!)",
+            "achievementId": 41803
+          },
+          {
+            "id": "story-harandar",
+            "type": "achievement",
+            "label": "Finish the Harandar story (One Does Not Simply Walk Into Harandar)",
+            "achievementId": 41804
+          },
+          {
+            "id": "story-voidstorm",
+            "type": "achievement",
+            "label": "Finish the Voidstorm story (Breaching the Voidstorm)",
+            "achievementId": 41806
+          }
+        ]
+      },
+      {
+        "name": "First gear",
+        "steps": [
+          {
+            "id": "story-midnight",
+            "type": "achievement",
+            "label": "Finish the whole Midnight story, Arator's chapters too (Midnight)",
+            "achievementId": 42045
+          },
+          {
+            "id": "first-delve",
+            "type": "achievement",
+            "label": "Finish your first delve (Midnight Delves: Tier 1)",
+            "achievementId": 61832
+          },
+          {
+            "id": "ilvl-266",
+            "type": "item-level",
+            "label": "Reach item level 266, enough to queue for Heroic dungeons",
+            "n": 266
+          }
+        ]
+      },
+      {
+        "name": "Your first vault",
+        "steps": [
+          {
+            "id": "vault-world",
+            "type": "vault",
+            "label": "Do two delves, prey hunts or weekly world activities for a Great Vault slot",
+            "row": "world",
+            "n": 1
+          },
+          {
+            "id": "vault-dungeon",
+            "type": "vault",
+            "label": "Run one Heroic or Mythic dungeon this week for a Great Vault slot",
+            "row": "dungeon",
+            "n": 1
+          },
+          {
+            "id": "first-prey",
+            "type": "achievement",
+            "label": "Hunt your first Prey on Normal (Prey: Normal Mode I)",
+            "achievementId": 61387
+          }
+        ]
+      },
+      {
+        "name": "Pick your lane",
+        "steps": [
+          {
+            "id": "ilvl-286",
+            "type": "item-level",
+            "label": "Reach item level 286, ready for Normal raids and Mythic 0 dungeons",
+            "n": 286
+          },
+          {
+            "id": "first-house",
+            "type": "achievement",
+            "label": "Move into your first house (Welcome Home)",
+            "achievementId": 61211
+          },
+          {
+            "id": "next-road",
+            "type": "manual",
+            "label": "Pick your next road: The Long Season for a whole season, or First Steps in Rated PvP"
+          }
+        ]
+      }
+    ]
+  }
+}

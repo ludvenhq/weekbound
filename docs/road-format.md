@@ -154,8 +154,9 @@ concerns R3-3, R3-4, R3-15 and R3-36 this way. Each can be changed while no code
   150 to 180 short steps fit.
 - **Inputs per step type.** Item level, ratings, renown and amounts are whole numbers ("1,500" is
   read as 1500); the PvP bracket, the vault row and its 1 to 3 slots are picked from a list;
-  Solo Shuffle and Blitz pick a spec from a list or take a spec id ("another spec", for Midnight's
-  Devourer, whose id is not checked yet). Achievement, quest, title, faction and currency ids take
+  Solo Shuffle and Blitz pick a spec from a list or take a spec id ("another spec", for a spec
+  newer than the list; Devourer, 1480, joined the list in build step 4). Achievement, quest, title,
+  faction and currency ids take
   the number or a Wowhead link (`wowhead.com/achievement=12345`). Mount ids are the Mount
   Journal's, typed by hand: Wowhead's mount pages carry spell or item ids.
 - **Not yet:** searching achievements, mounts, titles and factions by name. It needs the game data
@@ -163,3 +164,25 @@ concerns R3-3, R3-4, R3-15 and R3-36 this way. Each can be changed while no code
 - **A road link**, `/my-road#road=<code>`, starts a road on My road the way pasting its code does.
   The code stays in the part after `#`, which no server sees. The editor's "Walk this road" uses
   it.
+
+## Studio roads (2026-10-18, build step 4)
+
+- **Where they live:** one JSON file per road in `roads/` at the repository root, shared with the
+  addon, with a CC BY 4.0 notice of their own (`roads/README.md`, review concern R3-9). A file
+  holds the road and what the gallery shows about it: a one-line `summary`, an `about` paragraph,
+  the `season` it was written for and the date its ids were `checked`.
+- **How they travel:** by id, never by code. `/my-road#walk=sr-<name>` makes one the active road;
+  `/editor#remix=sr-<name>` opens a remix of it (a new `p-` road whose `basedOn` names it). Their
+  pages are `/roads/<name>`.
+- **On My road** a studio road is never stored with the player's own roads: the saved state keeps
+  only its id (as the active road) and its marks, so a newer `rev` shipped with the site keeps
+  every tick on the steps it keeps. "Your roads" lists the studio roads the player has started,
+  with no Remove.
+- **The cap:** a test checks that every studio road's code fits the 24 KB cap (R3-36), although
+  a studio road never travels as a code.
+- **Season-bound ids:** a studio road may use the live season's achievements (ranks, Keystone
+  achievements, Ahead of the Curve); each season the studio ships a new `rev` with the new ids.
+- **Open: title ids.** The game has two ids per title: the row id that Wowhead and (probably) the
+  Blizzard API use, and the mask id that `IsTitleKnown` takes. `titleId` must name one of them
+  before the addon or Road Check reads it; until then the studio roads use the achievement that
+  grants a title instead of a `title` step.

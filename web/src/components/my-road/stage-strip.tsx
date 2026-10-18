@@ -17,7 +17,7 @@ export function StageStrip({
       ? `${done} of ${count} stages done`
       : `Stage ${current + 1} of ${count}, ${done} done`;
   return (
-    <Flex role="img" aria-label={label} align="center" mt="18px">
+    <Flex role="img" aria-label={label} align="center" mt="22px">
       {Array.from({ length: count }, (_, index) => {
         const isDone = index < done;
         const isNow = index === current;
@@ -29,15 +29,15 @@ export function StageStrip({
               <Box
                 h="2px"
                 flex="1"
-                maxW="56px"
+                maxW="72px"
                 bg={reached ? 'accent' : 'locked'}
                 opacity={reached ? 1 : 0.6}
               />
             )}
             <Box
               flex="none"
-              w="12px"
-              h="12px"
+              w="14px"
+              h="14px"
               transform="rotate(45deg)"
               borderWidth="2px"
               borderColor={isDone ? 'accent' : isNow ? 'primary' : 'locked'}

@@ -2,7 +2,7 @@
   "name": "slow-road-web",
   "version": "0.1.0",
   "private": true,
-  "description": "The Slow Road website: clear, slow roads for World of Warcraft retail.",
+  "description": "Slow Road website: clear, slow roads for World of Warcraft retail.",
   "license": "MIT",
   "type": "module",
   "engines": {

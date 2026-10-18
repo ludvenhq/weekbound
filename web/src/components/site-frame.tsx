@@ -6,7 +6,7 @@ import { ThemeToggle } from './theme-toggle';
 
 export function PageWidth({ children }: { children: ReactNode }) {
   return (
-    <Container maxW="1120px" px={{ base: '16px', sm: '24px' }}>
+    <Container maxW="1280px" px={{ base: '16px', sm: '24px' }}>
       {children}
     </Container>
   );
@@ -31,15 +31,15 @@ export function SiteHeader() {
             gap="10px"
             fontFamily="display"
             fontWeight="600"
-            fontSize="1.75rem"
+            fontSize="2rem"
             textDecoration="none"
             _focusVisible={{ outline: '2px solid {colors.text}', outlineOffset: '3px' }}
           >
             <NextLink href="/">
               <Box
                 aria-hidden
-                w="12px"
-                h="12px"
+                w="14px"
+                h="14px"
                 transform="rotate(45deg)"
                 borderWidth="2px"
                 borderColor="accent"
@@ -53,9 +53,10 @@ export function SiteHeader() {
             aria-label="Main"
             align="center"
             gap={{ base: '22px', sm: '28px' }}
-            fontSize="1.0625rem"
+            fontSize="1.125rem"
           >
             <NavLink href="/my-road">My road</NavLink>
+            <NavLink href="/roads">Roads</NavLink>
             <NavLink href="/editor">Make a road</NavLink>
             <ThemeToggle />
           </Flex>
@@ -69,13 +70,7 @@ export function SiteFooter() {
   return (
     <Box as="footer" borderTopWidth="1px" borderColor="line" pt="56px" pb="80px">
       <PageWidth>
-        <Flex
-          wrap="wrap"
-          gap="12px 40px"
-          justify="space-between"
-          fontSize="0.9375rem"
-          color="textMuted"
-        >
+        <Flex wrap="wrap" gap="12px 40px" justify="space-between" fontSize="1rem" color="textMuted">
           <Text>Slow Road, made by Ludven, a small studio. Code MIT, roads CC BY 4.0.</Text>
           <Text>
             Fan tool. Not affiliated with Blizzard Entertainment. World of Warcraft is a trademark

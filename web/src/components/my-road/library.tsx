@@ -6,19 +6,25 @@ import { secondaryButton, textButton } from '@/components/buttons';
 import { CodeBox } from '@/components/code-box';
 import { Fold } from '@/components/fold';
 import { Message } from '@/components/message';
+import type { Road } from '@/lib/road/schema';
+import { isStudioId } from '@/lib/studio/roads';
 import { BACKUP_MESSAGES, decodeBackup, encodeBackup } from '@/lib/walk/backup';
 import type { Region } from '@/lib/walk/reset';
-import { marksOf, type Saved } from '@/lib/walk/saved';
+import { marksOf, yourRoads, type Saved } from '@/lib/walk/saved';
 import { position } from '@/lib/walk/walk';
 import { CodeField } from './paste-road';
 
+// The studio roads the player has started, then their own. A studio road ships with the site, so
+// it has no Remove.
 export function YourRoads({
+  roads,
   saved,
   region,
   now,
   onWalk,
   onRemove,
 }: {
+  roads: Road[];
   saved: Saved;
   region: Region;
   now: number;
@@ -26,46 +32,50 @@ export function YourRoads({
   onRemove: (id: string) => void;
 }) {
   return (
-    <Fold summary={`Your roads (${saved.library.length})`}>
-      <chakra.ul listStyleType="none" m="0" p="0" display="grid" gap="8px">
-        {saved.library.map((road) => {
-          const where = position(road, marksOf(saved, road.id), region, now);
-          const status =
-            where.kind === 'complete'
-              ? 'complete'
-              : where.kind === 'camp'
-                ? `camp after stage ${where.stage + 1}`
-                : `stage ${where.stage + 1} of ${road.stages.length}`;
-          const active = road.id === saved.active;
-          return (
-            <Flex
-              as="li"
-              key={road.id}
-              justify="space-between"
-              align="center"
-              wrap="wrap"
-              gap="8px 20px"
-              px="16px"
-              py="12px"
-              bg="surface"
-              borderWidth="1px"
-              borderColor="line"
-            >
-              <Box minW="0">
-                <Text fontFamily="display" fontWeight="600" fontSize="1.375rem" lineHeight="1.15">
-                  {road.title}
-                </Text>
-                <Text fontSize="0.9375rem" color="textMuted">
-                  by {road.author}, version {road.rev}, {status}
-                  {active && ', your road now'}
-                </Text>
-              </Box>
-              <Flex gap="18px" fontSize="1rem">
-                {!active && (
-                  <chakra.button type="button" css={textButton} onClick={() => onWalk(road.id)}>
-                    Walk this road
-                  </chakra.button>
-                )}
+    <chakra.ul listStyleType="none" m="0" p="0" display="grid" gap="8px">
+      {roads.map((road) => {
+        const where = position(road, marksOf(saved, road.id), region, now);
+        const status =
+          where.kind === 'complete'
+            ? 'complete'
+            : where.kind === 'camp'
+              ? `camp after stage ${where.stage + 1}`
+              : `stage ${where.stage + 1} of ${road.stages.length}`;
+        const active = road.id === saved.active;
+        return (
+          <Flex
+            as="li"
+            key={road.id}
+            direction="column"
+            gap="8px"
+            px="18px"
+            py="14px"
+            bg="surface"
+            borderWidth="1px"
+            borderColor={active ? 'lineStrong' : 'line'}
+          >
+            <Box minW="0">
+              <Text
+                fontFamily="display"
+                fontWeight="600"
+                fontSize="1.5rem"
+                lineHeight="1.15"
+                overflowWrap="anywhere"
+              >
+                {road.title}
+              </Text>
+              <Text mt="2px" fontSize="1rem" color="textMuted">
+                by {road.author}, version {road.rev}, {status}
+                {active && ', your road now'}
+              </Text>
+            </Box>
+            <Flex gap="18px" fontSize="1rem" _empty={{ display: 'none' }}>
+              {!active && (
+                <chakra.button type="button" css={textButton} onClick={() => onWalk(road.id)}>
+                  Walk this road
+                </chakra.button>
+              )}
+              {!isStudioId(road.id) && (
                 <chakra.button
                   type="button"
                   css={textButton}
@@ -74,19 +84,19 @@ export function YourRoads({
                 >
                   Remove
                 </chakra.button>
-              </Flex>
+              )}
             </Flex>
-          );
-        })}
-      </chakra.ul>
-    </Fold>
+          </Flex>
+        );
+      })}
+    </chakra.ul>
   );
 }
 
 // The backup code for this browser, and the box that restores one from another browser.
 export function Backup({ saved, onRestore }: { saved: Saved; onRestore: (next: Saved) => void }) {
   const [pending, setPending] = useState<Saved | null>(null);
-  const hasRoads = saved.library.length > 0;
+  const hasRoads = yourRoads(saved).length > 0;
   const encoded = hasRoads ? encodeBackup(saved) : null;
 
   return (

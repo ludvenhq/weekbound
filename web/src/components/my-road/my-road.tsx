@@ -3,11 +3,14 @@
 import { Box, chakra, Flex, Heading, Stack, Text, VisuallyHidden } from '@chakra-ui/react';
 import { Fragment, useCallback, useEffect, useState, type ReactNode } from 'react';
 import { secondaryButton, textButton } from '@/components/buttons';
-import { Fold } from '@/components/fold';
 import { Message, type Tone } from '@/components/message';
+import { Columns, pageTitle, SideSection } from '@/components/page';
+import { Signpost } from '@/components/signpost';
+import { TextLink } from '@/components/text-link';
 import { DECODE_MESSAGES, decodeRoad } from '@/lib/road/code';
-import { codeFromHash } from '@/lib/road/link';
+import { codeFromHash, walkFromHash } from '@/lib/road/link';
 import type { Road } from '@/lib/road/schema';
+import { roadPage, STUDIO_ROADS, studioRoad } from '@/lib/studio/roads';
 import { guessRegion, type Region } from '@/lib/walk/reset';
 import {
   activate,
@@ -18,6 +21,7 @@ import {
   removeRoad,
   replaceRoad,
   setRegion,
+  yourRoads,
   type Saved,
 } from '@/lib/walk/saved';
 import { position, recap, withMark, type Mark, type Recap } from '@/lib/walk/walk';
@@ -82,16 +86,22 @@ function RecapNote({ recap, onDismiss }: { recap: Recap; onDismiss: () => void }
 
 function Loading() {
   return (
-    <Box aria-busy="true" aria-label="Loading your road">
-      <Box h="40px" w="60%" bg="surface" />
-      <Box mt="10px" h="22px" w="40%" bg="surface" />
-      <Box mt="18px" h="12px" w="180px" bg="surface" />
-      <Stack mt="26px" gap="8px">
-        {[0, 1, 2].map((row) => (
-          <Box key={row} h="64px" bg="surface" />
-        ))}
+    <Columns template="minmax(0, 1fr) 360px" gap={{ base: '56px', lg: '88px' }}>
+      <Box aria-busy="true" aria-label="Loading your road">
+        <Box h="52px" w="60%" bg="surface" />
+        <Box mt="12px" h="26px" w="40%" bg="surface" />
+        <Box mt="22px" h="14px" w="220px" bg="surface" />
+        <Stack mt="30px" gap="10px">
+          {[0, 1, 2].map((row) => (
+            <Box key={row} h="76px" bg="surface" />
+          ))}
+        </Stack>
+      </Box>
+      <Stack gap="40px">
+        <Box h="140px" bg="surface" />
+        <Box h="100px" bg="surface" />
       </Stack>
-    </Box>
+    </Columns>
   );
 }
 
@@ -148,22 +158,47 @@ export function MyRoad() {
     toTop();
   }, []);
 
-  // A road handed over in a link (/my-road#road=SR1!…, from the editor or another player) is
-  // started like a pasted one, then the code leaves the address bar.
+  // A studio road ships with the site, so starting it only makes it the active road. Its
+  // progress, if the player walked it before, is where they left it.
+  const walkStudio = useCallback((id: string) => {
+    setNewer(null);
+    setRecapNote(null);
+    const road = studioRoad(id);
+    if (!road) {
+      setNotice({ tone: 'error', text: "We don't know that road. Pick one from the roads." });
+    } else if (currentSaved().active === id) {
+      setNotice({ tone: 'info', text: `${road.title} is your road already.` });
+    } else {
+      updateSaved((current) => activate(current, id));
+      setNotice({ tone: 'success', text: `${road.title} is your road now.` });
+    }
+    toTop();
+  }, []);
+
+  // A road handed over in a link is started like a pasted one, then the link leaves the address
+  // bar: a code (/my-road#road=SR1!…, from the editor or another player) or a studio road
+  // (/my-road#walk=sr-…, from its page).
   useEffect(() => {
     if (!snapshot) return;
-    const code = codeFromHash(window.location.hash);
-    if (code === null) return;
+    const { hash } = window.location;
+    const code = codeFromHash(hash);
+    const walk = walkFromHash(hash);
+    if (code === null && walk === null) return;
     window.history.replaceState(null, '', window.location.pathname + window.location.search);
-    const result = decodeRoad(code);
-    if (result.ok) startRoad(result.road);
-    else setNotice({ tone: 'error', text: DECODE_MESSAGES[result.error] });
-  }, [snapshot, startRoad]);
+    if (walk !== null) {
+      walkStudio(walk);
+    } else if (code !== null) {
+      const result = decodeRoad(code);
+      if (result.ok) startRoad(result.road);
+      else setNotice({ tone: 'error', text: DECODE_MESSAGES[result.error] });
+    }
+  }, [snapshot, startRoad, walkStudio]);
 
   if (!snapshot) return <Loading />;
   const { saved, stored } = snapshot;
   const region = regionOf(saved);
   const road = findRoad(saved, saved.active);
+  const roads = yourRoads(saved);
 
   function mark(target: Road, stepId: string, state: Mark['state'] | null) {
     const at = Date.now();
@@ -196,121 +231,141 @@ export function MyRoad() {
   }
 
   return (
-    <Stack gap="20px">
-      <VisuallyHidden aria-live="polite">{announcement}</VisuallyHidden>
+    <Columns template="minmax(0, 1fr) 360px" gap={{ base: '56px', lg: '88px' }}>
+      <Stack gap="20px">
+        <VisuallyHidden aria-live="polite">{announcement}</VisuallyHidden>
 
-      {!stored && (
-        <Message tone="warning">
-          This browser isn&apos;t saving your progress (a private window, or blocked site data). It
-          lasts until you close this tab; a backup code keeps it.
-        </Message>
-      )}
-      {recapNote && road && <RecapNote recap={recapNote} onDismiss={() => setRecapNote(null)} />}
-      {notice && (
-        <Box animation="arrive 250ms ease-out">
-          <Message tone={notice.tone}>{notice.text}</Message>
-        </Box>
-      )}
-      {newer && (
-        <Message tone="info">
-          <Text>
-            You have version {newer.current.rev} of {newer.current.title} by {newer.current.author}.
-            Replace it with version {newer.incoming.rev}? Your progress stays.
-          </Text>
-          <Flex mt="12px" gap="18px" align="center" wrap="wrap">
-            <chakra.button
-              type="button"
-              css={secondaryButton}
-              onClick={() => {
-                updateSaved((current) => replaceRoad(current, newer.incoming));
-                setNotice({
-                  tone: 'success',
-                  text: `${newer.incoming.title} is now version ${newer.incoming.rev}. Your progress stayed.`,
-                });
-                setNewer(null);
-              }}
-            >
-              Replace with version {newer.incoming.rev}
-            </chakra.button>
-            <chakra.button type="button" css={textButton} onClick={() => setNewer(null)}>
-              Keep version {newer.current.rev}
-            </chakra.button>
-          </Flex>
-        </Message>
-      )}
-
-      <Box>
-        {road ? (
-          <RoadView
-            road={road}
-            marks={marksOf(saved, road.id)}
-            region={region}
-            now={now}
-            celebrate={celebrate}
-            onMark={(stepId, state) => mark(road, stepId, state)}
-            onRegion={(next) => updateSaved((current) => setRegion(current, next))}
-          />
-        ) : (
-          <Box>
-            <Heading
-              as="h1"
-              fontFamily="display"
-              fontWeight="600"
-              fontSize="2.5rem"
-              lineHeight="1.05"
-            >
-              No road yet.
-            </Heading>
-            <Text mt="10px" mb="26px" color="textMuted" maxW="44ch">
-              Paste a road code to start walking it. The studio&apos;s first roads come soon.
-            </Text>
-            <PasteRoad primary onRoad={startRoad} />
+        {!stored && (
+          <Message tone="warning">
+            This browser isn&apos;t saving your progress (a private window, or blocked site data).
+            It lasts until you close this tab; a backup code keeps it.
+          </Message>
+        )}
+        {recapNote && road && <RecapNote recap={recapNote} onDismiss={() => setRecapNote(null)} />}
+        {notice && (
+          <Box animation="arrive 250ms ease-out">
+            <Message tone={notice.tone}>{notice.text}</Message>
           </Box>
         )}
-      </Box>
-
-      <Box mt="14px" borderBottomWidth="1px" borderColor="line">
-        {road && (
-          <Fold summary="Start another road">
-            <PasteRoad primary={false} onRoad={startRoad} />
-          </Fold>
+        {newer && (
+          <Message tone="info">
+            <Text>
+              You have version {newer.current.rev} of {newer.current.title} by{' '}
+              {newer.current.author}. Replace it with version {newer.incoming.rev}? Your progress
+              stays.
+            </Text>
+            <Flex mt="12px" gap="18px" align="center" wrap="wrap">
+              <chakra.button
+                type="button"
+                css={secondaryButton}
+                onClick={() => {
+                  updateSaved((current) => replaceRoad(current, newer.incoming));
+                  setNotice({
+                    tone: 'success',
+                    text: `${newer.incoming.title} is now version ${newer.incoming.rev}. Your progress stayed.`,
+                  });
+                  setNewer(null);
+                }}
+              >
+                Replace with version {newer.incoming.rev}
+              </chakra.button>
+              <chakra.button type="button" css={textButton} onClick={() => setNewer(null)}>
+                Keep version {newer.current.rev}
+              </chakra.button>
+            </Flex>
+          </Message>
         )}
-        {saved.library.length > 0 && (
-          <YourRoads
+
+        <Box>
+          {road ? (
+            <RoadView
+              road={road}
+              marks={marksOf(saved, road.id)}
+              region={region}
+              now={now}
+              celebrate={celebrate}
+              page={roadPage(road.id)}
+              onMark={(stepId, state) => mark(road, stepId, state)}
+              onRegion={(next) => updateSaved((current) => setRegion(current, next))}
+            />
+          ) : (
+            <Box>
+              <Heading as="h1" {...pageTitle}>
+                No road yet.
+              </Heading>
+              <Text mt="14px" mb="36px" fontSize="1.25rem" color="textMuted" maxW="44ch">
+                Pick one of the studio&apos;s roads and see its first three steps, or paste a road
+                code.
+              </Text>
+              <Signpost
+                arms={STUDIO_ROADS.map((studio) => ({
+                  road: studio.road,
+                  summary: studio.summary,
+                  action: 'Walk',
+                  onPick: () => walkStudio(studio.road.id),
+                }))}
+              />
+              <Box mt="56px">
+                <PasteRoad primary onRoad={startRoad} />
+              </Box>
+            </Box>
+          )}
+        </Box>
+      </Stack>
+
+      <Stack as="aside" aria-label="Your roads and backup" gap="40px">
+        {roads.length > 0 && (
+          <SideSection title="Your roads">
+            <YourRoads
+              roads={roads}
+              saved={saved}
+              region={region}
+              now={now}
+              onWalk={(id) => {
+                updateSaved((current) => activate(current, id));
+                setNotice(null);
+                setRecapNote(null);
+                toTop();
+              }}
+              onRemove={(id) => {
+                const title = findRoad(saved, id)?.title;
+                updateSaved((current) => removeRoad(current, id));
+                setRecapNote(null);
+                setNotice({
+                  tone: 'info',
+                  text: `Removed ${title}. Its progress stays in this browser: paste its code again to continue where you stopped.`,
+                });
+                toTop();
+              }}
+            />
+          </SideSection>
+        )}
+        {road && (
+          <SideSection title="Start another road">
+            <Stack gap="20px">
+              <Text color="textMuted">
+                Your ticks on this road stay, and so does its weekly lock. Pick one of{' '}
+                <TextLink href="/roads">the studio&apos;s roads</TextLink>, or paste a code.
+              </Text>
+              <PasteRoad primary={false} onRoad={startRoad} />
+            </Stack>
+          </SideSection>
+        )}
+        <Box borderBottomWidth="1px" borderColor="line">
+          <Backup
             saved={saved}
-            region={region}
-            now={now}
-            onWalk={(id) => {
-              updateSaved((current) => activate(current, id));
-              setNotice(null);
-              setRecapNote(null);
-              toTop();
-            }}
-            onRemove={(id) => {
-              const title = findRoad(saved, id)?.title;
-              updateSaved((current) => removeRoad(current, id));
+            onRestore={(next) => {
+              updateSaved((current) => ({ ...next, lastVisit: current.lastVisit }));
               setRecapNote(null);
               setNotice({
-                tone: 'info',
-                text: `Removed ${title}. Its progress stays in this browser: paste its code again to continue where you stopped.`,
+                tone: 'success',
+                text: 'Restored. The roads and progress from the backup are here now.',
               });
               toTop();
             }}
           />
-        )}
-        <Backup
-          saved={saved}
-          onRestore={(next) => {
-            updateSaved((current) => ({ ...next, lastVisit: current.lastVisit }));
-            setRecapNote(null);
-            setNotice({
-              tone: 'success',
-              text: 'Restored. The roads and progress from the backup are here now.',
-            });
-            toTop();
-          }}
-        />
-      </Box>
-    </Stack>
+        </Box>
+      </Stack>
+    </Columns>
   );
 }

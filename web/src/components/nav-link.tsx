@@ -6,7 +6,9 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 export function NavLink({ href, children }: { href: string; children: ReactNode }) {
-  const here = usePathname() === href;
+  const path = usePathname();
+  // A road's page sits under the roads.
+  const here = path === href || path.startsWith(`${href}/`);
   return (
     <Link
       asChild

@@ -20,10 +20,10 @@ export function Camp({ title, children }: { title: string; children: ReactNode }
   return (
     <Flex
       role="status"
-      mt="26px"
+      mt="30px"
       gap="18px"
       align="flex-start"
-      p="22px"
+      p="28px"
       borderWidth="1px"
       borderColor="lineStrong"
       bg="surface"
@@ -33,7 +33,7 @@ export function Camp({ title, children }: { title: string; children: ReactNode }
         {TENT}
       </Box>
       <Box>
-        <Text fontFamily="display" fontWeight="600" fontSize="1.75rem" lineHeight="1.1">
+        <Text fontFamily="display" fontWeight="600" fontSize="2.125rem" lineHeight="1.1">
           {title}
         </Text>
         {children}

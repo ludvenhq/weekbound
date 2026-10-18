@@ -1,6 +1,8 @@
 'use client';
 
 import { Box, chakra, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { pageTitle } from '@/components/page';
+import { TextLink } from '@/components/text-link';
 import type { Road } from '@/lib/road/schema';
 import { lastReset, RESETS, type Region } from '@/lib/walk/reset';
 import { position, stageView, type Mark, type Marks } from '@/lib/walk/walk';
@@ -44,10 +46,13 @@ export function RoadView({
   region,
   now,
   celebrate,
+  page,
   onMark,
   onRegion,
 }: {
   road: Road;
+  // A studio road's page, where the whole road can be read.
+  page?: string;
   marks: Marks;
   region: Region;
   now: number;
@@ -67,22 +72,16 @@ export function RoadView({
     <Box>
       <Flex justify="space-between" align="flex-end" wrap="wrap" gap="12px 16px">
         <Box minW="0">
-          <Heading
-            as="h1"
-            {...display}
-            fontSize={{ base: '2rem', md: '2.5rem' }}
-            lineHeight="1.05"
-            overflowWrap="anywhere"
-          >
+          <Heading as="h1" {...pageTitle} overflowWrap="anywhere">
             {road.title}
           </Heading>
-          <Text mt="6px" fontSize="1.1875rem">
+          <Text mt="10px" fontSize="1.375rem">
             {where.kind === 'complete' ? (
               'Road complete.'
             ) : (
               <>
                 Stage {stageIndex + 1} of {count}:{' '}
-                <chakra.span {...display} fontSize="1.3rem">
+                <chakra.span {...display} fontSize="1.625rem">
                   {stage.name}
                 </chakra.span>
               </>
@@ -90,13 +89,18 @@ export function RoadView({
           </Text>
         </Box>
         <Stack
-          gap="2px"
-          fontSize="0.9375rem"
+          gap="4px"
+          fontSize="1rem"
           color="textMuted"
           textAlign={{ base: 'left', md: 'right' }}
         >
           <Text>
             by {road.author}, {road.pace === 'weekly' ? 'weekly pace' : 'free pace'}
+            {page && (
+              <>
+                , <TextLink href={page}>the whole road</TextLink>
+              </>
+            )}
           </Text>
           <RegionSelect region={region} onChange={onRegion} />
         </Stack>
@@ -109,7 +113,7 @@ export function RoadView({
       />
 
       {where.kind !== 'complete' && view.rows.length > 0 && (
-        <chakra.ul listStyleType="none" m="0" p="0" mt="26px" display="grid" gap="8px">
+        <chakra.ul listStyleType="none" m="0" p="0" mt="30px" display="grid" gap="10px">
           {view.rows.map((row) => (
             <TickRow
               key={row.step.id}
@@ -123,7 +127,7 @@ export function RoadView({
       )}
 
       {where.kind === 'walking' && (view.fogged > 0 || view.earlier > 0) && (
-        <Stack gap="2px" mt="14px" fontSize="1rem" color="textMuted">
+        <Stack gap="2px" mt="16px" fontSize="1.0625rem" color="textMuted">
           {view.fogged > 0 && (
             <Text>
               {view.fogged === 1 ? 'One more step' : `${n(view.fogged)} more steps`} in this stage,
@@ -141,10 +145,10 @@ export function RoadView({
 
       {where.kind === 'camp' && (
         <Camp title="Make camp.">
-          <Text mt="6px" fontSize="1.0625rem">
+          <Text mt="6px" fontSize="1.1875rem">
             The road opens on {RESETS[region].day}, at the {RESETS[region].name} reset.
           </Text>
-          <Text mt="6px" fontSize="0.9375rem" color="textMuted">
+          <Text mt="6px" fontSize="1rem" color="textMuted">
             Stage {where.stage + 2}, {road.stages[where.stage + 1]?.name}:{' '}
             {stepCount(road.stages[where.stage + 1]?.steps.length ?? 0)} waiting.{' '}
             {localTime(where.opensAt)}, your time.
@@ -154,12 +158,13 @@ export function RoadView({
 
       {where.kind === 'complete' && (
         <Camp title="You walked the whole road.">
-          <Text mt="6px" fontSize="1.0625rem">
+          <Text mt="6px" fontSize="1.1875rem">
             {count === 1 ? 'Its one stage' : count === 2 ? 'Both stages' : `All ${n(count)} stages`}{' '}
             of {road.title}, done.
           </Text>
-          <Text mt="6px" fontSize="0.9375rem" color="textMuted">
-            Pick your next road: paste its code below.
+          <Text mt="6px" fontSize="1rem" color="textMuted">
+            Pick your next road from <TextLink href="/roads">the studio&apos;s roads</TextLink>, or
+            paste its code below.
           </Text>
         </Camp>
       )}

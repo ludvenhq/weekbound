@@ -33,7 +33,7 @@ export function TickRow({
     <Flex
       as="li"
       align="stretch"
-      minH="64px"
+      minH="76px"
       bg="surface"
       borderWidth="1px"
       borderColor="line"
@@ -48,9 +48,9 @@ export function TickRow({
         flex="1"
         display="flex"
         alignItems="center"
-        gap="16px"
-        px="16px"
-        py="12px"
+        gap={{ base: '14px', sm: '18px' }}
+        px={{ base: '14px', sm: '20px' }}
+        py="14px"
         bg="none"
         color="inherit"
         textAlign="left"
@@ -60,8 +60,8 @@ export function TickRow({
       >
         <Box
           flex="none"
-          w="24px"
-          h="24px"
+          w={{ base: '24px', sm: '28px' }}
+          h={{ base: '24px', sm: '28px' }}
           display="grid"
           placeItems="center"
           borderWidth="2px"
@@ -76,7 +76,7 @@ export function TickRow({
         <Box minW="0">
           <Text
             fontWeight="500"
-            fontSize="1.125rem"
+            fontSize={{ base: '1.125rem', sm: '1.25rem' }}
             lineHeight="1.3"
             color={done ? 'textMuted' : 'text'}
             overflowWrap="anywhere"
@@ -85,7 +85,7 @@ export function TickRow({
           </Text>
           {meta && (
             <Text
-              fontSize="0.9375rem"
+              fontSize={{ base: '1rem', sm: '1.0625rem' }}
               color="textMuted"
               fontVariantNumeric="lining-nums tabular-nums"
             >
@@ -104,10 +104,10 @@ export function TickRow({
         flex="none"
         borderLeftWidth="1px"
         borderColor="line"
-        px="18px"
+        px={{ base: '14px', sm: '22px' }}
         bg="none"
         color="textMuted"
-        fontSize="0.9375rem"
+        fontSize="1rem"
         cursor="pointer"
         _hover={{ color: 'text', bg: 'surfaceHover' }}
         _focusVisible={{ outline: '2px solid {colors.text}', outlineOffset: '3px' }}

@@ -1,0 +1,204 @@
+{
+  "summary": "A whole season at Wrath pace, PvE and PvP.",
+  "about": "One season of Midnight at the pace of Wrath of the Lich King: one stage a week, three steps each, a little of everything. Heroic dungeons and raid nights, a few rated games, a renown mount at the end. It asks for a few evenings a week, never every day. Miss a week and the road waits for you.",
+  "season": "Midnight Season 2 (patch 12.1.5)",
+  "checked": "2026-10-18",
+  "road": {
+    "v": 1,
+    "id": "sr-the-long-season",
+    "rev": 1,
+    "title": "The Long Season",
+    "pace": "weekly",
+    "author": "Ludven",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Set up camp",
+        "steps": [
+          {
+            "id": "ilvl-266",
+            "type": "item-level",
+            "label": "Reach item level 266, enough to queue for Heroic dungeons",
+            "n": 266
+          },
+          {
+            "id": "vault-world-1",
+            "type": "vault",
+            "label": "Do two delves, prey hunts or weekly world activities for a Great Vault slot",
+            "row": "world",
+            "n": 1
+          },
+          {
+            "id": "entering-battle",
+            "type": "achievement",
+            "label": "Play five battlegrounds or arena games (Entering Battle)",
+            "achievementId": 61683
+          }
+        ]
+      },
+      {
+        "name": "Heroics, like the old days",
+        "steps": [
+          {
+            "id": "vault-dungeon-1",
+            "type": "vault",
+            "label": "Run one Heroic or Mythic dungeon this week for a Great Vault slot",
+            "row": "dungeon",
+            "n": 1
+          },
+          {
+            "id": "silvermoon-5",
+            "type": "reputation",
+            "label": "Reach renown 5 with the Silvermoon Court",
+            "factionId": 2710,
+            "n": 5
+          },
+          {
+            "id": "battleground-friends",
+            "type": "manual",
+            "label": "Win a battleground with a friend or a guildmate"
+          }
+        ]
+      },
+      {
+        "name": "The first raid night",
+        "steps": [
+          {
+            "id": "first-raid-boss",
+            "type": "manual",
+            "label": "Kill your first boss in The Venomous Abyss, on any difficulty; Raid Finder counts"
+          },
+          {
+            "id": "ilvl-286",
+            "type": "item-level",
+            "label": "Reach item level 286, ready for Normal raids and Mythic 0 dungeons",
+            "n": 286
+          },
+          {
+            "id": "keystone-explorer",
+            "type": "achievement",
+            "label": "Time one Mythic+ dungeon this season (Midnight Keystone Explorer)",
+            "achievementId": 62445
+          }
+        ]
+      },
+      {
+        "name": "Into the arena",
+        "steps": [
+          {
+            "id": "combatant-1",
+            "type": "achievement",
+            "label": "Reach 1,000 rating in any rated bracket (Combatant I)",
+            "achievementId": 62926
+          },
+          {
+            "id": "vault-raid-1",
+            "type": "vault",
+            "label": "Kill two raid bosses this week for a Great Vault slot",
+            "row": "raid",
+            "n": 1
+          },
+          {
+            "id": "mplus-1000",
+            "type": "mythic-plus-rating",
+            "label": "Reach a Mythic+ rating of 1,000",
+            "n": 1000
+          }
+        ]
+      },
+      {
+        "name": "The whole raid",
+        "steps": [
+          {
+            "id": "venomous-abyss",
+            "type": "achievement",
+            "label": "Defeat every boss of The Venomous Abyss, on any difficulty (The Venomous Abyss)",
+            "achievementId": 63521
+          },
+          {
+            "id": "delve-tier-8",
+            "type": "achievement",
+            "label": "Finish a Tier 8 delve with lives to spare (Midnight Delves: Tier 8)",
+            "achievementId": 62893
+          },
+          {
+            "id": "silvermoon-10",
+            "type": "reputation",
+            "label": "Reach renown 10 with the Silvermoon Court",
+            "factionId": 2710,
+            "n": 10
+          }
+        ]
+      },
+      {
+        "name": "Halfway there",
+        "steps": [
+          {
+            "id": "ilvl-302",
+            "type": "item-level",
+            "label": "Reach item level 302, ready for Heroic raids",
+            "n": 302
+          },
+          {
+            "id": "combatant-2",
+            "type": "achievement",
+            "label": "Reach 1,200 rating in any rated bracket (Combatant II)",
+            "achievementId": 62951
+          },
+          {
+            "id": "soul-crusher",
+            "type": "mount",
+            "label": "Collect the Corroded Soul Crusher: Delver's Journey rank 5, then Telemancer Astrandis in Silvermoon",
+            "mountId": 3043
+          }
+        ]
+      },
+      {
+        "name": "Heroic nights",
+        "steps": [
+          {
+            "id": "keystone-conqueror",
+            "type": "achievement",
+            "label": "Reach a Mythic+ rating of 1,500, for the title the Venomous (Midnight Keystone Conqueror)",
+            "achievementId": 62446
+          },
+          {
+            "id": "challenger-1",
+            "type": "achievement",
+            "label": "Reach 1,400 rating in any rated bracket (Challenger I)",
+            "achievementId": 62927
+          },
+          {
+            "id": "silvermoon-17",
+            "type": "reputation",
+            "label": "Reach renown 17 with the Silvermoon Court",
+            "factionId": 2710,
+            "n": 17
+          }
+        ]
+      },
+      {
+        "name": "Ahead of the Curve",
+        "steps": [
+          {
+            "id": "aotc-ulatek",
+            "type": "achievement",
+            "label": "Defeat Ula'tek on Heroic (Ahead of the Curve: Ula'tek)",
+            "achievementId": 63650
+          },
+          {
+            "id": "silvermoon-hawkstrider",
+            "type": "mount",
+            "label": "Buy the Crimson Silvermoon Hawkstrider from Caeris Fairdawn in Eversong Woods",
+            "mountId": 2761
+          },
+          {
+            "id": "season-screenshot",
+            "type": "manual",
+            "label": "Take a screenshot of your character where this season felt best"
+          }
+        ]
+      }
+    ]
+  }
+}

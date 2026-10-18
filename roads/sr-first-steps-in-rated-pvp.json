@@ -1,0 +1,143 @@
+{
+  "summary": "From your first arena win to Rival, at 1,800.",
+  "about": "For players who never played rated PvP, or stopped long ago. It starts against AI in the Training Grounds, then climbs the season's ranks one at a time, in whichever bracket you like: 2v2, 3v3, Solo Shuffle, Blitz or rated battlegrounds. Every rank counts in any bracket. A rank can take more than a week; the road waits.",
+  "season": "Midnight Season 2 (patch 12.1.5)",
+  "checked": "2026-10-18",
+  "road": {
+    "v": 1,
+    "id": "sr-first-steps-in-rated-pvp",
+    "rev": 1,
+    "title": "First Steps in Rated PvP",
+    "pace": "weekly",
+    "author": "Ludven",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Practice without a rating",
+        "steps": [
+          {
+            "id": "pvp-talents",
+            "type": "manual",
+            "label": "Pick your PvP talents from a current guide for your spec, and bind your interrupt and trinket"
+          },
+          {
+            "id": "arena-exercise",
+            "type": "achievement",
+            "label": "Win 10 Training Grounds arena games against AI (Arena Exercise)",
+            "achievementId": 63695
+          },
+          {
+            "id": "entering-battle",
+            "type": "achievement",
+            "label": "Play five battlegrounds or arena games against players (Entering Battle)",
+            "achievementId": 61683
+          },
+          {
+            "id": "honor-gear",
+            "type": "manual",
+            "label": "Spend your Honor on honor gear, weapon first"
+          }
+        ]
+      },
+      {
+        "name": "The first rated wins",
+        "steps": [
+          {
+            "id": "first-arena-win",
+            "type": "achievement",
+            "label": "Win a rated 2v2 or 3v3 game (Step Into the Arena)",
+            "achievementId": 397
+          },
+          {
+            "id": "sole-survivor",
+            "type": "achievement",
+            "label": "Win 15 Solo Shuffle rounds (Sole Survivor)",
+            "achievementId": 15541
+          },
+          {
+            "id": "combatant-1",
+            "type": "achievement",
+            "label": "Reach 1,000 rating in any bracket (Combatant I)",
+            "achievementId": 62926
+          }
+        ]
+      },
+      {
+        "name": "Combatant",
+        "steps": [
+          {
+            "id": "combatant-2",
+            "type": "achievement",
+            "label": "Reach 1,200 rating in any bracket (Combatant II)",
+            "achievementId": 62951
+          },
+          {
+            "id": "conquest-2500",
+            "type": "achievement",
+            "label": "Earn 2,500 Conquest this season, spending it on conquest gear as you go (Venomous Weapons of Conquest)",
+            "achievementId": 62497
+          },
+          {
+            "id": "one-lesson",
+            "type": "manual",
+            "label": "After each evening, write down one thing that lost a round, and try one fix next time"
+          }
+        ]
+      },
+      {
+        "name": "Challenger",
+        "steps": [
+          {
+            "id": "challenger-1",
+            "type": "achievement",
+            "label": "Reach 1,400 rating in any bracket (Challenger I)",
+            "achievementId": 62927
+          },
+          {
+            "id": "successful-solos",
+            "type": "achievement",
+            "label": "Win 50 Solo Shuffle rounds (Successful Solos)",
+            "achievementId": 15543
+          },
+          {
+            "id": "vicious-mount",
+            "type": "manual",
+            "label": "Fill the season rewards bar with rated wins at 1,000 or more for the Vicious Lightbloom Boar"
+          }
+        ]
+      },
+      {
+        "name": "Challenger II",
+        "steps": [
+          {
+            "id": "challenger-2",
+            "type": "achievement",
+            "label": "Reach 1,600 rating in any bracket (Challenger II)",
+            "achievementId": 62952
+          },
+          {
+            "id": "two-brackets",
+            "type": "manual",
+            "label": "Win ten rated games in a bracket you have not played yet"
+          }
+        ]
+      },
+      {
+        "name": "Rival",
+        "steps": [
+          {
+            "id": "rival-1",
+            "type": "achievement",
+            "label": "Reach 1,800 rating in any bracket (Rival I) and wear the title Rival",
+            "achievementId": 62928
+          },
+          {
+            "id": "next-road",
+            "type": "manual",
+            "label": "Pick your next goal: Rival II at 1,950, or a slower road for the rest of the season"
+          }
+        ]
+      }
+    ]
+  }
+}

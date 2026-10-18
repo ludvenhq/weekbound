@@ -6,6 +6,7 @@ import {
   STUDIO_PREFIX,
   type Road,
 } from '../road/schema.ts';
+import { isStudioId, STUDIO_ROADS, studioRoad } from '../studio/roads.ts';
 import { REGIONS, type Region } from './reset.ts';
 import { withMark, type Mark, type Marks } from './walk.ts';
 
@@ -38,8 +39,18 @@ export type Saved = z.infer<typeof savedSchema>;
 
 export const EMPTY: Saved = { v: SAVED_VERSION, library: [], progress: {} };
 
+// A studio road by its id, or one of the player's own roads.
 export function findRoad(saved: Saved, id: string | undefined): Road | undefined {
-  return id === undefined ? undefined : saved.library.find((road) => road.id === id);
+  if (id === undefined) return undefined;
+  return isStudioId(id) ? studioRoad(id) : saved.library.find((road) => road.id === id);
+}
+
+// The roads the player has: the studio roads they walk or have ticked a step of, then their own.
+export function yourRoads(saved: Saved): Road[] {
+  const started = STUDIO_ROADS.map((studio) => studio.road).filter(
+    (road) => road.id === saved.active || Object.keys(saved.progress[road.id] ?? {}).length > 0,
+  );
+  return [...started, ...saved.library];
 }
 
 export function marksOf(saved: Saved, id: string): Marks {

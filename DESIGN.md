@@ -114,7 +114,7 @@ components:
     backgroundColor: "{colors.surface}"
     borderColor: "{colors.line}"
     rounded: "{rounded.none}"
-    minHeight: 64px
+    minHeight: 76px
   nav-link:
     textColor: "{colors.text-muted}"
 ---
@@ -189,19 +189,26 @@ toggle.
 - **Codes: JetBrains Mono 400** for road codes and backup codes only.
 - **Loading:** one Google Fonts request with `display=swap` in the prototype; in the app, load the
   same families through `next/font/google` (self-hosted at build, no runtime call to Google).
-- **Scale:** display 2.75 to 4.5rem, headline 2 to 3rem, title 1.625rem, body 1.125rem, small
-  0.9375rem. Levels differ by more than weight.
+- **Scale:** display 2.75 to 5.25rem, an app page's title 2.5 to 3.5rem, headline 2 to 3rem, title
+  1.625 to 2rem, body 1.125rem (1.25rem for a page's lead text and step labels), small 1rem.
+  Levels differ by more than weight.
 - **Alternative tried:** Marcellus 400 (calmer, more generic). Kept as the fallback if Grenze
   Gotisch ever reads too heavy at small sizes.
 
 ## Layout
 
-- **Max width** 1120px with a 24px gutter (16px under 480px).
+- **Max width** 1280px with a 24px gutter (16px under 480px).
 - **Home:** left-aligned throughout. The hero is text on the left and the road with its three
   stones on the right; under 860px the road moves below the text, and under 480px its three steps
   become a short list under the drawing. Sections alternate a narrow text column (up to 440px) with
   the thing itself (recap, signpost, code box) on the right.
-- **App pages:** one centred column of at most 680px; rows, not cards.
+- **App pages:** the full width, in two columns from 1024px; rows, not cards. My road and the
+  editor keep the work in the main column (the road, the stages being built) and put what goes
+  with it in a side column of 360 to 400px (your roads, another road, the backup; the code). The
+  gallery and road pages put the words on the left (up to 420px) and the thing itself on the
+  right (the signpost, the stages), as the home page's sections do. A side column that helps
+  while the other one scrolls (the road page's actions, the editor's code) stays in view. Under
+  1024px the columns stack, main first. Long text keeps a readable measure inside its column.
 - **Rhythm:** sections 120px apart (80px on mobile); inside a section, 24 to 32px between blocks and
   8px between rows.
 - **No horizontal scroll** at any width; long codes truncate with an ellipsis and a Copy button.
@@ -229,8 +236,9 @@ hidden), so it is the only blur on the site.
   text. One per screen.
 - **Secondary button:** 1px `line-strong` border, transparent; hover fills `surface`.
 - **Text link:** underlined at 4px offset with a faint underline that turns solid on hover.
-- **Tick row:** the whole row is the tap target (at least 64px tall), with a 24px box, the step
-  label in 500, and progress text under it in muted 0.9375rem ("1,240 of 1,500"). The current step's
+- **Tick row:** the whole row is the tap target (at least 76px tall), with a 28px box (24px on a
+  phone), the step label in 500 at 1.25rem, and progress text under it in muted 1.0625rem
+  ("1,240 of 1,500"). The current step's
   box has a gold border. Done: the box fills green with a check, the label goes muted and the
   progress text ends in "· done". Skip is a quiet text action at the row's end; a skipped row fades
   to 55% and offers Undo. ARIA: `role="checkbox"` with `aria-checked`.
@@ -283,4 +291,5 @@ hidden), so it is the only blur on the site.
 | 2026-10-18 | Quest log palette | The owner chose it over Pine dusk and Northrend after seeing all three in the preview |
 | 2026-10-18 | Display face Grenze Gotisch | The owner chose it over Marcellus after seeing both in the preview |
 | 2026-10-18 | Defaults set by Claude, not reviewed one by one | The spacing scale (4 to 120px), 64px tick rows, the motion timings, the 2px radius, the 680px app column and the message tint strength; change freely |
+| 2026-10-18 | Wider pages, larger type | The owner found the 680px column too small ("we have so much space, but we dont use and our content is tiny"): 1280px pages, two columns from 1024px, larger titles, labels and tick rows |
 | 2026-10-18 | Camp instead of a countdown | From the design agent; the slow pace shown as rest, with the exact time in small text |

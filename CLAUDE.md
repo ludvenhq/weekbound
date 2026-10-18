@@ -11,9 +11,13 @@ Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0).
   Amendment 1 first: web first). Build order: (1) `web/` + CI, schema, codes, samples (done
   2026-10-18); (2) My road with localStorage, the weekly lock, the recap and the backup code
   (done 2026-10-18; its paste box came early); (3) the editor (done 2026-10-18; ids, versions and
-  inputs in `docs/road-format.md`); (4) gallery and the first roads (the gallery's "remix" opens a
-  studio road with `remixDraft`; add a test that every studio road's code fits the cap, R3-36);
-  (5) the owner plays a week; (6) deploy at the owner's word.
+  inputs in `docs/road-format.md`); (4) gallery and the first roads (done 2026-10-18: `/roads`,
+  `/roads/<name>`, three studio roads in `roads/` reviewed by the owner, wider two-column pages);
+  (5) the owner plays a week; (6) deploy at the owner's word (the build reads `roads/` next to
+  `web/`, so the Docker build context is the repo root).
+- **Studio roads:** files in `roads/` (CC BY 4.0, `roads/README.md`); the owner reviews every road
+  and every change to one before it is committed. Game ids are checked on the web; an uncertain one
+  becomes a `manual` step.
 - **Gate:** `cd web && npm run verify` (lint, type-check, Vitest with the shared samples, build),
   the same as CI. Node 24; TypeScript stays on 6.0 until typescript-eslint supports 7.
 - **Road format:** `docs/road-format.md` is the contract for the website and the addon; the Zod

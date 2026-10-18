@@ -1,11 +1,13 @@
+import { isKnownStep, type Step } from '../road/schema.ts';
 import type { ParamKey } from './draft.ts';
 
 // Game facts the editor needs before the game data files exist. Those files (achievements,
 // mounts, titles and factions, searchable by name) need the Blizzard API client, so until then
 // authors type an id or paste a Wowhead link.
 
-// Specialization ids for Solo Shuffle and Blitz steps, by class. Midnight's Devourer and any
-// later spec are typed by id ("Another spec"), so no unchecked id is listed here.
+// Specialization ids for Solo Shuffle and Blitz steps, by class. Devourer's 1480 was checked on
+// 2026-10-18 in the 12.1.5 client's ChrSpecialization table (wago.tools); any later spec is
+// typed by id ("Another spec"), so no unchecked id is listed here.
 export const SPECS: readonly { class: string; specs: readonly [number, string][] }[] = [
   {
     class: 'Death Knight',
@@ -20,6 +22,7 @@ export const SPECS: readonly { class: string; specs: readonly [number, string][]
     specs: [
       [577, 'Havoc'],
       [581, 'Vengeance'],
+      [1480, 'Devourer'],
     ],
   },
   {
@@ -137,6 +140,17 @@ export function idFromLink(value: string, key: ParamKey): string {
 
 export function takesLink(key: ParamKey): boolean {
   return WOWHEAD_PAGES[key] !== undefined;
+}
+
+// A step's page on Wowhead, for a reader who wants to know where the thing is; null for steps
+// with no game id there (mounts, ratings, item level, the vault, manual steps).
+export function wowheadUrl(step: Step): string | null {
+  if (!isKnownStep(step)) return null;
+  for (const [key, page] of Object.entries(WOWHEAD_PAGES)) {
+    const id = (step as Record<string, unknown>)[key];
+    if (typeof id === 'number') return `https://www.wowhead.com/${page}=${id}`;
+  }
+  return null;
 }
 
 // Where an author looks an id up.
