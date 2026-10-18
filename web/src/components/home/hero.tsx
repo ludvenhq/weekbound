@@ -159,7 +159,7 @@ export function Hero() {
               lineHeight="1.5"
               maxW="32ch"
             >
-              Retail hands you fifty chores. Slow Road gives your character one road: the next three
+              Retail hands you fifty chores. Weekbound gives your character one road: the next three
               steps, and a new stage at each weekly reset.
             </Text>
             <Flex mt="40px" wrap="wrap" align="center" gap="22px">

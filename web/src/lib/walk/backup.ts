@@ -23,9 +23,9 @@ export const BACKUP_MESSAGES: Record<BackupError, string> = {
   'road-code': "That's a road code, not a backup. Paste it in the road box instead.",
   'not-a-backup-code': "That isn't a backup code. Backup codes start with SRB1!",
   'newer-encoding':
-    'This backup is from a newer version of Slow Road. Reload the page to restore it.',
+    'This backup is from a newer version of Weekbound. Reload the page to restore it.',
   'newer-version':
-    'This backup is from a newer version of Slow Road. Reload the page to restore it.',
+    'This backup is from a newer version of Weekbound. Reload the page to restore it.',
   broken: 'This backup code is broken. Copy it again from the other browser.',
 };
 

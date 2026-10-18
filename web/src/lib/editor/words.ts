@@ -24,7 +24,7 @@ export const TYPE_ORDER: readonly StepType[] = [
 ];
 
 export const TYPE_HELP: Record<StepType, string> = {
-  manual: 'Anything a player can do and tick. Slow Road never checks it.',
+  manual: 'Anything a player can do and tick. Weekbound never checks it.',
   'item-level': 'The equipped item level, as the character sheet shows it.',
   'mythic-plus-rating': "This season's Mythic+ rating.",
   'pvp-rating': "This season's rating in one bracket. Solo Shuffle and Blitz count one spec.",

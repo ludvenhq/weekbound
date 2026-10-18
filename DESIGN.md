@@ -1,6 +1,6 @@
 ---
 # gstack: design-md-format=spec
-name: Slow Road
+name: Weekbound
 description: A night survey map under fog, in quest-log colours, where only your stretch of road is clear; calm, warm and quiet.
 colors:
   background: "#1F1A15"
@@ -119,7 +119,7 @@ components:
     textColor: "{colors.text-muted}"
 ---
 
-# Slow Road
+# Weekbound
 
 ## Overview
 
@@ -132,7 +132,7 @@ road and finished steps), so the site feels like WoW without any Blizzard art.
 **Product context:** a website (an addon later) that gives a World of Warcraft retail character one
 road, shows its next three steps and opens a new stage at each weekly reset. For returning and
 casual players who feel lost in retail. Peers: Raider.IO, Wago, ResetReady, the big chore-list
-addons. All of them are dark, gold and dense; Slow Road is the quiet one.
+addons. All of them are dark, gold and dense; Weekbound is the quiet one.
 
 **The one thing to remember (the owner, 2026-10-18):** "I know what to do now." A lost player
 opens the site and sees their next three steps within ten seconds.
@@ -295,4 +295,5 @@ hidden), so it is the only blur on the site.
 | 2026-10-18 | Wider pages, larger type | The owner found the 680px column too small ("we have so much space, but we dont use and our content is tiny"): 1280px pages, two columns from 1024px, larger titles, labels and tick rows |
 | 2026-10-18 | The landing, the map and the fog built from the approved preview | The owner asked for the look of the preview ("i dont see your fancy fog"): the contour map behind every page, fog in the hero, the scene and the road ahead, the hero road, the moment, the recap and codes sections, and fog over the steps still ahead on My road. Two chores swapped for Midnight's (Prey hunts, Special assignments) |
 | 2026-10-18 | The moment plays both ways | The owner expected the fog to come back when scrolling up ("there is no animation when i scroll up"); it was once only |
+| 2026-10-18 | Named Weekbound | The owner picked it over the working name Slow Road, which a viral driving game (Slow Roads) owns in search; one stage per weekly reset, an echo of WoW's "Warbound". The approved preview (`docs/design/preview.html`) keeps the old name as the record of what was approved |
 | 2026-10-18 | Camp instead of a countdown | From the design agent; the slow pace shown as rest, with the exact time in small text |

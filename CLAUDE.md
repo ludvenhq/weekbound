@@ -1,7 +1,9 @@
-# Slow Road
+# Weekbound
 
 Clear, slow roadmaps for World of Warcraft retail: a website first, an addon later. Part of the
-Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0).
+Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0). Named Weekbound on
+2026-10-18 (working name Slow Road, which stays in the hub design doc, the `SR1!` code prefix and
+the browser storage keys).
 
 - **Public repo rules:** no secrets, no server addresses or VPS config, and no personal names in
   commits, pull requests, release notes or repo content (write "the owner" or a date).

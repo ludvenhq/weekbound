@@ -2,6 +2,7 @@
 // the system setting (DESIGN.md, Colors). The choice lives in localStorage under this key, and the
 // script below applies it before the first paint, so the page never flashes the wrong theme.
 
+// The working name from before the rename to Weekbound, kept so the choice is not lost.
 export const THEME_KEY = 'slow-road:theme';
 export type Theme = 'dusk' | 'dawn';
 

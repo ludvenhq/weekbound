@@ -44,7 +44,7 @@ const PACES = [
     value: 'weekly',
     name: 'Weekly',
     about:
-      "The next stage opens at the first weekly reset after a stage is done. Slow Road's default.",
+      "The next stage opens at the first weekly reset after a stage is done. Weekbound's default.",
   },
   { value: 'free', name: 'Free', about: 'The next stage opens as soon as a stage is done.' },
 ] as const;

@@ -149,7 +149,7 @@ describe('versions', () => {
     expect(second.id).toBe(first.id);
   });
 
-  it('keeps steps of a type from a newer Slow Road as they are', () => {
+  it('keeps steps of a type from a newer Weekbound as they are', () => {
     const road = sample('unknown-step-type.json');
     expect(ready(makeCode(versionDraft(road))).road).toStrictEqual(road);
   });

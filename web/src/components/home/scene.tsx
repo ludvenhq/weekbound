@@ -276,7 +276,7 @@ export function Scene() {
                 Walk one road.
               </Heading>
               <Text mt="20px" fontSize={{ base: '1.125rem', md: '1.3125rem' }} maxW="40ch">
-                Slow Road shows your character the next three steps of one road. Nothing else is on
+                Weekbound shows your character the next three steps of one road. Nothing else is on
                 the screen.
               </Text>
               <Box position="relative" mt="30px" pl="44px">

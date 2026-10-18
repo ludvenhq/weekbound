@@ -46,7 +46,7 @@ export function SiteHeader() {
                 borderColor="accent"
                 bg="background"
               />
-              Slow Road
+              Weekbound
             </NextLink>
           </Flex>
           <Flex
@@ -73,7 +73,7 @@ export function SiteFooter() {
       <PageWidth>
         <Flex wrap="wrap" gap="12px 40px" justify="space-between" fontSize="1rem" color="textMuted">
           <Text>
-            Slow Road, made by Ludven, a small studio. Code MIT, roads CC BY 4.0.{' '}
+            Weekbound, made by Ludven, a small studio. Code MIT, roads CC BY 4.0.{' '}
             <TextLink href="/about">About and privacy</TextLink>
           </Text>
           <Text>

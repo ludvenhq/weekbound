@@ -6,6 +6,7 @@ import { draftSchema, newDraft, type Draft } from '@/lib/editor/draft';
 // The road being made, kept in localStorage so a reload or a closed tab loses nothing, and in
 // step with other tabs. When the browser refuses storage, the draft lasts for the open tab.
 
+// The working name from before the rename to Weekbound, kept so a draft is not lost.
 const KEY = 'slow-road:editor';
 
 let fallback: string | null | undefined;

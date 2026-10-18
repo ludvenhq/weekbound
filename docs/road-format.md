@@ -14,6 +14,9 @@ codes and must give the same result for every code.
 A code is `SR1!` followed by base64url (RFC 4648 section 5, no `=` padding) of the road's JSON in
 UTF-8. Codes are not compressed, so the cost of opening one grows only with its length.
 
+- **The name in the prefix.** `SR` comes from the working name, Slow Road; the website was renamed
+  Weekbound on 2026-10-18 and the prefixes `SR1!` and `SRB1!` stayed, so every sample and every
+  code made before the rename opens as it did.
 - **Two version marks, two meanings.** The digit after `SR` is the **encoding** version: a later
   encoding (a compressed one, say) would be `SR2!`. The road's `v` field is the **schema** version:
   a new field that older readers can drop stays in the same `v`; a change older readers would get

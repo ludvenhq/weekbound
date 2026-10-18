@@ -6,7 +6,7 @@ import { TextLink } from '@/components/text-link';
 
 export const metadata: Metadata = {
   title: 'About and privacy',
-  description: 'What Slow Road is, what it keeps about you (nearly nothing), and who made it.',
+  description: 'What Weekbound is, what it keeps about you (nearly nothing), and who made it.',
 };
 
 function Part({ title, children }: { title: string; children: ReactNode }) {
@@ -29,7 +29,7 @@ export default function AboutPage() {
       <Columns template="minmax(0, 400px) minmax(0, 1fr)" gap={{ base: '48px', lg: '96px' }}>
         <Box>
           <Heading as="h1" {...pageTitle}>
-            About Slow Road.
+            About Weekbound.
           </Heading>
           <Text mt="18px" fontSize="1.25rem" lineHeight="1.5">
             One road for your World of Warcraft character: the next three steps, and a new stage at
@@ -66,7 +66,7 @@ export default function AboutPage() {
                 CC BY 4.0
               </TextLink>
               : share it and change it, and name its author. The code is MIT and public on{' '}
-              <TextLink href="https://github.com/ludvenhq/slow-road" external>
+              <TextLink href="https://github.com/ludvenhq/weekbound" external>
                 GitHub
               </TextLink>
               . The fonts are Grenze Gotisch, Alegreya Sans and JetBrains Mono, under the SIL Open
@@ -75,7 +75,7 @@ export default function AboutPage() {
           </Part>
           <Part title="Not Blizzard">
             <Text>
-              Slow Road is a fan tool, not affiliated with or endorsed by Blizzard Entertainment.
+              Weekbound is a fan tool, not affiliated with or endorsed by Blizzard Entertainment.
               World of Warcraft and Blizzard Entertainment are trademarks or registered trademarks
               of Blizzard Entertainment, Inc. Game data comes from Blizzard&apos;s public API.
             </Text>

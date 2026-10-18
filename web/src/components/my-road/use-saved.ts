@@ -7,6 +7,8 @@ import { EMPTY, savedSchema, type Saved } from '@/lib/walk/saved';
 // kept in step with other tabs. When the browser refuses storage (a private window, blocked site
 // data), everything still works for the open tab and `stored` says so.
 
+// Every storage key keeps the working name from before the rename to Weekbound (2026-10-18), so
+// progress saved before it stays where it is.
 const KEY = 'slow-road';
 // A save this version cannot read is copied here once before anything overwrites it.
 const UNREADABLE_KEY = 'slow-road:unreadable';

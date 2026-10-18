@@ -35,7 +35,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: { default: 'Slow Road', template: '%s · Slow Road' },
+  title: { default: 'Weekbound', template: '%s · Weekbound' },
   description:
     'Clear, slow roads for World of Warcraft retail: one road, the next three steps, and a new stage at each weekly reset.',
 };

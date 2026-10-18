@@ -24,6 +24,7 @@ import { codeInput } from './paste-road';
 // (lib/check/check.ts). It shows only when the server has a Blizzard client, and remembers the
 // character in this browser.
 
+// Named like the other storage keys, with the working name from before the rename to Weekbound.
 const KEY = 'slow-road:character';
 type Saved = { region: Region; realm: string; name: string };
 

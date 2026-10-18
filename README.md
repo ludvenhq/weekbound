@@ -1,4 +1,4 @@
-# Slow Road
+# Weekbound
 
 Clear, slow roadmaps for World of Warcraft retail. Pick one road; see its next three steps and
 nothing else; a new stage opens at each weekly reset. Roads are shared as one line of text, a road

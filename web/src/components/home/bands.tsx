@@ -53,7 +53,7 @@ export function RecapBand() {
     <Band>
       <Columns template={TWO} gap={{ base: '32px', lg: '96px' }}>
         <BandText title="Every week starts with what you did.">
-          On your first visit after a reset, Slow Road shows a short recap. It never lists what you
+          On your first visit after a reset, Weekbound shows a short recap. It never lists what you
           missed.
         </BandText>
         <Box

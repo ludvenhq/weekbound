@@ -211,7 +211,7 @@ export const StepRow = memo(
     const onChange = actions.change;
     const onMove = (by: -1 | 1) => actions.move(step.id, by);
     const onRemove = () => actions.remove(step, stageKey, number - 1);
-    // Null for a type from a newer Slow Road.
+    // Null for a type from a newer Weekbound.
     const known = isKnownStepType(step.type) ? step.type : null;
     const label = `step.${step.id}.label`;
     const lookup = known
@@ -286,7 +286,7 @@ export const StepRow = memo(
                 {TYPE_NAMES[type]}
               </option>
             ))}
-            {!known && <option value={step.type}>{step.type} (from a newer Slow Road)</option>}
+            {!known && <option value={step.type}>{step.type} (from a newer Weekbound)</option>}
           </SelectField>
           <Params
             step={step}
@@ -299,7 +299,7 @@ export const StepRow = memo(
         <Text mt="10px" fontSize="0.9375rem" color="textMuted">
           {known
             ? TYPE_HELP[known]
-            : 'A kind of step from a newer Slow Road. It stays as it is, and players tick it by hand.'}
+            : 'A kind of step from a newer Weekbound. It stays as it is, and players tick it by hand.'}
           {lookup && (
             <>
               {' '}
