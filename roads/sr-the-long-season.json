@@ -6,7 +6,7 @@
   "road": {
     "v": 1,
     "id": "sr-the-long-season",
-    "rev": 1,
+    "rev": 2,
     "title": "The Long Season",
     "pace": "weekly",
     "author": "Ludven",
@@ -64,15 +64,15 @@
         "name": "The first raid night",
         "steps": [
           {
-            "id": "first-raid-boss",
-            "type": "manual",
-            "label": "Kill your first boss in The Venomous Abyss, on any difficulty; Raid Finder counts"
-          },
-          {
             "id": "ilvl-286",
             "type": "item-level",
             "label": "Reach item level 286, ready for Normal raids and Mythic 0 dungeons",
             "n": 286
+          },
+          {
+            "id": "first-raid-boss",
+            "type": "manual",
+            "label": "Kill your first boss in The Venomous Abyss, on any difficulty; Raid Finder counts"
           },
           {
             "id": "keystone-explorer",
@@ -189,7 +189,7 @@
           {
             "id": "silvermoon-hawkstrider",
             "type": "mount",
-            "label": "Buy the Crimson Silvermoon Hawkstrider from Caeris Fairdawn in Eversong Woods",
+            "label": "Buy the Crimson Silvermoon Hawkstrider from Caeris Fairdawn in Eversong Woods for 6,000 Voidlight Marl",
             "mountId": 2761
           },
           {

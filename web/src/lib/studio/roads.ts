@@ -1,6 +1,8 @@
 import { z } from 'zod';
+import collectors from '../../../../roads/sr-collectors-mile.json' with { type: 'json' };
 import firstSteps from '../../../../roads/sr-first-steps-in-rated-pvp.json' with { type: 'json' };
 import returning from '../../../../roads/sr-returning-player.json' with { type: 'json' };
+import ladder from '../../../../roads/sr-season-pve-ladder.json' with { type: 'json' };
 import longSeason from '../../../../roads/sr-the-long-season.json' with { type: 'json' };
 import { roadSchema, STUDIO_PREFIX, type Road } from '../road/schema.ts';
 
@@ -26,7 +28,7 @@ export type StudioRoad = z.infer<typeof studioFileSchema> & {
 };
 
 // The gallery's order.
-const FILES: readonly unknown[] = [returning, longSeason, firstSteps];
+const FILES: readonly unknown[] = [returning, longSeason, firstSteps, ladder, collectors];
 
 export const STUDIO_ROADS: readonly StudioRoad[] = FILES.map((file) => {
   const parsed = studioFileSchema.parse(file);

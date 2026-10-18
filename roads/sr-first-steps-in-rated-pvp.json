@@ -6,7 +6,7 @@
   "road": {
     "v": 1,
     "id": "sr-first-steps-in-rated-pvp",
-    "rev": 1,
+    "rev": 2,
     "title": "First Steps in Rated PvP",
     "pace": "weekly",
     "author": "Ludven",
@@ -29,7 +29,7 @@
           {
             "id": "entering-battle",
             "type": "achievement",
-            "label": "Play five battlegrounds or arena games against players (Entering Battle)",
+            "label": "Play five battlegrounds or arena games (Entering Battle)",
             "achievementId": 61683
           },
           {
@@ -80,7 +80,7 @@
           {
             "id": "one-lesson",
             "type": "manual",
-            "label": "After each evening, write down one thing that lost a round, and try one fix next time"
+            "label": "Write down one thing that lost you a round, and try one fix the next evening"
           }
         ]
       },
@@ -128,7 +128,7 @@
           {
             "id": "rival-1",
             "type": "achievement",
-            "label": "Reach 1,800 rating in any bracket (Rival I) and wear the title Rival",
+            "label": "Reach 1,800 rating in any bracket (Rival I, with the title Rival)",
             "achievementId": 62928
           },
           {

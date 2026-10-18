@@ -1,0 +1,153 @@
+{
+  "summary": "From your first timed key to Keystone Master and the Curve.",
+  "about": "For a player who wants this season's PvE ladder, one rung a week: Mythic+ from your first timed key to a rating of 2,000, the raid from your first clear to Ahead of the Curve on Heroic, and a fuller Great Vault as the weeks go on. A rung can take more than a week; the road waits.",
+  "season": "Midnight Season 2 (patch 12.1.5)",
+  "checked": "2026-10-18",
+  "road": {
+    "v": 1,
+    "id": "sr-season-pve-ladder",
+    "rev": 1,
+    "title": "Season PvE Ladder",
+    "pace": "weekly",
+    "author": "Ludven",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Ready for keys",
+        "steps": [
+          {
+            "id": "ilvl-286",
+            "type": "item-level",
+            "label": "Reach item level 286, ready for Mythic 0 and Normal raids",
+            "n": 286
+          },
+          {
+            "id": "keystone-explorer",
+            "type": "achievement",
+            "label": "Time your first Mythic+ dungeon this season (Midnight Keystone Explorer)",
+            "achievementId": 62445
+          },
+          {
+            "id": "vault-dungeon-1",
+            "type": "vault",
+            "label": "Run one Heroic, Mythic or Mythic+ dungeon this week for a Great Vault slot",
+            "row": "dungeon",
+            "n": 1
+          }
+        ]
+      },
+      {
+        "name": "A thousand",
+        "steps": [
+          {
+            "id": "mplus-1000",
+            "type": "mythic-plus-rating",
+            "label": "Reach a Mythic+ rating of 1,000",
+            "n": 1000
+          },
+          {
+            "id": "vault-dungeon-2",
+            "type": "vault",
+            "label": "Run four Heroic, Mythic or Mythic+ dungeons this week for two Great Vault slots",
+            "row": "dungeon",
+            "n": 2
+          },
+          {
+            "id": "vault-raid-1",
+            "type": "vault",
+            "label": "Kill two raid bosses this week for a Great Vault slot",
+            "row": "raid",
+            "n": 1
+          }
+        ]
+      },
+      {
+        "name": "The whole raid",
+        "steps": [
+          {
+            "id": "venomous-abyss",
+            "type": "achievement",
+            "label": "Defeat every boss of The Venomous Abyss, on any difficulty (The Venomous Abyss)",
+            "achievementId": 63521
+          },
+          {
+            "id": "mplus-1250",
+            "type": "mythic-plus-rating",
+            "label": "Reach a Mythic+ rating of 1,250",
+            "n": 1250
+          },
+          {
+            "id": "ilvl-295",
+            "type": "item-level",
+            "label": "Reach item level 295",
+            "n": 295
+          }
+        ]
+      },
+      {
+        "name": "Keystone Conqueror",
+        "steps": [
+          {
+            "id": "keystone-conqueror",
+            "type": "achievement",
+            "label": "Reach a Mythic+ rating of 1,500, for the title the Venomous (Midnight Keystone Conqueror)",
+            "achievementId": 62446
+          },
+          {
+            "id": "vault-dungeon-3",
+            "type": "vault",
+            "label": "Run eight Heroic, Mythic or Mythic+ dungeons this week for all three Great Vault dungeon slots",
+            "row": "dungeon",
+            "n": 3
+          },
+          {
+            "id": "ilvl-302",
+            "type": "item-level",
+            "label": "Reach item level 302, ready for Heroic raids",
+            "n": 302
+          }
+        ]
+      },
+      {
+        "name": "The raid on Heroic",
+        "steps": [
+          {
+            "id": "heroic-first-boss",
+            "type": "manual",
+            "label": "Kill your first boss of The Venomous Abyss on Heroic"
+          },
+          {
+            "id": "mplus-1750",
+            "type": "mythic-plus-rating",
+            "label": "Reach a Mythic+ rating of 1,750",
+            "n": 1750
+          },
+          {
+            "id": "vault-raid-2",
+            "type": "vault",
+            "label": "Kill four raid bosses this week for two Great Vault slots",
+            "row": "raid",
+            "n": 2
+          }
+        ]
+      },
+      {
+        "name": "Ahead of the Curve",
+        "steps": [
+          {
+            "id": "aotc-ulatek",
+            "type": "achievement",
+            "label": "Defeat Ula'tek on Heroic (Ahead of the Curve: Ula'tek)",
+            "achievementId": 63650
+          },
+          {
+            "id": "keystone-master",
+            "type": "achievement",
+            "label": "Reach a Mythic+ rating of 2,000, for the mount Breath of Blight (Midnight Keystone Master)",
+            "achievementId": 62447
+          }
+        ]
+      }
+    ]
+  }
+}

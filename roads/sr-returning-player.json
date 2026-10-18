@@ -6,7 +6,7 @@
   "road": {
     "v": 1,
     "id": "sr-returning-player",
-    "rev": 1,
+    "rev": 2,
     "title": "Returning Player",
     "pace": "weekly",
     "author": "Ludven",
@@ -122,7 +122,7 @@
           {
             "id": "next-road",
             "type": "manual",
-            "label": "Pick your next road: The Long Season for a whole season, or First Steps in Rated PvP"
+            "label": "Pick your next road from the gallery: a season, PvP or collecting"
           }
         ]
       }

@@ -1,0 +1,190 @@
+{
+  "summary": "Midnight's maps, treasures and mounts, one quiet evening at a time.",
+  "about": "A road for the evenings when nothing is urgent: explore every corner of Midnight, find its hidden treasures and glyphs, and collect the mounts they lead to, from the treasure mounts to a renown mount each from Silvermoon and the Amani. Free pace: the next stage opens as soon as you finish one, and nothing here ends with the season.",
+  "season": "Midnight Season 2 (patch 12.1.5)",
+  "checked": "2026-10-18",
+  "road": {
+    "v": 1,
+    "id": "sr-collectors-mile",
+    "rev": 1,
+    "title": "Collector's Mile",
+    "pace": "free",
+    "author": "Ludven",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Look around",
+        "steps": [
+          {
+            "id": "explore-eversong",
+            "type": "achievement",
+            "label": "Uncover the whole map of Eversong Woods (Explore Eversong Woods)",
+            "achievementId": 61855
+          },
+          {
+            "id": "explore-zulaman",
+            "type": "achievement",
+            "label": "Uncover the whole map of Zul'Aman (Explore Zul'Aman)",
+            "achievementId": 61856
+          },
+          {
+            "id": "explore-harandar",
+            "type": "achievement",
+            "label": "Uncover the whole map of Harandar (Explore Harandar)",
+            "achievementId": 61520
+          }
+        ]
+      },
+      {
+        "name": "Off the map",
+        "steps": [
+          {
+            "id": "explore-voidstorm",
+            "type": "achievement",
+            "label": "Uncover the whole map of Voidstorm (Explore Voidstorm)",
+            "achievementId": 61857
+          },
+          {
+            "id": "explore-coiled-isle",
+            "type": "achievement",
+            "label": "Uncover the whole map of the Coiled Isle (Explore the Coiled Isle)",
+            "achievementId": 63640
+          }
+        ]
+      },
+      {
+        "name": "Hidden things",
+        "steps": [
+          {
+            "id": "chloroceros",
+            "type": "mount",
+            "label": "Find every treasure in Harandar for the Vivacious Chloroceros",
+            "mountId": 2912
+          },
+          {
+            "id": "venomfang",
+            "type": "mount",
+            "label": "Find every treasure on the Coiled Isle for the Auriferous Venomfang",
+            "mountId": 3023
+          },
+          {
+            "id": "midnight-hunter",
+            "type": "achievement",
+            "label": "Finish a Prey hunt in each of the four Midnight zones (Midnight Hunter)",
+            "achievementId": 62139
+          }
+        ]
+      },
+      {
+        "name": "Up in the air",
+        "steps": [
+          {
+            "id": "crimson-dragonhawk",
+            "type": "mount",
+            "label": "Find every skyriding glyph in Eversong, Zul'Aman, Harandar and Voidstorm for the Crimson Dragonhawk (Midnight Glyph Hunter)",
+            "mountId": 2756
+          },
+          {
+            "id": "stormray",
+            "type": "mount",
+            "label": "Unlock the whole Research Console in Voidstorm, a weekly quest at a time, for the Lab-Grown Stormray",
+            "mountId": 2829
+          }
+        ]
+      },
+      {
+        "name": "Light up the night",
+        "steps": [
+          {
+            "id": "forever-song",
+            "type": "achievement",
+            "label": "Finish the Eversong Woods set: treasures, rares, runestones, easels and the party (Forever Song)",
+            "achievementId": 62261
+          },
+          {
+            "id": "amani-set",
+            "type": "achievement",
+            "label": "Finish the Zul'Aman set: treasures, rares, Abundance and the Altar of Blessings (Making an Amani Out of You)",
+            "achievementId": 61453
+          },
+          {
+            "id": "harandar-set",
+            "type": "achievement",
+            "label": "Finish the Harandar set: treasures, rares, moths and the Legends of the Haranir, a few weeks' work (That's Aln, Folks!)",
+            "achievementId": 62260
+          },
+          {
+            "id": "voidstorm-set",
+            "type": "achievement",
+            "label": "Finish the Voidstorm set: treasures, rares, the Hungering Presence and Stormarion (Yelling into the Voidstorm)",
+            "achievementId": 62256
+          },
+          {
+            "id": "petalwing",
+            "type": "mount",
+            "label": "Collect the Brilliant Petalwing, the reward for all four zone sets (Light Up the Night)",
+            "mountId": 2707
+          }
+        ]
+      },
+      {
+        "name": "Friends of Silvermoon",
+        "steps": [
+          {
+            "id": "silvermoon-17",
+            "type": "reputation",
+            "label": "Reach renown 17 with the Silvermoon Court",
+            "factionId": 2710,
+            "n": 17
+          },
+          {
+            "id": "silvermoon-hawkstrider",
+            "type": "mount",
+            "label": "Buy the Crimson Silvermoon Hawkstrider from Caeris Fairdawn in Eversong Woods for 6,000 Voidlight Marl",
+            "mountId": 2761
+          }
+        ]
+      },
+      {
+        "name": "Friends of the Amani",
+        "steps": [
+          {
+            "id": "amani-17",
+            "type": "reputation",
+            "label": "Reach renown 17 with the Amani Tribe",
+            "factionId": 2696,
+            "n": 17
+          },
+          {
+            "id": "amani-bear",
+            "type": "mount",
+            "label": "Buy the Amani Blessed Bear from Magovu in Zul'Aman for 6,000 Voidlight Marl",
+            "mountId": 2776
+          }
+        ]
+      },
+      {
+        "name": "The whole story",
+        "steps": [
+          {
+            "id": "loremaster",
+            "type": "achievement",
+            "label": "Finish the campaign and every zone's side stories (Loremaster of Midnight)",
+            "achievementId": 62110
+          }
+        ]
+      },
+      {
+        "name": "A house to fill",
+        "steps": [
+          {
+            "id": "decor-100",
+            "type": "achievement",
+            "label": "Collect 100 different pieces of decor, uncommon or better (Casual Collector)",
+            "achievementId": 61310
+          }
+        ]
+      }
+    ]
+  }
+}

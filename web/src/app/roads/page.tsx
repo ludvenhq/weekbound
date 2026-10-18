@@ -8,7 +8,7 @@ import { STUDIO_ROADS } from '@/lib/studio/roads';
 export const metadata: Metadata = {
   title: 'The roads',
   description:
-    "The studio's roads for World of Warcraft retail: for returning players, for a slow season of PvE and PvP, and for your first rated PvP.",
+    "The studio's roads for World of Warcraft retail: for returning players, a slow season of PvE and PvP, your first rated PvP, the season's PvE ladder, and collecting.",
 };
 
 // The gallery (design doc, "The website"): what a road is on the left, the studio's roads on a
@@ -26,8 +26,9 @@ export default function RoadsPage() {
             studio&apos;s.
           </Text>
           <Text mt="14px" fontSize="1.125rem" color="textMuted">
-            Each one shows you three steps at a time and opens one stage a week, at the reset. Read
-            a road first, or start walking it from its page.
+            Each one shows you three steps at a time. Most open one stage a week, at the reset; a
+            free-pace road opens the next as soon as you finish one. Read a road first, or start
+            walking it from its page.
           </Text>
           <Text mt="32px" color="textMuted">
             Have a code from another player? Paste it on{' '}
