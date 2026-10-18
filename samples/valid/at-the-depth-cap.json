@@ -1,0 +1,26 @@
+{
+  "about": "Nesting exactly 16 deep (the road object is level 1) still opens.",
+  "canonical": false,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1iYWNrLWszeDlxYSIsInJldiI6MSwidGl0bGUiOiJNeSBmaXJzdCB3ZWVrIGJhY2siLCJwYWNlIjoid2Vla2x5IiwiYXV0aG9yIjoiQSByZXR1cm5pbmcgcGxheWVyIiwibGljZW5zZSI6IkNDLUJZLTQuMCIsInN0YWdlcyI6W3sibmFtZSI6IkZpbmQgeW91ciBmZWV0Iiwic3RlcHMiOlt7ImlkIjoid2VsY29tZSIsInR5cGUiOiJtYW51YWwiLCJsYWJlbCI6IkZpbmlzaCB0aGUgd2VsY29tZS1iYWNrIHF1ZXN0In1dfV0sIngiOltbW1tbW1tbW1tbW1tbW11dXV1dXV1dXV1dXV1dXX0",
+  "road": {
+    "v": 1,
+    "id": "p-first-week-back-k3x9qa",
+    "rev": 1,
+    "title": "My first week back",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Find your feet",
+        "steps": [
+          {
+            "id": "welcome",
+            "type": "manual",
+            "label": "Finish the welcome-back quest"
+          }
+        ]
+      }
+    ]
+  }
+}

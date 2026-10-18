@@ -1,0 +1,26 @@
+{
+  "about": "Fields this version does not know are dropped, at every level.",
+  "canonical": false,
+  "code": "SR1!eyJzdW1tYXJ5IjoiQSBuZXdlciBmaWVsZCIsInYiOjEsImlkIjoicC1maXJzdC13ZWVrLWJhY2stazN4OXFhIiwicmV2IjoxLCJ0aXRsZSI6Ik15IGZpcnN0IHdlZWsgYmFjayIsInBhY2UiOiJ3ZWVrbHkiLCJhdXRob3IiOiJBIHJldHVybmluZyBwbGF5ZXIiLCJsaWNlbnNlIjoiQ0MtQlktNC4wIiwic3RhZ2VzIjpbeyJjb2xvdXIiOiJnb2xkIiwibmFtZSI6IkZpbmQgeW91ciBmZWV0Iiwic3RlcHMiOlt7Imljb24iOiJ0ZW50IiwiaWQiOiJ3ZWxjb21lIiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoiRmluaXNoIHRoZSB3ZWxjb21lLWJhY2sgcXVlc3QifV19XSwieCI6eyJuZXN0ZWQiOlsxLDIsM119fQ",
+  "road": {
+    "v": 1,
+    "id": "p-first-week-back-k3x9qa",
+    "rev": 1,
+    "title": "My first week back",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Find your feet",
+        "steps": [
+          {
+            "id": "welcome",
+            "type": "manual",
+            "label": "Finish the welcome-back quest"
+          }
+        ]
+      }
+    ]
+  }
+}

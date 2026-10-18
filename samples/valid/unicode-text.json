@@ -1,0 +1,31 @@
+{
+  "about": "Cyrillic, Polish, German, Japanese and emoji text survives UTF-8 both ways.",
+  "canonical": true,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtaG9tZWNvbWluZy11OHQzeHQiLCJyZXYiOjEsInRpdGxlIjoi0J_QvtCy0LXRgNC90LXQvdC90Y8g0LTQvtC00L7QvNGDIPCfkIkiLCJwYWNlIjoid2Vla2x5IiwiYXV0aG9yIjoiWmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQiLCJsaWNlbnNlIjoiQ0MtQlktNC4wIiwic3RhZ2VzIjpbeyJuYW1lIjoiRXJzdGUgU2Nocml0dGUsIGdyw7bDn2VyIiwic3RlcHMiOlt7ImlkIjoiY2prIiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoi5pyA5Yid44Gu5LiA5q2p44KS6LiP44G_5Ye644GZIn0seyJpZCI6ImVtb2ppIiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoiUmlkZSBhIPCfkI4gdG8gdGhlIPCfj7Agd2l0aCBhIGZyaWVuZCDwn6ed4oCN4pmA77iPIn1dfV19",
+  "road": {
+    "v": 1,
+    "id": "p-homecoming-u8t3xt",
+    "rev": 1,
+    "title": "Повернення додому 🐉",
+    "pace": "weekly",
+    "author": "Zażółć gęślą jaźń",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Erste Schritte, größer",
+        "steps": [
+          {
+            "id": "cjk",
+            "type": "manual",
+            "label": "最初の一歩を踏み出す"
+          },
+          {
+            "id": "emoji",
+            "type": "manual",
+            "label": "Ride a 🐎 to the 🏰 with a friend 🧝‍♀️"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "about": "One step of every type, every PvP bracket and every vault row.",
+  "canonical": true,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtZXZlcnktc3RlcC10eXBlLWExYjJjMyIsInJldiI6NCwidGl0bGUiOiJFdmVyeSBzdGVwIHR5cGUiLCJwYWNlIjoid2Vla2x5IiwiYXV0aG9yIjoiRm9ybWF0IHNhbXBsZSIsImxpY2Vuc2UiOiJDQy1CWS00LjAiLCJzdGFnZXMiOlt7Im5hbWUiOiJHZWFyIGFuZCBrZXlzIiwic3RlcHMiOlt7ImlkIjoiaWx2bCIsInR5cGUiOiJpdGVtLWxldmVsIiwibGFiZWwiOiJSZWFjaCBpdGVtIGxldmVsIDI0MCIsIm4iOjI0MH0seyJpZCI6ImtleXMiLCJ0eXBlIjoibXl0aGljLXBsdXMtcmF0aW5nIiwibGFiZWwiOiJSZWFjaCBhIE15dGhpYysgcmF0aW5nIG9mIDEsNTAwIiwibiI6MTUwMH0seyJpZCI6InZhdWx0LXJhaWQiLCJ0eXBlIjoidmF1bHQiLCJsYWJlbCI6IkZpbGwgYSByYWlkIHNsb3QiLCJyb3ciOiJyYWlkIiwibiI6MX0seyJpZCI6InZhdWx0LWR1bmdlb24iLCJ0eXBlIjoidmF1bHQiLCJsYWJlbCI6IkZpbGwgdHdvIGR1bmdlb24gc2xvdHMiLCJyb3ciOiJkdW5nZW9uIiwibiI6Mn0seyJpZCI6InZhdWx0LXdvcmxkIiwidHlwZSI6InZhdWx0IiwibGFiZWwiOiJGaWxsIGFsbCB3b3JsZCBzbG90cyIsInJvdyI6IndvcmxkIiwibiI6M30seyJpZCI6ImR1bmdlb24tZmVhdCIsInR5cGUiOiJhY2hpZXZlbWVudCIsImxhYmVsIjoiRWFybiB0aGUgc2FtcGxlIGFjaGlldmVtZW50IiwiYWNoaWV2ZW1lbnRJZCI6MTIzNDV9XX0seyJuYW1lIjoiUmF0ZWQgcGxheSIsInN0ZXBzIjpbeyJpZCI6InR3b3MiLCJ0eXBlIjoicHZwLXJhdGluZyIsImxhYmVsIjoiUmVhY2ggMSw0MDAgaW4gMnYyIiwiYnJhY2tldCI6IjJ2MiIsIm4iOjE0MDB9LHsiaWQiOiJ0aHJlZXMiLCJ0eXBlIjoicHZwLXJhdGluZyIsImxhYmVsIjoiUmVhY2ggMSw2MDAgaW4gM3YzIiwiYnJhY2tldCI6IjN2MyIsIm4iOjE2MDB9LHsiaWQiOiJyYmciLCJ0eXBlIjoicHZwLXJhdGluZyIsImxhYmVsIjoiUmVhY2ggMSw1MDAgaW4gUkJHIiwiYnJhY2tldCI6InJiZyIsIm4iOjE1MDB9LHsiaWQiOiJzaHVmZmxlIiwidHlwZSI6InB2cC1yYXRpbmciLCJsYWJlbCI6IlJlYWNoIDEsODAwIGluIFNvbG8gU2h1ZmZsZSBhcyBhIGhlYWxlciIsImJyYWNrZXQiOiJzaHVmZmxlIiwibiI6MTgwMCwic3BlY0lkIjoxMDV9LHsiaWQiOiJibGl0eiIsInR5cGUiOiJwdnAtcmF0aW5nIiwibGFiZWwiOiJSZWFjaCAxLDcwMCBpbiBCbGl0eiIsImJyYWNrZXQiOiJibGl0eiIsIm4iOjE3MDAsInNwZWNJZCI6MTA1fSx7ImlkIjoicHZwLXRpdGxlIiwidHlwZSI6InRpdGxlIiwibGFiZWwiOiJFYXJuIHRoZSBzYW1wbGUgdGl0bGUiLCJ0aXRsZUlkIjo0Mn1dfSx7Im5hbWUiOiJBcm91bmQgdGhlIHdvcmxkIiwic3RlcHMiOlt7ImlkIjoiY2FtcGFpZ24iLCJ0eXBlIjoicXVlc3QiLCJsYWJlbCI6IkZpbmlzaCB0aGUgc2FtcGxlIHF1ZXN0IiwicXVlc3RJZCI6Njc4OTB9LHsiaWQiOiJyZW5vd24iLCJ0eXBlIjoicmVwdXRhdGlvbiIsImxhYmVsIjoiUmVhY2ggcmVub3duIDEwIHdpdGggdGhlIHNhbXBsZSBmYWN0aW9uIiwiZmFjdGlvbklkIjoyNjAwLCJuIjoxMH0seyJpZCI6Im1vdW50IiwidHlwZSI6Im1vdW50IiwibGFiZWwiOiJDb2xsZWN0IHRoZSBzYW1wbGUgbW91bnQiLCJtb3VudElkIjoxNTAwfSx7ImlkIjoiY3Jlc3RzIiwidHlwZSI6ImN1cnJlbmN5IiwibGFiZWwiOiJTYXZlIDkwIG9mIHRoZSBzYW1wbGUgY3VycmVuY3kiLCJjdXJyZW5jeUlkIjozMDAwLCJuIjo5MH0seyJpZCI6ImZyaWVuZHMiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiJSdW4gb25lIGR1bmdlb24gd2l0aCBmcmllbmRzIn1dfV19",
+  "road": {
+    "v": 1,
+    "id": "p-every-step-type-a1b2c3",
+    "rev": 4,
+    "title": "Every step type",
+    "pace": "weekly",
+    "author": "Format sample",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Gear and keys",
+        "steps": [
+          {
+            "id": "ilvl",
+            "type": "item-level",
+            "label": "Reach item level 240",
+            "n": 240
+          },
+          {
+            "id": "keys",
+            "type": "mythic-plus-rating",
+            "label": "Reach a Mythic+ rating of 1,500",
+            "n": 1500
+          },
+          {
+            "id": "vault-raid",
+            "type": "vault",
+            "label": "Fill a raid slot",
+            "row": "raid",
+            "n": 1
+          },
+          {
+            "id": "vault-dungeon",
+            "type": "vault",
+            "label": "Fill two dungeon slots",
+            "row": "dungeon",
+            "n": 2
+          },
+          {
+            "id": "vault-world",
+            "type": "vault",
+            "label": "Fill all world slots",
+            "row": "world",
+            "n": 3
+          },
+          {
+            "id": "dungeon-feat",
+            "type": "achievement",
+            "label": "Earn the sample achievement",
+            "achievementId": 12345
+          }
+        ]
+      },
+      {
+        "name": "Rated play",
+        "steps": [
+          {
+            "id": "twos",
+            "type": "pvp-rating",
+            "label": "Reach 1,400 in 2v2",
+            "bracket": "2v2",
+            "n": 1400
+          },
+          {
+            "id": "threes",
+            "type": "pvp-rating",
+            "label": "Reach 1,600 in 3v3",
+            "bracket": "3v3",
+            "n": 1600
+          },
+          {
+            "id": "rbg",
+            "type": "pvp-rating",
+            "label": "Reach 1,500 in RBG",
+            "bracket": "rbg",
+            "n": 1500
+          },
+          {
+            "id": "shuffle",
+            "type": "pvp-rating",
+            "label": "Reach 1,800 in Solo Shuffle as a healer",
+            "bracket": "shuffle",
+            "n": 1800,
+            "specId": 105
+          },
+          {
+            "id": "blitz",
+            "type": "pvp-rating",
+            "label": "Reach 1,700 in Blitz",
+            "bracket": "blitz",
+            "n": 1700,
+            "specId": 105
+          },
+          {
+            "id": "pvp-title",
+            "type": "title",
+            "label": "Earn the sample title",
+            "titleId": 42
+          }
+        ]
+      },
+      {
+        "name": "Around the world",
+        "steps": [
+          {
+            "id": "campaign",
+            "type": "quest",
+            "label": "Finish the sample quest",
+            "questId": 67890
+          },
+          {
+            "id": "renown",
+            "type": "reputation",
+            "label": "Reach renown 10 with the sample faction",
+            "factionId": 2600,
+            "n": 10
+          },
+          {
+            "id": "mount",
+            "type": "mount",
+            "label": "Collect the sample mount",
+            "mountId": 1500
+          },
+          {
+            "id": "crests",
+            "type": "currency",
+            "label": "Save 90 of the sample currency",
+            "currencyId": 3000,
+            "n": 90
+          },
+          {
+            "id": "friends",
+            "type": "manual",
+            "label": "Run one dungeon with friends"
+          }
+        ]
+      }
+    ]
+  }
+}

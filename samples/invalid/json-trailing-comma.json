@@ -1,0 +1,5 @@
+{
+  "about": "Strict JSON: no trailing comma.",
+  "code": "SR1!eyJ2IjoxLH0",
+  "error": "bad-json"
+}

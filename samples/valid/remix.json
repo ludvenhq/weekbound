@@ -1,0 +1,45 @@
+{
+  "about": "A remix of a studio road at free pace; basedOn may name a reserved id.",
+  "canonical": true,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtcmV0dXJuaW5nLWhlYWxlci1xN20yemQiLCJyZXYiOjIsInRpdGxlIjoiUmV0dXJuaW5nIGhlYWxlciIsInBhY2UiOiJmcmVlIiwiYXV0aG9yIjoiQSBoZWFsZXIiLCJsaWNlbnNlIjoiQ0MtQlktNC4wIiwiYmFzZWRPbiI6eyJpZCI6InNyLXJldHVybmluZy1wbGF5ZXIiLCJyZXYiOjMsImF1dGhvciI6Ikx1ZHZlbiJ9LCJzdGFnZXMiOlt7Im5hbWUiOiJXYXJtIHVwIiwic3RlcHMiOlt7ImlkIjoiaGVhbC1rZXlzIiwidHlwZSI6Im15dGhpYy1wbHVzLXJhdGluZyIsImxhYmVsIjoiSGVhbCB0byAxLDAwMCByYXRpbmciLCJuIjoxMDAwfV19LHsibmFtZSI6IkFyZW5hIiwic3RlcHMiOlt7ImlkIjoiaGVhbC1zaHVmZmxlIiwidHlwZSI6InB2cC1yYXRpbmciLCJsYWJlbCI6IlJlYWNoIDEsNDAwIGluIFNvbG8gU2h1ZmZsZSIsImJyYWNrZXQiOiJzaHVmZmxlIiwibiI6MTQwMCwic3BlY0lkIjoyNjR9XX1dfQ",
+  "road": {
+    "v": 1,
+    "id": "p-returning-healer-q7m2zd",
+    "rev": 2,
+    "title": "Returning healer",
+    "pace": "free",
+    "author": "A healer",
+    "license": "CC-BY-4.0",
+    "basedOn": {
+      "id": "sr-returning-player",
+      "rev": 3,
+      "author": "Ludven"
+    },
+    "stages": [
+      {
+        "name": "Warm up",
+        "steps": [
+          {
+            "id": "heal-keys",
+            "type": "mythic-plus-rating",
+            "label": "Heal to 1,000 rating",
+            "n": 1000
+          }
+        ]
+      },
+      {
+        "name": "Arena",
+        "steps": [
+          {
+            "id": "heal-shuffle",
+            "type": "pvp-rating",
+            "label": "Reach 1,400 in Solo Shuffle",
+            "bracket": "shuffle",
+            "n": 1400,
+            "specId": 264
+          }
+        ]
+      }
+    ]
+  }
+}

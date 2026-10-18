@@ -1,0 +1,5 @@
+{
+  "about": "The schema is checked before the reserved id.",
+  "code": "SR1!eyJ2IjoxLCJpZCI6InNyLXJldHVybmluZy1wbGF5ZXIiLCJyZXYiOjEsInRpdGxlIjoiTXkgZmlyc3Qgd2VlayBiYWNrIiwicGFjZSI6ImZhc3QiLCJhdXRob3IiOiJBIHJldHVybmluZyBwbGF5ZXIiLCJsaWNlbnNlIjoiQ0MtQlktNC4wIiwic3RhZ2VzIjpbeyJuYW1lIjoiRmluZCB5b3VyIGZlZXQiLCJzdGVwcyI6W3siaWQiOiJ3ZWxjb21lIiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoiRmluaXNoIHRoZSB3ZWxjb21lLWJhY2sgcXVlc3QifV19XX0",
+  "error": "invalid"
+}

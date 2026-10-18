@@ -1,0 +1,5 @@
+{
+  "about": "Control characters are refused in every text.",
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1iYWNrLWszeDlxYSIsInJldiI6MSwidGl0bGUiOiJNeSBmaXJzdCB3ZWVrIGJhY2siLCJwYWNlIjoid2Vla2x5IiwiYXV0aG9yIjoiQmVsbFx1MDAwNyIsImxpY2Vuc2UiOiJDQy1CWS00LjAiLCJzdGFnZXMiOlt7Im5hbWUiOiJGaW5kIHlvdXIgZmVldCIsInN0ZXBzIjpbeyJpZCI6IndlbGNvbWUiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiJGaW5pc2ggdGhlIHdlbGNvbWUtYmFjayBxdWVzdCJ9XX1dfQ",
+  "error": "invalid"
+}

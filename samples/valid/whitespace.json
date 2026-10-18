@@ -1,0 +1,26 @@
+{
+  "about": "Spaces, tabs and line breaks anywhere in a code are ignored.",
+  "canonical": false,
+  "code": "  SR1!eyJ2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1i\r\nYWNrLWszeDlxYSIsInJldiI6MSwidGl0bGUiOiJN\r\neSBmaXJzdCB3ZWVrIGJhY2siLCJwYWNlIjoid2Vl\r\na2x5IiwiYXV0aG9yIjoiQSByZXR1cm5pbmcgcGxh\r\neWVyIiwibGljZW5zZSI6IkNDLUJZLTQuMCIsInN0\r\nYWdlcyI6W3sibmFtZSI6IkZpbmQgeW91ciBmZWV0\r\nIiwic3RlcHMiOlt7ImlkIjoid2VsY29tZSIsInR5\r\ncGUiOiJtYW51YWwiLCJsYWJlbCI6IkZpbmlzaCB0\r\naGUgd2VsY29tZS1iYWNrIHF1ZXN0In1dfV19\n",
+  "road": {
+    "v": 1,
+    "id": "p-first-week-back-k3x9qa",
+    "rev": 1,
+    "title": "My first week back",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Find your feet",
+        "steps": [
+          {
+            "id": "welcome",
+            "type": "manual",
+            "label": "Finish the welcome-back quest"
+          }
+        ]
+      }
+    ]
+  }
+}

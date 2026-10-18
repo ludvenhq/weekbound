@@ -1,0 +1,46 @@
+{
+  "about": "HTML, template syntax and WoW escape sequences are valid text; the site shows them as plain text and the addon escapes every |.",
+  "canonical": true,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtaG9zdGlsZS10ZXh0LWgwc3QxbCIsInJldiI6MSwidGl0bGUiOiI8aW1nIHNyYz14IG9uZXJyb3I9YWxlcnQoMSk-IiwicGFjZSI6IndlZWtseSIsImF1dGhvciI6IjxiPk5vdCBib2xkPC9iPiIsImxpY2Vuc2UiOiJDQy1CWS00LjAiLCJzdGFnZXMiOlt7Im5hbWUiOiJ7e2NvbnN0cnVjdG9yLmNvbnN0cnVjdG9yKFwiYWxlcnQoMSlcIikoKX19Iiwic3RlcHMiOlt7ImlkIjoic2NyaXB0IiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoiPHNjcmlwdD5hbGVydChcImhpXCIpPC9zY3JpcHQ-In0seyJpZCI6Indvdy1jb2xvciIsInR5cGUiOiJtYW51YWwiLCJsYWJlbCI6InxjZmZmZjAwMDBGcmVlIGdvbGR8ciJ9LHsiaWQiOiJ3b3ctbGluayIsInR5cGUiOiJtYW51YWwiLCJsYWJlbCI6InxIaXRlbToxOTAxOTo6Ojo6Ojo6fGhbVGh1bmRlcmZ1cnldfGh8ciJ9LHsiaWQiOiJ3b3ctdGV4dHVyZSIsInR5cGUiOiJtYW51YWwiLCJsYWJlbCI6InxUSW50ZXJmYWNlXFxJY29uc1xcSU5WX01pc2NfUXVlc3Rpb25NYXJrOjY0fHQifSx7ImlkIjoiZW50aXRpZXMiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiImYW1wOyAmbHQ7YiZndDsgJiN4NDE7In1dfV19",
+  "road": {
+    "v": 1,
+    "id": "p-hostile-text-h0st1l",
+    "rev": 1,
+    "title": "<img src=x onerror=alert(1)>",
+    "pace": "weekly",
+    "author": "<b>Not bold</b>",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "{{constructor.constructor(\"alert(1)\")()}}",
+        "steps": [
+          {
+            "id": "script",
+            "type": "manual",
+            "label": "<script>alert(\"hi\")</script>"
+          },
+          {
+            "id": "wow-color",
+            "type": "manual",
+            "label": "|cffff0000Free gold|r"
+          },
+          {
+            "id": "wow-link",
+            "type": "manual",
+            "label": "|Hitem:19019::::::::|h[Thunderfury]|h|r"
+          },
+          {
+            "id": "wow-texture",
+            "type": "manual",
+            "label": "|TInterface\\Icons\\INV_Misc_QuestionMark:64|t"
+          },
+          {
+            "id": "entities",
+            "type": "manual",
+            "label": "&amp; &lt;b&gt; &#x41;"
+          }
+        ]
+      }
+    ]
+  }
+}

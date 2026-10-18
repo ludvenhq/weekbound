@@ -7,6 +7,15 @@ Ludven studio. This repo is **public** (MIT for code, roads CC BY 4.0).
   commits, pull requests, release notes or repo content (write "the owner" or a date).
 - **Branches:** all work on `dev`; `main` moves only by a pull request the owner merges.
 - **Design:** read `DESIGN.md` before any UI work.
+- **Plan:** the box 3 design doc lives in the studio hub (`docs/designs/2026-10-18-wow-slow-road.md`,
+  Amendment 1 first: web first). Build order: (1) `web/` + CI, schema, codes, samples (done
+  2026-10-18); (2) My road; (3) editor and paste box; (4) gallery and the first roads; (5) the
+  owner plays a week; (6) deploy at the owner's word.
+- **Gate:** `cd web && npm run verify` (lint, type-check, Vitest with the shared samples, build),
+  the same as CI. Node 24; TypeScript stays on 6.0 until typescript-eslint supports 7.
+- **Road format:** `docs/road-format.md` is the contract for the website and the addon; the Zod
+  schema in `web/src/lib/road/schema.ts` is the single source of the shape. Never edit or delete
+  a file in `samples/`; add new ones with `npm run samples`.
 
 ## Skill routing
 

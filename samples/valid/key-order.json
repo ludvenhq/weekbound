@@ -1,0 +1,26 @@
+{
+  "about": "Keys may come in any order; the decoded road is the same.",
+  "canonical": false,
+  "code": "SR1!eyJzdGFnZXMiOlt7Im5hbWUiOiJGaW5kIHlvdXIgZmVldCIsInN0ZXBzIjpbeyJpZCI6IndlbGNvbWUiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiJGaW5pc2ggdGhlIHdlbGNvbWUtYmFjayBxdWVzdCJ9XX1dLCJsaWNlbnNlIjoiQ0MtQlktNC4wIiwiYXV0aG9yIjoiQSByZXR1cm5pbmcgcGxheWVyIiwicGFjZSI6IndlZWtseSIsInRpdGxlIjoiTXkgZmlyc3Qgd2VlayBiYWNrIiwicmV2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1iYWNrLWszeDlxYSIsInYiOjF9",
+  "road": {
+    "v": 1,
+    "id": "p-first-week-back-k3x9qa",
+    "rev": 1,
+    "title": "My first week back",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Find your feet",
+        "steps": [
+          {
+            "id": "welcome",
+            "type": "manual",
+            "label": "Finish the welcome-back quest"
+          }
+        ]
+      }
+    ]
+  }
+}

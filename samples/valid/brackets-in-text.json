@@ -1,0 +1,36 @@
+{
+  "about": "Brackets inside strings do not count toward the depth cap, after escaped quotes and a trailing backslash too.",
+  "canonical": true,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtYnJhY2tldHMtaW4tdGV4dC1iN2sycnEiLCJyZXYiOjEsInRpdGxlIjoiQnJhY2tldHMgW1tbW1tbW1tbW1tbW1tbW1tbW1sgaW4gdGV4dCIsInBhY2UiOiJ3ZWVrbHkiLCJhdXRob3IiOiJBIHJldHVybmluZyBwbGF5ZXIiLCJsaWNlbnNlIjoiQ0MtQlktNC4wIiwic3RhZ2VzIjpbeyJuYW1lIjoiRXNjYXBlcyIsInN0ZXBzIjpbeyJpZCI6InF1b3RlIiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoiSGUgc2FpZCBcIltbW1tbW1tbW1tbW1tbW1tbW1tbXCIgYW5kIGxlZnQge3t7e3t7e3t7e3t7e3t7e3t7e3sifSx7ImlkIjoiYmFja3NsYXNoIiwidHlwZSI6Im1hbnVhbCIsImxhYmVsIjoiQSBwYXRoIHRoYXQgZW5kcyBpbiBhIGJhY2tzbGFzaCBcXCJ9LHsiaWQiOiJhZnRlciIsInR5cGUiOiJtYW51YWwiLCJsYWJlbCI6IltbW1tbW1tbW1tbW1tbW1tbW1tbIGFmdGVyIHRoZSBiYWNrc2xhc2gifV19XX0",
+  "road": {
+    "v": 1,
+    "id": "p-brackets-in-text-b7k2rq",
+    "rev": 1,
+    "title": "Brackets [[[[[[[[[[[[[[[[[[[[ in text",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Escapes",
+        "steps": [
+          {
+            "id": "quote",
+            "type": "manual",
+            "label": "He said \"[[[[[[[[[[[[[[[[[[[[\" and left {{{{{{{{{{{{{{{{{{{{"
+          },
+          {
+            "id": "backslash",
+            "type": "manual",
+            "label": "A path that ends in a backslash \\"
+          },
+          {
+            "id": "after",
+            "type": "manual",
+            "label": "[[[[[[[[[[[[[[[[[[[[ after the backslash"
+          }
+        ]
+      }
+    ]
+  }
+}

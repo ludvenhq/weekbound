@@ -1,0 +1,5 @@
+{
+  "about": "Set bits after the last whole byte: only one spelling per code.",
+  "code": "SR1!e31",
+  "error": "bad-base64"
+}

@@ -1,0 +1,5 @@
+{
+  "about": "Step ids are unique across the road, so one tick never marks two steps.",
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1iYWNrLWszeDlxYSIsInJldiI6MSwidGl0bGUiOiJNeSBmaXJzdCB3ZWVrIGJhY2siLCJwYWNlIjoid2Vla2x5IiwiYXV0aG9yIjoiQSByZXR1cm5pbmcgcGxheWVyIiwibGljZW5zZSI6IkNDLUJZLTQuMCIsInN0YWdlcyI6W3sibmFtZSI6Ik9uZSIsInN0ZXBzIjpbeyJpZCI6InNhbWUiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiJGaXJzdCJ9XX0seyJuYW1lIjoiVHdvIiwic3RlcHMiOlt7ImlkIjoic2FtZSIsInR5cGUiOiJtYW51YWwiLCJsYWJlbCI6IlNlY29uZCJ9XX1dfQ",
+  "error": "invalid"
+}

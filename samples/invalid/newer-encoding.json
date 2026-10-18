@@ -1,0 +1,5 @@
+{
+  "about": "A later encoding (say, compressed) asks for an update.",
+  "code": "SR2!e30",
+  "error": "newer-encoding"
+}

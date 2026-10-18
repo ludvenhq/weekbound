@@ -1,0 +1,26 @@
+{
+  "about": "A key given twice: the last one wins, as JSON.parse does.",
+  "canonical": false,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1iYWNrLWszeDlxYSIsInJldiI6MSwidGl0bGUiOiJGaXJzdCIsInRpdGxlIjoiU2Vjb25kIiwicGFjZSI6IndlZWtseSIsImF1dGhvciI6IkEgcmV0dXJuaW5nIHBsYXllciIsImxpY2Vuc2UiOiJDQy1CWS00LjAiLCJzdGFnZXMiOlt7Im5hbWUiOiJGaW5kIHlvdXIgZmVldCIsInN0ZXBzIjpbeyJpZCI6IndlbGNvbWUiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiJGaW5pc2ggdGhlIHdlbGNvbWUtYmFjayBxdWVzdCJ9XX1dfQ",
+  "road": {
+    "v": 1,
+    "id": "p-first-week-back-k3x9qa",
+    "rev": 1,
+    "title": "Second",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Find your feet",
+        "steps": [
+          {
+            "id": "welcome",
+            "type": "manual",
+            "label": "Finish the welcome-back quest"
+          }
+        ]
+      }
+    ]
+  }
+}

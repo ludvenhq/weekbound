@@ -1,0 +1,5 @@
+{
+  "about": "Studio roads ship built in; a code may not use their sr- ids.",
+  "code": "SR1!eyJ2IjoxLCJpZCI6InNyLXJldHVybmluZy1wbGF5ZXIiLCJyZXYiOjEsInRpdGxlIjoiTXkgZmlyc3Qgd2VlayBiYWNrIiwicGFjZSI6IndlZWtseSIsImF1dGhvciI6IkEgcmV0dXJuaW5nIHBsYXllciIsImxpY2Vuc2UiOiJDQy1CWS00LjAiLCJzdGFnZXMiOlt7Im5hbWUiOiJGaW5kIHlvdXIgZmVldCIsInN0ZXBzIjpbeyJpZCI6IndlbGNvbWUiLCJ0eXBlIjoibWFudWFsIiwibGFiZWwiOiJGaW5pc2ggdGhlIHdlbGNvbWUtYmFjayBxdWVzdCJ9XX1dfQ",
+  "error": "reserved-id"
+}

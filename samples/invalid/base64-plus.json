@@ -1,0 +1,5 @@
+{
+  "about": "Standard base64’s + is outside the base64url alphabet.",
+  "code": "SR1!eyJ2Ijox+",
+  "error": "bad-base64"
+}

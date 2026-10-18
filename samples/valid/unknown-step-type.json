@@ -1,0 +1,26 @@
+{
+  "about": "A step type this version does not know keeps the road; the step keeps only id, type and label and shows as manual.",
+  "canonical": false,
+  "code": "SR1!eyJ2IjoxLCJpZCI6InAtZmlyc3Qtd2Vlay1iYWNrLWszeDlxYSIsInJldiI6MSwidGl0bGUiOiJNeSBmaXJzdCB3ZWVrIGJhY2siLCJwYWNlIjoid2Vla2x5IiwiYXV0aG9yIjoiQSByZXR1cm5pbmcgcGxheWVyIiwibGljZW5zZSI6IkNDLUJZLTQuMCIsInN0YWdlcyI6W3sibmFtZSI6IkZpbmQgeW91ciBmZWV0Iiwic3RlcHMiOlt7ImlkIjoid2lucyIsInR5cGUiOiJyYXRlZC13aW5zIiwibGFiZWwiOiJXaW4gMTAgcmF0ZWQgMnYyIGdhbWVzIiwiYnJhY2tldCI6IjJ2MiIsIm4iOjEwfV19XX0",
+  "road": {
+    "v": 1,
+    "id": "p-first-week-back-k3x9qa",
+    "rev": 1,
+    "title": "My first week back",
+    "pace": "weekly",
+    "author": "A returning player",
+    "license": "CC-BY-4.0",
+    "stages": [
+      {
+        "name": "Find your feet",
+        "steps": [
+          {
+            "id": "wins",
+            "type": "rated-wins",
+            "label": "Win 10 rated 2v2 games"
+          }
+        ]
+      }
+    ]
+  }
+}
