@@ -2,6 +2,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import type { Metadata, Viewport } from 'next';
 import { Alegreya_Sans, Alegreya_Sans_SC, Grenze_Gotisch, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { Analytics } from '@/components/analytics';
 import { ContourMap } from '@/components/contour-map';
 import { FogFilters } from '@/components/fog';
 import { SiteFooter, SiteHeader } from '@/components/site-frame';
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${fonts} dark`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <Analytics />
       </head>
       <body>
         <Providers>

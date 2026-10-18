@@ -7,6 +7,7 @@ import { secondaryButton, textButton } from '@/components/buttons';
 import { Fold } from '@/components/fold';
 import { Message } from '@/components/message';
 import { Columns, pageTitle, stickyColumn } from '@/components/page';
+import { roadLabel, track } from '@/lib/analytics';
 import { makeCode } from '@/lib/editor/check';
 import {
   addStage,
@@ -134,6 +135,7 @@ export function Editor() {
     window.history.replaceState(null, '', window.location.pathname + window.location.search);
     const road = studioRoad(id);
     if (!road) return;
+    track('remix-open', { from: roadLabel(road.id) });
     edit(() => remixDraft(road, currentDraft().author), {
       at: 'top',
       text: `Started a remix of ${road.title}, by ${road.author}.`,
@@ -162,6 +164,7 @@ export function Editor() {
 
   function open(road: Road, mode: OpenMode) {
     const author = draft!.author;
+    if (mode === 'remix') track('remix-open', { from: roadLabel(road.id) });
     edit(() => (mode === 'version' ? versionDraft(road) : remixDraft(road, author)), {
       at: 'top',
       text:
@@ -372,7 +375,10 @@ export function Editor() {
           draft={draft}
           made={made}
           rev={rev}
-          onCopy={(road) => updateDraft((current) => handOut(current, road))}
+          onCopy={(road) => {
+            updateDraft((current) => handOut(current, road));
+            track('code-copy');
+          }}
           onWalk={walk}
           onProblem={(field) => {
             touch(field);

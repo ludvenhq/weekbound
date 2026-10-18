@@ -7,6 +7,7 @@ import { Message, type Tone } from '@/components/message';
 import { Columns, pageTitle, SideSection } from '@/components/page';
 import { Signpost } from '@/components/signpost';
 import { TextLink } from '@/components/text-link';
+import { roadLabel, track } from '@/lib/analytics';
 import { DECODE_MESSAGES, decodeRoad } from '@/lib/road/code';
 import { codeFromHash, walkFromHash } from '@/lib/road/link';
 import type { Road } from '@/lib/road/schema';
@@ -138,6 +139,7 @@ export function MyRoad() {
       case 'added':
         updateSaved(() => outcome.saved);
         setNotice({ tone: 'success', text: `${incoming.title} is your road now.` });
+        track('road-start', { road: roadLabel(incoming.id) });
         break;
       case 'same':
         updateSaved(() => outcome.saved);
@@ -173,6 +175,7 @@ export function MyRoad() {
     } else {
       updateSaved((current) => activate(current, id));
       setNotice({ tone: 'success', text: `${road.title} is your road now.` });
+      track('road-start', { road: roadLabel(id) });
     }
     toTop();
   }, []);
@@ -221,6 +224,9 @@ export function MyRoad() {
           : `Undone: ${label}.`;
     if (after.kind === 'camp' && before.kind === 'walking') said += ' Stage done. Make camp.';
     if (after.kind === 'complete' && before.kind !== 'complete') said += ' Road complete.';
+    if (before.kind === 'walking' && (after.kind !== 'walking' || after.stage > before.stage)) {
+      track('stage-done', { road: roadLabel(target.id), stage: before.stage + 1 });
+    }
     if (after.kind === 'walking' && before.kind === 'walking' && after.stage > before.stage) {
       const name = target.stages[after.stage]?.name;
       said += ` Stage ${after.stage + 1} is open.`;

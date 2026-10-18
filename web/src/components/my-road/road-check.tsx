@@ -6,6 +6,7 @@ import { secondaryButton } from '@/components/buttons';
 import { Message } from '@/components/message';
 import { SideSection } from '@/components/page';
 import { useBlizzard } from '@/components/use-blizzard';
+import { track } from '@/lib/analytics';
 import {
   CHECK_MESSAGES,
   checkReplySchema,
@@ -113,6 +114,9 @@ function RoadCheck({ road, marks, region, onTicks }: Props) {
         body: JSON.stringify({ ...current, kinds: kindsFor(road) }),
       });
       const parsed = checkReplySchema.safeParse(await response.json());
+      track('road-check', {
+        result: parsed.success ? (parsed.data.ok ? 'ok' : parsed.data.error) : 'broken',
+      });
       if (!parsed.success) setError(CHECK_MESSAGES.busy);
       else if (!parsed.data.ok) setError(CHECK_MESSAGES[parsed.data.error]);
       else {
