@@ -36,6 +36,11 @@ export default function AboutPage() {
             each weekly reset. Free, no login.
           </Text>
           <Text mt="14px" color="textMuted">
+            In alpha: the roads, My road and the editor work, and your progress stays where it is.
+            Road Check, which ticks steps from your character, comes next. Things may still change
+            as players use it.
+          </Text>
+          <Text mt="14px" color="textMuted">
             Made by{' '}
             <TextLink href="https://ludven.com" external>
               Ludven

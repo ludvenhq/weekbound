@@ -47,6 +47,24 @@ export function SiteHeader() {
                 bg="background"
               />
               Weekbound
+              {/* In alpha since the launch on 2026-10-18 (the owner's call); a quiet tag, not gold. */}
+              <Box
+                as="span"
+                alignSelf="center"
+                fontFamily="smallCaps"
+                fontWeight="500"
+                fontSize="0.8125rem"
+                letterSpacing="0.04em"
+                lineHeight="1"
+                color="textMuted"
+                borderWidth="1px"
+                borderColor="lineStrong"
+                borderRadius="2px"
+                px="6px"
+                py="3px"
+              >
+                Alpha
+              </Box>
             </NextLink>
           </Flex>
           <Flex
