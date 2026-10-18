@@ -278,9 +278,10 @@ hidden), so it is the only blur on the site.
   moment about 1.4s in total.
 - **The one authored moment ("the fog lifts"):** on the home page, in a pinned scene under the
   hero, about fifty chore labels drift faintly in the fog behind "Retail is loud." When the player
-  scrolls on, it plays once: the labels sink into the fog (staggered over about 0.4s), the fog pulls
+  scrolls on, it plays: the labels sink into the fog (staggered over about 0.4s), the fog pulls
   back to the right, "Walk one road." appears, and the road draws itself down through three stones
-  next to three steps. With reduced motion it is an instant swap.
+  next to three steps. Scrolling back up plays it in reverse: the steps leave first, then the fog
+  and the chores return. With reduced motion it is an instant swap both ways.
 
 ## Decisions Log
 
@@ -293,4 +294,5 @@ hidden), so it is the only blur on the site.
 | 2026-10-18 | Defaults set by Claude, not reviewed one by one | The spacing scale (4 to 120px), 64px tick rows, the motion timings, the 2px radius, the 680px app column and the message tint strength; change freely |
 | 2026-10-18 | Wider pages, larger type | The owner found the 680px column too small ("we have so much space, but we dont use and our content is tiny"): 1280px pages, two columns from 1024px, larger titles, labels and tick rows |
 | 2026-10-18 | The landing, the map and the fog built from the approved preview | The owner asked for the look of the preview ("i dont see your fancy fog"): the contour map behind every page, fog in the hero, the scene and the road ahead, the hero road, the moment, the recap and codes sections, and fog over the steps still ahead on My road. Two chores swapped for Midnight's (Prey hunts, Special assignments) |
+| 2026-10-18 | The moment plays both ways | The owner expected the fog to come back when scrolling up ("there is no animation when i scroll up"); it was once only |
 | 2026-10-18 | Camp instead of a countdown | From the design agent; the slow pace shown as rest, with the exact time in small text |
